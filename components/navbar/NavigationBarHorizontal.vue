@@ -59,7 +59,7 @@ function handleSearch() {
       <!-- Logo -->
       <div class="absolute left-1/2 transform -translate-x-1/2 text-center">
         <NuxtLink to="/">
-          <img src="/public/static/images/site/navbar/logobrennero.png" alt="Brennero Gru" class="h-8 md:h-12 mx-auto" />
+          <img src="" alt="Brennero Gru" class="h-8 md:h-12 mx-auto" />
         </NuxtLink>
       </div>
 
@@ -79,7 +79,7 @@ function handleSearch() {
 
         <!-- BG LIFT desktop only -->
         <a href="https://bglift.com/" target="_blank" class="hidden md:block">
-          <img src="/public/static/images/site/navbar/bglift.png" alt="BG LIFT" class="h-4" />
+          <img src="" alt="BG LIFT" class="h-4" />
         </a>
 
         <!-- Login/Logout icon only -->
@@ -87,7 +87,7 @@ function handleSearch() {
 
           class="p-2 bg-black rounded hover:bg-white/10 transition"
         >
-          <img src="/public/static/images/site/account.png" alt="account icon" class="w-5 h-5" />
+          <img src="" alt="account icon" class="w-5 h-5" />
         </button>
 
         <!-- Language switch -->
@@ -134,25 +134,16 @@ function handleSearch() {
           <div class="max-w-7xl mx-auto px-4">
             <NavigationMenuList class="flex flex-col md:flex-row text-sm font-medium">
               <NavigationMenuItem class="px-6 py-3 hover:bg-blue-900 transition">
-                <NuxtLink to="/servizi">{{ t('menu.services') }}</NuxtLink>
+                <NuxtLink to="/usato">usati</NuxtLink>
               </NavigationMenuItem>
               <NavigationMenuItem class="px-6 py-3 hover:bg-blue-900 transition">
-                <NuxtLink to="/usato">{{ t('menu.used') }}</NuxtLink>
+                <NuxtLink to="/chisiamo">about us</NuxtLink>
               </NavigationMenuItem>
               <NavigationMenuItem class="px-6 py-3 hover:bg-blue-900 transition">
-                <NuxtLink to="/allestimenti">{{ t('menu.fittings') }}</NuxtLink>
+                <NuxtLink to="/dovesiamo">dove siamo</NuxtLink>
               </NavigationMenuItem>
               <NavigationMenuItem class="px-6 py-3 hover:bg-blue-900 transition">
-                <NuxtLink to="/news">{{ t('menu.news') }}</NuxtLink>
-              </NavigationMenuItem>
-              <NavigationMenuItem class="px-6 py-3 hover:bg-blue-900 transition">
-                <NuxtLink to="/chisiamo">{{ t('menu.about') }}</NuxtLink>
-              </NavigationMenuItem>
-              <NavigationMenuItem class="px-6 py-3 hover:bg-blue-900 transition">
-                <NuxtLink to="/dovesiamo">{{ t('menu.location') }}</NuxtLink>
-              </NavigationMenuItem>
-              <NavigationMenuItem class="px-6 py-3 hover:bg-blue-900 transition">
-                <NuxtLink to="/contatti">{{ t('menu.contact') }}</NuxtLink>
+                <NuxtLink to="/contatti">contatto</NuxtLink>
               </NavigationMenuItem>
             </NavigationMenuList>
           </div>
