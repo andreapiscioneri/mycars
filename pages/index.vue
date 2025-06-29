@@ -94,23 +94,37 @@ const goToSlide = (index: number) => {
     <div class="fixed top-0 left-0 h-1 bg-[#A30000] z-50 transition-all duration-300" :style="{ width: scrollProgress + '%' }" />
 
     <!-- HERO -->
-    <section
-      class="relative w-full min-h-[90vh] md:h-screen text-white flex items-center justify-center text-center bg-cover bg-center group overflow-hidden px-4"
-      style="background-image: url('/static/images/hero.jpg');"
-    >
-      <div class="absolute inset-0 bg-opacity-50 z-0 transition duration-500 group-hover:bg-opacity-60" />
-      <div class="relative z-10 space-y-6 transform transition duration-700 group-hover:scale-105 max-w-2xl">
-        <h1 class="text-3xl sm:text-4xl md:text-6xl font-bold uppercase tracking-wide animate-fadeInDown">
-          MyCars - La tua auto, il tuo stile
-        </h1>
-        <p class="text-base sm:text-lg text-white/80 animate-fadeIn">
-          Qualità, passione e servizi su misura. Scopri il tuo prossimo veicolo.
-        </p>
-        <button class="bg-[#A30000] hover:bg-red-800 text-white font-bold px-6 py-3 rounded shadow-md transition transform hover:scale-105 hover:shadow-lg">
-          Scopri di più
-        </button>
-      </div>
-    </section>
+<section class="relative w-full min-h-[90vh] md:h-screen text-white flex items-center justify-center text-center group overflow-hidden px-4">
+  <!-- Video background -->
+<video
+  autoplay
+  muted
+  loop
+  playsinline
+  preload="auto"
+  class="absolute inset-0 w-full h-full object-cover z-0"
+>
+  <source src="/public/static/images/def-2.mp4" type="video/mp4" />
+  Il tuo browser non supporta il video HTML5.
+</video>
+
+  <!-- Overlay scuro -->
+  <div class="absolute inset-0 bg-[#000000a1] bg-opacity-50 z-0 transition duration-500 group-hover:bg-opacity-60" />
+
+  <!-- Contenuto -->
+  <div class="relative z-10 space-y-6 transform transition duration-700 group-hover:scale-105 max-w-2xl">
+    <h1 class="text-3xl sm:text-4xl md:text-6xl font-bold uppercase tracking-wide animate-fadeInDown">
+      MyCars - La tua auto, il tuo stile
+    </h1>
+    <p class="text-base sm:text-lg text-white/80 animate-fadeIn">
+      Qualità, passione e servizi su misura. Scopri il tuo prossimo veicolo.
+    </p>
+    <button class="bg-[#A30000] hover:bg-red-800 text-white font-bold px-6 py-3 rounded shadow-md transition transform hover:scale-105 hover:shadow-lg">
+      Scopri di più
+    </button>
+  </div>
+</section>
+
 
     <!-- SECTION DINAMICHE -->
     <section

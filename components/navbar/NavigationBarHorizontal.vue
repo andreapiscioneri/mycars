@@ -64,7 +64,7 @@ const toggleLang = () => {
       </button>
 
       <!-- Menu items -->
-      <nav class="flex-1 text-white font-semibold text-lg space-y-8 px-6 mt-4">
+<nav class="flex-1 text-white font-light text-lg space-y-8 px-6 mt-4">
         <div
           v-for="item in menuItems"
           :key="item.route"
