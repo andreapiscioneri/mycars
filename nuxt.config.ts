@@ -13,5 +13,17 @@ export default defineNuxtConfig({
     '@nuxt/test-utils',
     '@nuxt/ui',
     '@nuxtjs/tailwindcss'
-  ]
+  ],
+
+  app: {
+    head: {
+      link: [
+        {
+          rel: 'icon',
+          type: 'image/png',
+          href: '/favicon.png'
+        }
+      ]
+    }
+  }
 })
