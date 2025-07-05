@@ -1,6 +1,5 @@
 <script setup>
 import { ref, computed, onMounted } from 'vue'
-import Id from './veicoli/[id].vue'
 
 const veicoli = ref([])
 const filtroMarca = ref([])
@@ -23,13 +22,24 @@ const toggleSection = (name) => {
   openSections.value[name] = !openSections.value[name]
 }
 
+const slugify = (str) =>
+  str
+    .toString()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .toLowerCase()
+    .trim()
+    .replace(/\s+/g, '-')
+    .replace(/[^\w\-]+/g, '')
+    .replace(/\-\-+/g, '-')
+
 onMounted(async () => {
   const res = await fetch('/api/veicoli')
   veicoli.value = await res.json()
 })
 
 const filtraVeicoli = computed(() => {
-  let result = [...veicoli.value]
+  let result = [...veicoli.value].filter(v => v.tipo === 'usato')
 
   if (filtroMarca.value.length > 0) {
     result = result.filter(v => filtroMarca.value.includes(v.marca))
@@ -41,10 +51,10 @@ const filtraVeicoli = computed(() => {
     result = result.filter(v => filtroCarburante.value.includes(v.carburante))
   }
   if (prezzoMin.value) {
-    result = result.filter(v => v.prezzo >= parseInt(prezzoMin.value))
+    result = result.filter(v => parseFloat(v.prezzo) >= parseFloat(prezzoMin.value))
   }
   if (prezzoMax.value) {
-    result = result.filter(v => v.prezzo <= parseInt(prezzoMax.value))
+    result = result.filter(v => parseFloat(v.prezzo) <= parseFloat(prezzoMax.value))
   }
   if (ricerca.value) {
     const q = ricerca.value.toLowerCase()
@@ -75,8 +85,16 @@ const filtraVeicoli = computed(() => {
         <div
           v-for="(block, index) in [
             { title: 'Marca', model: filtroMarca, options: ['Audi', 'Mercedes', 'BMW'] },
-            { title: 'Carrozzeria', model: filtroCarrozzeria, options: ['City Car', 'Cabrio', 'Coupé', 'Berlina', 'SUV', 'Furgonato', 'Station Wagon', 'Veicoli Commerciali'] },
-            { title: 'Carburante', model: filtroCarburante, options: ['Diesel', 'Benzina', 'Ibrida/Diesel', 'Elettrica'] }
+            {
+              title: 'Carrozzeria',
+              model: filtroCarrozzeria,
+              options: ['City Car', 'Cabrio', 'Coupé', 'Berlina', 'SUV', 'Furgonato', 'Station Wagon', 'Veicoli Commerciali']
+            },
+            {
+              title: 'Carburante',
+              model: filtroCarburante,
+              options: ['Diesel', 'Benzina', 'Ibrida/Diesel', 'Elettrica']
+            }
           ]"
           :key="index"
         >
@@ -96,7 +114,6 @@ const filtraVeicoli = computed(() => {
                   :value="opt"
                   v-model="block.model"
                   class="accent-[#A30000]"
-                  :aria-label="`Filtro ${block.title} ${opt}`"
                 />
                 {{ opt }}
               </label>
@@ -112,8 +129,8 @@ const filtraVeicoli = computed(() => {
           </div>
           <transition name="fade">
             <div v-if="openSections.Prezzo" class="flex gap-2 mt-2">
-              <input v-model="prezzoMin" type="number" placeholder="Min" class="w-1/2 bg-[#1a1a1a] text-white px-2 py-1 rounded border border-white/10 placeholder-white/40 text-sm" aria-label="Prezzo minimo" />
-              <input v-model="prezzoMax" type="number" placeholder="Max" class="w-1/2 bg-[#1a1a1a] text-white px-2 py-1 rounded border border-white/10 placeholder-white/40 text-sm" aria-label="Prezzo massimo" />
+              <input v-model="prezzoMin" type="number" placeholder="Min" class="w-1/2 bg-[#1a1a1a] text-white px-2 py-1 rounded border border-white/10 placeholder-white/40 text-sm" />
+              <input v-model="prezzoMax" type="number" placeholder="Max" class="w-1/2 bg-[#1a1a1a] text-white px-2 py-1 rounded border border-white/10 placeholder-white/40 text-sm" />
             </div>
           </transition>
         </div>
@@ -126,7 +143,6 @@ const filtraVeicoli = computed(() => {
             v-model="ricerca"
             placeholder="Cerca per modello, codice, marca..."
             class="w-full sm:w-auto flex-1 bg-[#1a1a1a] border border-white/10 text-white px-4 py-2 rounded placeholder-white/40 text-sm"
-            aria-label="Campo ricerca veicolo"
           />
 
           <div class="flex items-center gap-2">
@@ -134,8 +150,7 @@ const filtraVeicoli = computed(() => {
             <div class="relative w-full md:w-auto">
               <select
                 v-model="ordinamento"
-                class="bg-[#1a1a1a] border border-white/10 text-white text-sm px-4 py-2 pr-8 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#A30000] appearance-none w-full"
-                aria-label="Ordinamento"
+                class="bg-[#1a1a1a] border border-white/10 text-white text-sm px-4 py-2 pr-8 rounded-lg appearance-none w-full"
               >
                 <option value="alfabetico-crescente">Ordine crescente</option>
                 <option value="alfabetico-decrescente">Ordine decrescente</option>
@@ -144,33 +159,33 @@ const filtraVeicoli = computed(() => {
                 ▼
               </div>
             </div>
-
-            <!-- Toggle vista -->
-            <div class="flex items-center gap-1">
-              <button
-                @click="vista = 'griglia'"
-                :class="vista === 'griglia' ? 'bg-[#A30000] text-white' : 'bg-[#333] text-white/40'"
-                class="w-10 h-10 flex items-center justify-center rounded-lg transition"
-                aria-label="Vista griglia"
-              >
-                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                    d="M4 4h5v5H4V4zm0 11h5v5H4v-5zm11-11h5v5h-5V4zm0 11h5v5h-5v-5z" />
-                </svg>
-              </button>
-              <button
-                @click="vista = 'lista'"
-                :class="vista === 'lista' ? 'bg-[#A30000] text-white' : 'bg-[#333] text-white/40'"
-                class="w-10 h-10 flex items-center justify-center rounded-lg transition"
-                aria-label="Vista lista"
-              >
-                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                    d="M4 6h16M4 12h16M4 18h16" />
-                </svg>
-              </button>
-            </div>
           </div>
+
+<!-- Vista Toggle con Icone -->
+<div class="flex items-center gap-2">
+  <button
+    @click="vista = 'griglia'"
+    :class="vista === 'griglia' ? 'bg-white/10 border border-white text-red-500' : 'text-white/40'"
+    class="p-2 rounded transition hover:bg-white/10"
+    aria-label="Vista Griglia"
+  >
+    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
+      <path d="M3 3h7v7H3V3zm0 11h7v7H3v-7zm11-11h7v7h-7V3zm0 11h7v7h-7v-7z"/>
+    </svg>
+  </button>
+
+  <button
+    @click="vista = 'lista'"
+    :class="vista === 'lista' ? 'bg-white/10 border border-white text-red-500' : 'text-white/40'"
+    class="p-2 rounded transition hover:bg-white/10"
+    aria-label="Vista Lista"
+  >
+    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
+      <path d="M3 5h18v2H3V5zm0 6h18v2H3v-2zm0 6h18v2H3v-2z"/>
+    </svg>
+  </button>
+</div>
+
         </div>
 
         <!-- Griglia -->
@@ -178,19 +193,21 @@ const filtraVeicoli = computed(() => {
           <div
             v-for="v in filtraVeicoli"
             :key="v.codice || v.titolo || v.modello"
-            class="bg-[#111] border border-white/10 rounded-xl overflow-hidden transition shadow hover:shadow-lg"
+            class="bg-[#111] border border-white/10 rounded-xl overflow-hidden shadow hover:shadow-lg transition"
           >
             <img :src="v.immagine || '/placeholder.jpg'" class="w-full h-48 object-cover" />
             <div class="p-4 space-y-2">
               <h3 class="text-base font-bold text-white">{{ v.titolo }}</h3>
-              <p class="text-sm text-white/70">{{ v.modello }}</p>
-              <p class="text-xs text-[#A30000]">Codice: {{ v.codice }}</p>
-              <p class="text-xs text-white/50">Dealer: {{ v.dealer }}</p>
-              <div class="flex justify-between items-center mt-3">
+              <p class="text-sm text-white/70">{{ v.marca }} {{ v.modello }}</p>
+              <p class="text-xs text-white/50">Anno: {{ v.anno || 'n.d.' }}</p>
+              <p class="text-xs text-white/50">Chilometri: {{ v.chilometri ? v.chilometri + ' km' : 'n.d.' }}</p>
+              <p class="text-xs text-white/50">Prezzo: {{ v.prezzo ? v.prezzo + ' €' : 'n.d.' }}</p>
+              <p class="text-xs text-white/50">Venditore: {{ v.venditore }}</p>
 
-                <NuxtLink :to="`/veicoli/${Id}`" class="bg-[#A30000] hover:bg-red-800 text-white px-4 py-1.5 text-sm rounded shadow">
-                Dettagli
-              </NuxtLink>
+              <div class="flex justify-between items-center mt-3">
+                <NuxtLink :to="`/usato/${slugify(v.titolo)}-${v.codice}`" class="bg-[#A30000] hover:bg-red-800 text-white px-4 py-1.5 text-sm rounded shadow">
+                  Dettagli
+                </NuxtLink>
                 <span class="text-white/30 text-lg font-bold">&gt;</span>
               </div>
             </div>
@@ -198,24 +215,23 @@ const filtraVeicoli = computed(() => {
         </div>
 
         <!-- Lista -->
-        <div v-else class="space-y-4">
+        <div v-else-if="vista === 'lista'" class="space-y-4">
           <div
             v-for="v in filtraVeicoli"
-            :key="v.codice || v.titolo || v.modello"
-            class="flex flex-col sm:flex-row gap-4 bg-[#111] border border-white/10 rounded-xl overflow-hidden transition shadow hover:shadow-lg"
+            :key="v.codice"
+            class="bg-[#111] border border-white/10 rounded-xl overflow-hidden shadow hover:shadow-lg transition p-4 flex flex-col sm:flex-row sm:items-center gap-4"
           >
-            <img :src="v.immagine || '/placeholder.jpg'" class="w-full sm:w-60 h-48 object-cover" />
-            <div class="flex flex-col justify-between py-3 pr-4 pl-3 space-y-1 flex-1">
-              <div>
-                <h3 class="text-lg font-bold text-white">{{ v.titolo }}</h3>
-                <p class="text-sm text-white/70">{{ v.modello }}</p>
-                <p class="text-xs text-[#A30000]">Codice: {{ v.codice }}</p>
-                <p class="text-xs text-white/50">Dealer: {{ v.dealer }}</p>
-              </div>
-              <div class="flex justify-between items-center mt-2">
-                <button class="bg-[#A30000] hover:bg-red-800 text-white px-4 py-1.5 text-sm rounded shadow">Contattaci</button>
-                <span class="text-white/30 text-lg font-bold">&gt;</span>
-              </div>
+            <img :src="v.immagine || '/placeholder.jpg'" class="w-full sm:w-40 h-32 object-cover rounded" />
+            <div class="flex-1 space-y-1">
+              <h3 class="text-lg font-semibold text-white">{{ v.titolo }}</h3>
+              <p class="text-sm text-white/70">{{ v.marca }} {{ v.modello }}</p>
+              <p class="text-xs text-white/50">Anno: {{ v.anno || 'n.d.' }}</p>
+              <p class="text-xs text-white/50">Chilometri: {{ v.chilometri ? v.chilometri + ' km' : 'n.d.' }}</p>
+              <p class="text-xs text-white/50">Prezzo: {{ v.prezzo ? v.prezzo + ' €' : 'n.d.' }}</p>
+              <p class="text-xs text-white/50">Venditore: {{ v.venditore }}</p>
+              <NuxtLink :to="`/usato/${slugify(v.titolo)}-${v.codice}`" class="inline-block mt-2 bg-[#A30000] hover:bg-red-800 text-white px-4 py-1.5 text-sm rounded shadow">
+                Dettagli
+              </NuxtLink>
             </div>
           </div>
         </div>

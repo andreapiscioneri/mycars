@@ -23,6 +23,10 @@ const menuItems = [
   { label: 'Dove siamo', route: '/dovesiamo' },
   { label: 'Contatti', route: '/contatti' },
 ]
+const veicoliMenu = [
+  { label: 'Usato', route: '/usato' },
+  { label: 'Noleggio', route: '/noleggio' }
+]
 
 const toggleLang = () => {
   selectedLang.value = selectedLang.value === 'IT' ? 'EN' : 'IT'
@@ -66,15 +70,15 @@ const toggleLang = () => {
 
       <!-- Menu items -->
 <nav class="flex-1 text-white font-light text-lg space-y-8 px-6 mt-4">
-        <div
-          v-for="item in menuItems"
-          :key="item.route"
-          class="cursor-pointer transition"
-          :class="[route.path === item.route ? 'text-[#A30000]' : 'hover:text-[#A30000]']"
-          @click="() => { router.push(item.route); if (isMobile) emit('toggle') }"
-        >
-          {{ isOpen || isMobile ? item.label : '•' }}
-        </div>
+<div
+  v-for="item in menuItems"
+  :key="item.route"
+  class="cursor-pointer transition whitespace-nowrap overflow-hidden text-ellipsis"
+  :class="[route.path === item.route ? 'text-[#A30000]' : 'hover:text-[#A30000]']"
+  @click="() => { router.push(item.route); if (isMobile) emit('toggle') }"
+>
+  {{ isOpen || isMobile ? item.label : '•' }}
+</div>
       </nav>
 
       <!-- Lingua & Login -->
