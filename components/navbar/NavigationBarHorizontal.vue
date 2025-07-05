@@ -17,7 +17,8 @@ const route = useRoute()
 const menuItems = [
   { label: 'Homepage', route: '/' },
   { label: 'Servizi', route: '/servizi' },
-  { label: 'Veicoli', route: '/veicoli' },
+  { label: 'Usato', route: '/usato' },
+  { label: 'Noleggio', route: '/noleggio' },
   { label: 'Chi siamo', route: '/chisiamo' },
   { label: 'Dove siamo', route: '/dovesiamo' },
   { label: 'Contatti', route: '/contatti' },
