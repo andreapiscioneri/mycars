@@ -1,10 +1,16 @@
 <script setup>
 import { ref, computed, onMounted } from 'vue'
+import { useRouter } from 'vue-router'
 
 const veicoli = ref([])
 const filtroMarca = ref([])
 const filtroCarrozzeria = ref([])
 const filtroCarburante = ref([])
+const filtroVenditore = ref([])
+const filtroChilometriMin = ref('')
+const filtroChilometriMax = ref('')
+const filtroAnnoMin = ref('')
+const filtroAnnoMax = ref('')
 const prezzoMin = ref('')
 const prezzoMax = ref('')
 const ricerca = ref('')
@@ -15,7 +21,10 @@ const openSections = ref({
   Marca: false,
   Carrozzeria: false,
   Carburante: false,
-  Prezzo: false
+  Prezzo: false,
+  Venditore: false,
+  Chilometri: false,
+  Anno: false,
 })
 
 const toggleSection = (name) => {
@@ -23,15 +32,8 @@ const toggleSection = (name) => {
 }
 
 const slugify = (str) =>
-  str
-    .toString()
-    .normalize('NFD')
-    .replace(/[\u0300-\u036f]/g, '')
-    .toLowerCase()
-    .trim()
-    .replace(/\s+/g, '-')
-    .replace(/[^\w\-]+/g, '')
-    .replace(/\-\-+/g, '-')
+  str.toString().normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().trim()
+    .replace(/\s+/g, '-').replace(/[^\w\-]+/g, '').replace(/\-\-+/g, '-')
 
 onMounted(async () => {
   const res = await fetch('/api/veicoli')
@@ -39,23 +41,38 @@ onMounted(async () => {
 })
 
 const filtraVeicoli = computed(() => {
-  let result = [...veicoli.value].filter(v => v.tipo === 'usato')
+  let result = veicoli.value.filter(v => v.tipo === 'usato')
 
-  if (filtroMarca.value.length > 0) {
+  if (filtroMarca.value.length > 0)
     result = result.filter(v => filtroMarca.value.includes(v.marca))
-  }
-  if (filtroCarrozzeria.value.length > 0) {
+
+  if (filtroCarrozzeria.value.length > 0)
     result = result.filter(v => filtroCarrozzeria.value.includes(v.carrozzeria))
-  }
-  if (filtroCarburante.value.length > 0) {
+
+  if (filtroCarburante.value.length > 0)
     result = result.filter(v => filtroCarburante.value.includes(v.carburante))
-  }
-  if (prezzoMin.value) {
+
+  if (filtroVenditore.value.length > 0)
+    result = result.filter(v => filtroVenditore.value.includes(v.venditore))
+
+  if (prezzoMin.value)
     result = result.filter(v => parseFloat(v.prezzo) >= parseFloat(prezzoMin.value))
-  }
-  if (prezzoMax.value) {
+
+  if (prezzoMax.value)
     result = result.filter(v => parseFloat(v.prezzo) <= parseFloat(prezzoMax.value))
-  }
+
+  if (filtroChilometriMin.value)
+    result = result.filter(v => parseInt(v.chilometri) >= parseInt(filtroChilometriMin.value))
+
+  if (filtroChilometriMax.value)
+    result = result.filter(v => parseInt(v.chilometri) <= parseInt(filtroChilometriMax.value))
+
+  if (filtroAnnoMin.value)
+    result = result.filter(v => new Date(v.anno) >= new Date(filtroAnnoMin.value))
+
+  if (filtroAnnoMax.value)
+    result = result.filter(v => new Date(v.anno) <= new Date(filtroAnnoMax.value))
+
   if (ricerca.value) {
     const q = ricerca.value.toLowerCase()
     result = result.filter(v =>
@@ -65,88 +82,125 @@ const filtraVeicoli = computed(() => {
     )
   }
 
-  if (ordinamento.value === 'alfabetico-crescente') {
+  if (ordinamento.value === 'alfabetico-crescente')
     result.sort((a, b) => (a.titolo || '').localeCompare(b.titolo || ''))
-  } else if (ordinamento.value === 'alfabetico-decrescente') {
+  else if (ordinamento.value === 'alfabetico-decrescente')
     result.sort((a, b) => (b.titolo || '').localeCompare(a.titolo || ''))
-  }
 
   return result
 })
 </script>
 
 <template>
-  <section class="bg-black text-white py-20 px-4 md:px-10 min-h-screen">
-    <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-[250px_1fr] gap-10">
-      <!-- FILTRI -->
-      <aside class="space-y-4">
-        <h2 class="text-lg font-bold text-white mb-2">Filtra</h2>
+  <section class="bg-black text-white py-10 px-6 min-h-screen grid grid-cols-1 md:grid-cols-[280px_1fr] gap-8">
+    <!-- FILTRI -->
+    <aside class="space-y-6">
+      <h2 class="text-xl font-bold">Filtra</h2>
 
-        <div
-          v-for="(block, index) in [
-            { title: 'Marca', model: filtroMarca, options: ['Audi', 'Mercedes', 'BMW'] },
-            {
-              title: 'Carrozzeria',
-              model: filtroCarrozzeria,
-              options: ['City Car', 'Cabrio', 'Coupé', 'Berlina', 'SUV', 'Furgonato', 'Station Wagon', 'Veicoli Commerciali']
-            },
-            {
-              title: 'Carburante',
-              model: filtroCarburante,
-              options: ['Diesel', 'Benzina', 'Ibrida/Diesel', 'Elettrica']
-            }
-          ]"
-          :key="index"
-        >
-          <div class="flex justify-between items-center cursor-pointer text-sm font-medium text-white/80 py-1" @click="toggleSection(block.title)">
-            <span>{{ block.title }}</span>
-            <span class="text-white text-base font-bold">{{ openSections[block.title] ? '−' : '+' }}</span>
-          </div>
-          <transition name="fade">
-            <div v-if="openSections[block.title]" class="pl-1 mt-1 space-y-1">
-              <label
-                v-for="opt in block.options"
-                :key="opt"
-                class="flex items-center gap-2 text-sm text-white/70"
-              >
-                <input
-                  type="checkbox"
-                  :value="opt"
-                  v-model="block.model"
-                  class="accent-[#A30000]"
-                />
-                {{ opt }}
-              </label>
-            </div>
-          </transition>
+      <!-- Marca -->
+      <div>
+        <div class="flex justify-between items-center cursor-pointer" @click="toggleSection('Marca')">
+          <span class="font-semibold">Marca</span>
+          <span>{{ openSections.Marca ? '−' : '+' }}</span>
         </div>
-
-        <!-- Prezzo -->
-        <div>
-          <div class="flex justify-between items-center cursor-pointer text-sm font-medium text-white/80 py-1" @click="toggleSection('Prezzo')">
-            <span>Prezzo</span>
-            <span class="text-white text-base font-bold">{{ openSections.Prezzo ? '−' : '+' }}</span>
-          </div>
-          <transition name="fade">
-            <div v-if="openSections.Prezzo" class="flex gap-2 mt-2">
-              <input v-model="prezzoMin" type="number" placeholder="Min" class="w-1/2 bg-[#1a1a1a] text-white px-2 py-1 rounded border border-white/10 placeholder-white/40 text-sm" />
-              <input v-model="prezzoMax" type="number" placeholder="Max" class="w-1/2 bg-[#1a1a1a] text-white px-2 py-1 rounded border border-white/10 placeholder-white/40 text-sm" />
-            </div>
-          </transition>
+        <div v-if="openSections.Marca" class="mt-2 space-y-1">
+          <label v-for="opt in [...new Set(veicoli.map(v => v.marca))]" :key="opt" class="flex items-center gap-2 text-sm">
+            <input type="checkbox" :value="opt" v-model="filtroMarca" />
+            {{ opt }}
+          </label>
         </div>
-      </aside>
+      </div>
 
-      <!-- CONTENUTO -->
-      <main class="space-y-8 w-full">
-        <div class="flex flex-wrap justify-between items-center gap-4">
-          <input
-            v-model="ricerca"
-            placeholder="Cerca per modello, codice, marca..."
-            class="w-full sm:w-auto flex-1 bg-[#1a1a1a] border border-white/10 text-white px-4 py-2 rounded placeholder-white/40 text-sm"
-          />
+      <!-- Carrozzeria -->
+      <div>
+        <div class="flex justify-between items-center cursor-pointer" @click="toggleSection('Carrozzeria')">
+          <span class="font-semibold">Carrozzeria</span>
+          <span>{{ openSections.Carrozzeria ? '−' : '+' }}</span>
+        </div>
+        <div v-if="openSections.Carrozzeria" class="mt-2 space-y-1">
+          <label v-for="opt in [...new Set(veicoli.map(v => v.carrozzeria))]" :key="opt" class="flex items-center gap-2 text-sm">
+            <input type="checkbox" :value="opt" v-model="filtroCarrozzeria" />
+            {{ opt }}
+          </label>
+        </div>
+      </div>
 
-          <div class="flex items-center gap-2">
-            <label class="text-white/60 text-sm">Ordina per</label>
+      <!-- Carburante -->
+      <div>
+        <div class="flex justify-between items-center cursor-pointer" @click="toggleSection('Carburante')">
+          <span class="font-semibold">Carburante</span>
+          <span>{{ openSections.Carburante ? '−' : '+' }}</span>
+        </div>
+        <div v-if="openSections.Carburante" class="mt-2 space-y-1">
+          <label v-for="opt in [...new Set(veicoli.map(v => v.carburante))]" :key="opt" class="flex items-center gap-2 text-sm">
+            <input type="checkbox" :value="opt" v-model="filtroCarburante" />
+            {{ opt }}
+          </label>
+        </div>
+      </div>
+
+      <!-- Venditore -->
+      <div>
+        <div class="flex justify-between items-center cursor-pointer" @click="toggleSection('Venditore')">
+          <span class="font-semibold">Venditore</span>
+          <span>{{ openSections.Venditore ? '−' : '+' }}</span>
+        </div>
+        <div v-if="openSections.Venditore" class="mt-2 space-y-1">
+          <label v-for="opt in [...new Set(veicoli.map(v => v.venditore))]" :key="opt" class="flex items-center gap-2 text-sm">
+            <input type="checkbox" :value="opt" v-model="filtroVenditore" />
+            {{ opt }}
+          </label>
+        </div>
+      </div>
+
+      <!-- Prezzo -->
+      <div>
+        <div class="flex justify-between items-center cursor-pointer" @click="toggleSection('Prezzo')">
+          <span class="font-semibold">Prezzo</span>
+          <span>{{ openSections.Prezzo ? '−' : '+' }}</span>
+        </div>
+        <div v-if="openSections.Prezzo" class="flex gap-2 mt-2">
+          <input v-model="prezzoMin" type="number" placeholder="Min" class="input w-1/2" />
+          <input v-model="prezzoMax" type="number" placeholder="Max" class="input w-1/2" />
+        </div>
+      </div>
+
+      <!-- Chilometri -->
+      <div>
+        <div class="flex justify-between items-center cursor-pointer" @click="toggleSection('Chilometri')">
+          <span class="font-semibold">Chilometri</span>
+          <span>{{ openSections.Chilometri ? '−' : '+' }}</span>
+        </div>
+        <div v-if="openSections.Chilometri" class="flex gap-2 mt-2">
+          <input v-model="filtroChilometriMin" type="number" placeholder="Min" class="input w-1/2" />
+          <input v-model="filtroChilometriMax" type="number" placeholder="Max" class="input w-1/2" />
+        </div>
+      </div>
+
+      <!-- Anno -->
+      <div>
+        <div class="flex justify-between items-center cursor-pointer" @click="toggleSection('Anno')">
+          <span class="font-semibold">Anno</span>
+          <span>{{ openSections.Anno ? '−' : '+' }}</span>
+        </div>
+        <div v-if="openSections.Anno" class="flex gap-2 mt-2">
+          <input v-model="filtroAnnoMin" type="date" class="input w-1/2" />
+          <input v-model="filtroAnnoMax" type="date" class="input w-1/2" />
+        </div>
+      </div>
+    </aside>
+
+    <!-- CONTENUTO -->
+    <main class="space-y-6 w-full">
+      <div class="flex flex-wrap justify-between items-center gap-4">
+        <input
+          v-model="ricerca"
+          class="input w-full sm:w-auto flex-1"
+          placeholder="Cerca per modello, codice, marca..."
+        />
+
+        <div class="flex items-center gap-2">
+            <label class="text-white/60 text-sm">Ordina</label>
             <div class="relative w-full md:w-auto">
               <select
                 v-model="ordinamento"
@@ -185,70 +239,66 @@ const filtraVeicoli = computed(() => {
     </svg>
   </button>
 </div>
+</div>
 
-        </div>
 
-        <!-- Griglia -->
-        <div v-if="vista === 'griglia'" class="grid sm:grid-cols-2 xl:grid-cols-3 gap-6">
-          <div
-            v-for="v in filtraVeicoli"
-            :key="v.codice || v.titolo || v.modello"
-            class="bg-[#111] border border-white/10 rounded-xl overflow-hidden shadow hover:shadow-lg transition"
-          >
-            <img :src="v.immagine || '/placeholder.jpg'" class="w-full h-48 object-cover" />
-            <div class="p-4 space-y-2">
-              <h3 class="text-base font-bold text-white">{{ v.titolo }}</h3>
-              <p class="text-sm text-white/70">{{ v.marca }} {{ v.modello }}</p>
-              <p class="text-xs text-white/50">Anno: {{ v.anno || 'n.d.' }}</p>
-              <p class="text-xs text-white/50">Chilometri: {{ v.chilometri ? v.chilometri + ' km' : 'n.d.' }}</p>
-              <p class="text-xs text-white/50">Prezzo: {{ v.prezzo ? v.prezzo + ' €' : 'n.d.' }}</p>
-              <p class="text-xs text-white/50">Venditore: {{ v.venditore }}</p>
 
-              <div class="flex justify-between items-center mt-3">
-                <NuxtLink :to="`/usato/${slugify(v.titolo)}-${v.codice}`" class="bg-[#A30000] hover:bg-red-800 text-white px-4 py-1.5 text-sm rounded shadow">
-                  Dettagli
-                </NuxtLink>
-                <span class="text-white/30 text-lg font-bold">&gt;</span>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Lista -->
-        <div v-else-if="vista === 'lista'" class="space-y-4">
-          <div
-            v-for="v in filtraVeicoli"
-            :key="v.codice"
-            class="bg-[#111] border border-white/10 rounded-xl overflow-hidden shadow hover:shadow-lg transition p-4 flex flex-col sm:flex-row sm:items-center gap-4"
-          >
-            <img :src="v.immagine || '/placeholder.jpg'" class="w-full sm:w-40 h-32 object-cover rounded" />
-            <div class="flex-1 space-y-1">
-              <h3 class="text-lg font-semibold text-white">{{ v.titolo }}</h3>
-              <p class="text-sm text-white/70">{{ v.marca }} {{ v.modello }}</p>
-              <p class="text-xs text-white/50">Anno: {{ v.anno || 'n.d.' }}</p>
-              <p class="text-xs text-white/50">Chilometri: {{ v.chilometri ? v.chilometri + ' km' : 'n.d.' }}</p>
-              <p class="text-xs text-white/50">Prezzo: {{ v.prezzo ? v.prezzo + ' €' : 'n.d.' }}</p>
-              <p class="text-xs text-white/50">Venditore: {{ v.venditore }}</p>
-              <NuxtLink :to="`/usato/${slugify(v.titolo)}-${v.codice}`" class="inline-block mt-2 bg-[#A30000] hover:bg-red-800 text-white px-4 py-1.5 text-sm rounded shadow">
-                Dettagli
-              </NuxtLink>
-            </div>
-          </div>
-        </div>
-
-        <!-- Conteggio -->
-        <p class="text-sm text-white/40">{{ filtraVeicoli.length }} veicoli trovati</p>
-      </main>
+      <!-- VISTA GRIGLIA -->
+<div v-if="vista === 'griglia'" class="grid sm:grid-cols-2 xl:grid-cols-3 gap-6">
+  <div
+    v-for="v in filtraVeicoli"
+    :key="v.codice"
+    class="bg-[#111] border border-white/10 rounded-xl overflow-hidden flex flex-col"
+  >
+    <img :src="v.immagine || '/placeholder.jpg'" class="w-full h-48 object-cover" />
+    <div class="p-4 flex flex-col flex-1 justify-between">
+      <div class="space-y-1">
+        <h3 class="text-base font-bold text-white">{{ v.titolo }}</h3>
+        <p class="text-sm text-white/70">{{ v.marca }} {{ v.modello }}</p>
+        <p class="text-xs text-white/50">Anno: {{ v.anno || 'n.d.' }}</p>
+        <p class="text-xs text-white/50">Chilometri: {{ v.chilometri || 'n.d.' }} km</p>
+        <p class="text-xs text-white/50">Prezzo: {{ v.prezzo || 'n.d.' }} €</p>
+        <p class="text-xs text-white/50">Venditore: {{ v.venditore }}</p>
+      </div>
+      <NuxtLink
+        :to="`/usato/${slugify(v.titolo)}-${v.codice}`"
+        class="block w-full text-center bg-red-700 hover:bg-red-800 text-white py-2 mt-4 rounded"
+      >
+        Dettagli
+      </NuxtLink>
     </div>
+  </div>
+</div>
+
+
+      <!-- VISTA LISTA -->
+      <div v-else class="space-y-4">
+        <div v-for="v in filtraVeicoli" :key="v.codice" class="bg-[#111] p-4 rounded-lg border border-white/10 flex flex-col sm:flex-row gap-4">
+          <img :src="v.immagine" class="w-full sm:w-40 h-32 object-cover rounded" />
+          <div class="flex-1 space-y-1">
+            <h3 class="text-lg font-semibold text-white">{{ v.titolo }}</h3>
+            <p class="text-sm text-white/70">{{ v.marca }} {{ v.modello }}</p>
+            <p class="text-xs text-white/50">Anno: {{ v.anno }}</p>
+            <p class="text-xs text-white/50">Chilometri: {{ v.chilometri }} km</p>
+            <p class="text-xs text-white/50">Prezzo: {{ v.prezzo }} €</p>
+            <p class="text-xs text-white/50">Venditore: {{ v.venditore }}</p>
+            <NuxtLink :to="`/usato/${slugify(v.titolo)}-${v.codice}`" class="inline-block mt-2 bg-red-700 hover:bg-red-800 text-white px-4 py-1.5 text-sm rounded shadow">Dettagli</NuxtLink>
+          </div>
+        </div>
+      </div>
+
+      <p class="text-sm text-white/40">{{ filtraVeicoli.length }} veicoli trovati</p>
+    </main>
   </section>
 </template>
 
 <style scoped>
-.fade-enter-active, .fade-leave-active {
-  transition: all 0.25s ease;
-}
-.fade-enter-from, .fade-leave-to {
-  opacity: 0;
-  transform: translateY(-5px);
+.input {
+  background-color: #1a1a1a;
+  color: white;
+  padding: 0.5rem;
+  border-radius: 6px;
+  border: 1px solid #333;
+  font-size: 0.875rem;
 }
 </style>

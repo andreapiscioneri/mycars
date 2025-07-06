@@ -230,23 +230,64 @@ const filteredVeicoli = (tipo) => {
           </label>
         </div>
 
-        <div>
-          <label for="file-immagine" class="upload-btn">📎 {{ labels.immagine }}</label>
-          <input id="file-immagine" type="file" @change="handleNewFile" class="hidden" />
-          <img v-if="newVeicolo.immagine" :src="newVeicolo.immagine" class="mt-2 w-full max-w-xs rounded shadow" />
-        </div>
+<div class="mt-4 mb-8">
+  <label for="file-immagine" class="upload-btn mb-4">📎 {{ labels.immagine }}</label>
+  <input id="file-immagine" type="file" @change="handleNewFile" class="hidden" />
 
-        <div class="mt-4">
-          <label for="file-gallery" class="upload-btn">📎 {{ labels.galleria }}</label>
-          <input id="file-gallery" type="file" multiple @change="handleNewGallery" class="hidden" />
-          <div class="flex flex-wrap gap-3 mt-3">
-            <div v-for="(img, i) in newVeicolo.galleria" :key="i" class="w-24 h-24 rounded overflow-hidden">
-              <img :src="img" class="w-full h-full object-cover border border-white/20" />
-            </div>
-          </div>
-        </div>
+  <div v-if="newVeicolo.immagine" class="relative w-full max-w-xs mt-2">
+    <img :src="newVeicolo.immagine" class="w-full rounded shadow" />
+    <button
+      @click="newVeicolo.immagine = ''"
+      class="absolute top-1 right-1 bg-black/70 text-white px-2 py-1 rounded-full text-xs hover:bg-red-700"
+    >
+      ✕
+    </button>
+  </div>
+</div>
 
-        <label>{{ labels.descrizione }} <textarea v-model="newVeicolo.descrizione" class="input w-full" /></label>
+        <!-- GALLERIA -->
+<div class="mt-4">
+  <label class="block text-sm font-semibold mb-2">{{ labels.galleria }}</label>
+  <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
+    <!-- Immagini esistenti -->
+    <div
+      v-for="(img, i) in newVeicolo.galleria"
+      :key="i"
+      class="relative bg-white/10 p-2 rounded-md"
+    >
+      <img :src="img" class="w-full h-32 object-cover rounded-md" />
+
+      <!-- Pulsante rimozione -->
+      <button
+        @click="newVeicolo.galleria.splice(i, 1)"
+        class="absolute top-1 right-1 text-white bg-black/60 rounded-full px-1 text-xs hover:bg-red-600"
+      >
+        ✕
+      </button>
+
+      <!-- Imposta come immagine principale -->
+      <button
+        @click="setAsMainImage(newVeicolo, img)"
+        class="text-xs text-blue-400 hover:underline mt-2 block text-center"
+      >
+        {{ newVeicolo.immagine === img ? 'Immagine Principale ✅' : 'Imposta Principale' }}
+      </button>
+    </div>
+
+    <!-- Aggiunta nuova immagine -->
+    <div class="flex items-center justify-center p-2 border-2 border-dashed border-white/30 rounded-md">
+      <input
+        type="file"
+        multiple
+        @change="e => addGalleryImages(e, newVeicolo)"
+        class="block w-full text-xs text-white cursor-pointer"
+      />
+    </div>
+  </div>
+</div>
+
+
+        <label>{{ labels.descrizione }} <textarea v-model="newVeicolo.descrizione" class="input textarea-large" /></label>
         <button @click="addVeicolo" class="bg-red-600 hover:bg-red-700 px-4 py-2 rounded text-sm">Salva Veicolo</button>
       </div>
 
@@ -296,53 +337,71 @@ const filteredVeicoli = (tipo) => {
                 {{ labels.venditore }}
                 <input v-model="v.venditore" class="input" placeholder="Modifica venditore" />
               </label>
-              <label class="md:col-span-2">{{ labels.descrizione }} <textarea v-model="v.descrizione" class="input" /></label>
+              <label class="md:col-span-2">{{ labels.descrizione }} <textarea v-model="v.descrizione" class="input textarea-large" /></label>
             </div>
 
-            <label class="block text-sm mt-2">{{ labels.immagine }}</label>
-            <input type="file" @change="e => handleEditImageInline(e, v)" class="text-sm text-white" />
-            <img v-if="v.immagine" :src="v.immagine" class="w-full max-w-xs mt-2 rounded" />
+ <!-- IMMAGINE PRINCIPALE -->
+<div class="mt-4 mb-8">
+  <label for="file-immagine-edit" class="upload-btn mb-4" >📎 {{ labels.immagine }}</label>
+  <input
+    id="file-immagine-edit"
+    type="file"
+    @change="e => handleEditImageInline(e, v)"
+    class="hidden"
+  />
 
-<!-- GALLERIA -->
+  <div v-if="v.immagine" class="relative w-full max-w-xs mt-2">
+    <img :src="v.immagine" class="w-full rounded shadow" />
+    <button
+      @click="v.immagine = ''"
+      class="absolute top-1 right-1 bg-black/70 text-white px-2 py-1 rounded-full text-xs hover:bg-red-700"
+    >
+      ✕
+    </button>
+  </div>
+</div>
+
+<!-- GALLERIA IMMAGINI -->
 <div class="mt-4">
-  <label class="block text-sm font-semibold">{{ labels.galleria }}</label>
-  <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4 mt-2">
-    <!-- Immagini esistenti -->
+  <label class="block text-sm font-semibold mb-2">{{ labels.galleria }}</label>
+  <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
+    <!-- Immagini già caricate -->
     <div
       v-for="(img, i) in v.galleria"
       :key="i"
-      class="relative p-2 bg-white/10 rounded"
+      class="relative bg-white/10 p-2 rounded-md"
     >
-      <img :src="img" class="w-full h-24 object-cover rounded" />
+      <img :src="img" class="w-full h-32 object-cover rounded-md" />
+
+      <!-- Rimuovi -->
+      <button
+        @click="removeGalleryImage(v, i)"
+        class="absolute top-1 right-1 text-white bg-black/60 rounded-full px-1 text-xs hover:bg-red-600"
+      >
+        ✕
+      </button>
 
       <!-- Imposta come principale -->
       <button
         @click="setAsMainImage(v, img)"
-        class="text-xs mt-2 text-blue-400 hover:underline block text-center"
+        class="text-xs text-blue-400 hover:underline mt-2 block text-center"
       >
         {{ v.immagine === img ? 'Immagine Principale ✅' : 'Imposta Principale' }}
       </button>
-
-      <!-- Rimuovi immagine -->
-      <button
-        @click="removeGalleryImage(v, i)"
-        class="absolute top-1 right-1 text-white bg-black/70 rounded px-1 text-xs hover:bg-red-600"
-      >
-        ✕
-      </button>
     </div>
 
-    <!-- Upload multiplo -->
-    <div class="flex items-center justify-center p-2 border-2 border-dashed border-white/30 rounded">
+    <!-- Upload nuove immagini -->
+    <div class="flex items-center justify-center p-2 border-2 border-dashed border-white/30 rounded-md">
       <input
         type="file"
         multiple
         @change="e => addGalleryImages(e, v)"
-        class="block w-full text-xs text-white"
+        class="block w-full text-xs text-white cursor-pointer"
       />
     </div>
   </div>
 </div>
+
 
 
 
@@ -368,7 +427,10 @@ const filteredVeicoli = (tipo) => {
   transition: border-color 0.2s;
   appearance: none;
   padding-right: 1rem;
+  font-family: 'Inter', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+
 }
+
 .input:focus {
   outline: none;
   border-color: #888;
@@ -397,4 +459,10 @@ label {
   flex-direction: column;
   gap: 0.25rem;
 }
+.textarea-large {
+  min-height: 120px; /* o l'altezza che preferisci */
+  resize: vertical;  /* opzionale: permette di ridimensionare */
+}
+
+
 </style>

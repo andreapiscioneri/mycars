@@ -13,9 +13,18 @@ const correlati = ref([])
 const scrollContainer = ref(null)
 const thumbContainer = ref(null)
 
+const isModalOpen = ref(false)
+const modalImage = ref('')
+const openModal = () => {
+  modalImage.value = selectedImage.value
+  isModalOpen.value = true
+}
+const closeModal = () => {
+  isModalOpen.value = false
+}
+
 const slugify = (str) =>
-  str
-    .toString()
+  str.toString()
     .normalize('NFD')
     .replace(/[\u0300-\u036f]/g, '')
     .toLowerCase()
@@ -27,24 +36,20 @@ const slugify = (str) =>
 const scrollCorrelati = (direction) => {
   const container = scrollContainer.value
   if (!container) return
-  const scrollAmount = 320
-  container.scrollLeft += direction === 'left' ? -scrollAmount : scrollAmount
+  container.scrollLeft += direction === 'left' ? -320 : 320
 }
 
 const scrollThumbs = (dir) => {
   const el = thumbContainer.value
   if (!el) return
-  const amount = 120
-  el.scrollLeft += dir === 'left' ? -amount : amount
+  el.scrollLeft += dir === 'left' ? -120 : 120
 }
 
 onMounted(async () => {
   const res = await fetch('/api/veicoli')
   const data = await res.json()
 
-  veicolo.value = data.find(
-    v => `${slugify(v.titolo)}-${v.codice}` === route.params.slug && v.tipo === 'noleggio'
-  )
+  veicolo.value = data.find(v => `${slugify(v.titolo)}-${v.codice}` === route.params.slug)
 
   if (!veicolo.value) {
     router.push('/404')
@@ -53,16 +58,14 @@ onMounted(async () => {
 
   selectedImage.value = veicolo.value.immagine || veicolo.value.galleria?.[0] || '/placeholder.jpg'
 
-  correlati.value = data.filter(
-    v => v.codice !== veicolo.value.codice && v.tipo === 'noleggio'
-  )
+  correlati.value = data.filter(v => v.codice !== veicolo.value.codice && v.tipo === 'noleggio')
 
   useHead({
     title: `${veicolo.value.titolo} | Veicolo a Noleggio`,
     meta: [
       {
         name: 'description',
-        content: `Scopri ${veicolo.value.titolo} - ${veicolo.value.marca} ${veicolo.value.modello}, alimentazione ${veicolo.value.carburante}, carrozzeria ${veicolo.value.carrozzeria}, offerto da ${veicolo.value.venditore}.`
+        content: `Scopri ${veicolo.value.titolo} - ${veicolo.value.marca} ${veicolo.value.modello}, alimentazione ${veicolo.value.carburante}, carrozzeria ${veicolo.value.carrozzeria}, venduto da ${veicolo.value.venditore}.`
       }
     ]
   })
@@ -74,25 +77,25 @@ onMounted(async () => {
 <template>
   <section class="bg-black text-white py-20 px-4 md:px-10 min-h-screen">
     <div class="max-w-6xl mx-auto">
-      <!-- DETTAGLIO VEICOLO -->
+      <!-- Dettaglio veicolo -->
       <div v-if="veicolo" class="grid md:grid-cols-2 gap-10 mb-20">
-        <!-- GALLERIA -->
+        <!-- Galleria -->
         <div>
           <div class="relative">
             <img
               :src="selectedImage || '/placeholder.jpg'"
               alt="Immagine principale"
-              class="w-full h-auto rounded-xl shadow-xl object-contain bg-black border border-white/10"
+              class="w-full h-auto rounded-xl shadow-xl object-contain bg-black border border-white/10 cursor-pointer"
+              @click="openModal"
             />
           </div>
 
+          <!-- Miniature -->
           <div class="relative mt-4">
             <button
               @click="scrollThumbs('left')"
-              class="absolute left-0 top-1/2 -translate-y-1/2 bg-red-700 hover:bg-red-800 text-white px-2 py-1 rounded-full z-10"
-            >
-              ‹
-            </button>
+              class="absolute left-0 top-1/2 -translate-y-1/2 bg-white/10 hover:bg-white/20 text-white px-2 py-1 rounded-full z-10"
+            >‹</button>
 
             <div
               ref="thumbContainer"
@@ -114,14 +117,12 @@ onMounted(async () => {
 
             <button
               @click="scrollThumbs('right')"
-              class="absolute right-0 top-1/2 -translate-y-1/2 bg-red-700 hover:bg-red-800 text-white px-2 py-1 rounded-full z-10"
-            >
-              ›
-            </button>
+              class="absolute right-0 top-1/2 -translate-y-1/2 bg-white/10 hover:bg-white/20 text-white px-2 py-1 rounded-full z-10"
+            >›</button>
           </div>
         </div>
 
-        <!-- INFO VEICOLO -->
+        <!-- Info veicolo -->
         <div class="bg-white/5 rounded-xl p-6 space-y-6">
           <h1 class="text-3xl font-bold">{{ veicolo.titolo }}</h1>
           <p class="text-white/70 text-sm">{{ veicolo.marca }} {{ veicolo.modello }}</p>
@@ -137,12 +138,12 @@ onMounted(async () => {
             <li class="flex justify-between pt-2"><span>Carburante:</span><span>{{ veicolo.carburante || 'n.d.' }}</span></li>
             <li class="flex justify-between pt-2"><span>Venditore:</span><span>{{ veicolo.venditore || 'n.d.' }}</span></li>
           </ul>
+       <div v-if="veicolo.descrizione" class="pt-6 text-sm text-white/90 leading-relaxed"><span>Descrizione:</span>
+            {{ veicolo.descrizione }}
+          </div>
 
           <div class="flex flex-wrap gap-3 pt-6">
-            <NuxtLink
-              to="/noleggio"
-              class="bg-white/10 hover:bg-white/20 text-white px-5 py-2 rounded text-sm shadow"
-            >
+            <NuxtLink to="/noleggio" class="bg-white/10 hover:bg-white/20 text-white px-5 py-2 rounded text-sm shadow">
               ← Torna indietro
             </NuxtLink>
             <a
@@ -155,7 +156,7 @@ onMounted(async () => {
         </div>
       </div>
 
-      <!-- CORRELATI -->
+      <!-- Correlati -->
       <div v-if="correlati.length">
         <h2 class="text-3xl font-bold text-center text-red-700 mb-10">
           <span class="text-white">Veicoli</span> correlati
@@ -204,15 +205,22 @@ onMounted(async () => {
             &gt;
           </button>
         </div>
+      </div>
 
-        <!-- VEDI TUTTI -->
-        <div class="text-center mt-10">
-          <NuxtLink
-            to="/noleggio"
-            class="bg-red-700 hover:bg-red-800 text-white px-5 py-2 rounded text-sm shadow"
+      <!-- Modal -->
+      <div v-if="isModalOpen" class="fixed inset-0 bg-black/90 flex items-center justify-center z-50">
+        <div class="relative w-full max-w-5xl mx-auto">
+          <button
+            @click="closeModal"
+            class="absolute top-4 right-4 text-white text-2xl bg-black/50 hover:bg-black/70 px-3 py-1 rounded-full z-50"
           >
-            Vedi tutti
-          </NuxtLink>
+            ✕
+          </button>
+          <img
+            :src="modalImage"
+            alt="Immagine zoomata"
+            class="w-full max-h-[90vh] object-contain rounded-lg shadow-lg"
+          />
         </div>
       </div>
     </div>

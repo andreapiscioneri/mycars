@@ -13,6 +13,17 @@ const correlati = ref([])
 const scrollContainer = ref(null)
 const thumbContainer = ref(null)
 
+// Modal solo per immagine principale
+const isModalOpen = ref(false)
+const modalImage = ref('')
+const openModal = () => {
+  modalImage.value = selectedImage.value
+  isModalOpen.value = true
+}
+const closeModal = () => {
+  isModalOpen.value = false
+}
+
 const slugify = (str) =>
   str
     .toString()
@@ -27,15 +38,13 @@ const slugify = (str) =>
 const scrollCorrelati = (direction) => {
   const container = scrollContainer.value
   if (!container) return
-  const scrollAmount = 320
-  container.scrollLeft += direction === 'left' ? -scrollAmount : scrollAmount
+  container.scrollLeft += direction === 'left' ? -320 : 320
 }
 
 const scrollThumbs = (dir) => {
   const el = thumbContainer.value
   if (!el) return
-  const amount = 120
-  el.scrollLeft += dir === 'left' ? -amount : amount
+  el.scrollLeft += dir === 'left' ? -120 : 120
 }
 
 onMounted(async () => {
@@ -51,7 +60,7 @@ onMounted(async () => {
 
   selectedImage.value = veicolo.value.immagine || veicolo.value.galleria?.[0] || '/placeholder.jpg'
 
-  correlati.value = data.filter(v => v.codice !== veicolo.value.codice)
+correlati.value = data.filter(v => v.codice !== veicolo.value.codice && v.tipo === 'usato')
 
   useHead({
     title: `${veicolo.value.titolo} | Veicolo Usato`,
@@ -70,61 +79,52 @@ onMounted(async () => {
 <template>
   <section class="bg-black text-white py-20 px-4 md:px-10 min-h-screen">
     <div class="max-w-6xl mx-auto">
-      <!-- VEICOLO DETTAGLIO -->
+      <!-- Dettaglio veicolo -->
       <div v-if="veicolo" class="grid md:grid-cols-2 gap-10 mb-20">
-        <!-- GALLERIA SLIDER -->
-  <!-- GALLERIA CON MINIATURE E FRECCE -->
-<div>
-  <!-- Immagine principale -->
-  <div class="relative">
-    <img
-      :src="selectedImage || '/placeholder.jpg'"
-      alt="Immagine principale"
-      class="w-full h-auto rounded-xl shadow-xl object-contain bg-black border border-white/10"
-    />
-  </div>
+        <!-- Galleria -->
+        <div>
+          <div class="relative">
+            <img
+              :src="selectedImage || '/placeholder.jpg'"
+              alt="Immagine principale"
+              class="w-full h-auto rounded-xl shadow-xl object-contain bg-black border border-white/10 cursor-pointer"
+              @click="openModal"
+            />
+          </div>
 
-  <!-- Miniature con freccette -->
-  <div class="relative mt-4">
-    <!-- ← freccia -->
-    <button
-      @click="scrollThumbs('left')"
-      class="absolute left-0 top-1/2 -translate-y-1/2 bg-white/10 hover:bg-white/20 text-white px-2 py-1 rounded-full z-10"
-    >
-      ‹
-    </button>
+          <!-- Miniature -->
+          <div class="relative mt-4">
+            <button
+              @click="scrollThumbs('left')"
+              class="absolute left-0 top-1/2 -translate-y-1/2 bg-white/10 hover:bg-white/20 text-white px-2 py-1 rounded-full z-10"
+            >‹</button>
 
-    <!-- thumbnails -->
-    <div
-      ref="thumbContainer"
-      class="flex gap-3 overflow-x-auto scroll-smooth px-8"
-      style="scrollbar-width: none;"
-    >
-      <img
-        v-for="(img, i) in [veicolo.immagine, ...veicolo.galleria]"
-        :key="i"
-        :src="img"
-        @click="selectedImage = img"
-        class="w-20 h-20 rounded object-cover cursor-pointer border-2 shrink-0"
-        :class="{
-          'border-[#A30000]': selectedImage === img,
-          'border-transparent opacity-80 hover:opacity-100': selectedImage !== img
-        }"
-      />
-    </div>
+            <div
+              ref="thumbContainer"
+              class="flex gap-3 overflow-x-auto scroll-smooth px-8"
+              style="scrollbar-width: none;"
+            >
+              <img
+                v-for="(img, i) in [veicolo.immagine, ...veicolo.galleria]"
+                :key="i"
+                :src="img"
+                @click="selectedImage = img"
+                class="w-20 h-20 rounded object-cover cursor-pointer border-2 shrink-0"
+                :class="{
+                  'border-[#A30000]': selectedImage === img,
+                  'border-transparent opacity-80 hover:opacity-100': selectedImage !== img
+                }"
+              />
+            </div>
 
-    <!-- → freccia -->
-    <button
-      @click="scrollThumbs('right')"
-      class="absolute right-0 top-1/2 -translate-y-1/2 bg-white/10 hover:bg-white/20 text-white px-2 py-1 rounded-full z-10"
-    >
-      ›
-    </button>
-  </div>
-</div>
+            <button
+              @click="scrollThumbs('right')"
+              class="absolute right-0 top-1/2 -translate-y-1/2 bg-white/10 hover:bg-white/20 text-white px-2 py-1 rounded-full z-10"
+            >›</button>
+          </div>
+        </div>
 
-
-        <!-- INFO VEICOLO -->
+        <!-- Info veicolo -->
         <div class="bg-white/5 rounded-xl p-6 space-y-6">
           <h1 class="text-3xl font-bold">{{ veicolo.titolo }}</h1>
           <p class="text-white/70 text-sm">{{ veicolo.marca }} {{ veicolo.modello }}</p>
@@ -141,11 +141,12 @@ onMounted(async () => {
             <li class="flex justify-between pt-2"><span>Venditore:</span><span>{{ veicolo.venditore || 'n.d.' }}</span></li>
           </ul>
 
+          <div v-if="veicolo.descrizione" class="pt-6 text-sm text-white/90 leading-relaxed"><span>Descrizione:</span>
+            {{ veicolo.descrizione }}
+          </div>
+
           <div class="flex flex-wrap gap-3 pt-6">
-            <NuxtLink
-              to="/usato"
-              class="bg-white/10 hover:bg-white/20 text-white px-5 py-2 rounded text-sm shadow"
-            >
+            <NuxtLink to="/usato" class="bg-white/10 hover:bg-white/20 text-white px-5 py-2 rounded text-sm shadow">
               ← Torna indietro
             </NuxtLink>
             <a
@@ -157,8 +158,7 @@ onMounted(async () => {
           </div>
         </div>
       </div>
-
-      <!-- VEICOLI CORRELATI SLIDER -->
+          <!-- CORRELATI -->
       <div v-if="correlati.length">
         <h2 class="text-3xl font-bold text-center text-red-700 mb-10">
           <span class="text-white">Veicoli</span> correlati
@@ -180,7 +180,7 @@ onMounted(async () => {
             <div
               v-for="(auto, i) in correlati"
               :key="i"
-              class="min-w-[300px] max-w-[300px]  bg-white/10 rounded-xl shadow hover:shadow-lg transition overflow-hidden"
+              class="min-w-[300px] max-w-[300px] bg-white/10 rounded-xl shadow hover:shadow-lg transition overflow-hidden"
             >
               <NuxtLink
                 :to="`/usato/${slugify(auto.titolo)}-${auto.codice}`"
@@ -207,6 +207,9 @@ onMounted(async () => {
             &gt;
           </button>
         </div>
+      </div>    
+              </div>
+        
 
         <!-- VEDI TUTTI -->
         <div class="text-center mt-10">
@@ -216,6 +219,21 @@ onMounted(async () => {
           >
             Vedi tutti
           </NuxtLink>
+
+      <!-- MODAL IMMAGINE GRANDE -->
+      <div v-if="isModalOpen" class="fixed inset-0 bg-black/90 flex items-center justify-center z-50">
+        <div class="relative w-full max-w-5xl mx-auto">
+          <button
+            @click="closeModal"
+            class="absolute top-4 right-4 text-white text-2xl bg-black/50 hover:bg-black/70 px-3 py-1 rounded-full z-50"
+          >
+            ✕
+          </button>
+          <img
+            :src="modalImage"
+            alt="Immagine zoomata"
+            class="w-full max-h-[90vh] object-contain rounded-lg shadow-lg"
+          />
         </div>
       </div>
     </div>
