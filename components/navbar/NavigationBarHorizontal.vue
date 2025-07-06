@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, ref, watch } from 'vue'
+import { ref, computed } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 
 const props = defineProps({
@@ -8,11 +8,27 @@ const props = defineProps({
 })
 const emit = defineEmits(['toggle'])
 
-const selectedLang = ref('IT')
-const langIcon = computed(() => selectedLang.value === 'IT' ? '🇮🇹' : '🇬🇧')
-
 const router = useRouter()
 const route = useRoute()
+
+const selectedLang = ref('IT')
+const dropdownOpen = ref(false)
+
+const langs = [
+  { code: 'IT', emoji: '🇮🇹', label: 'Italiano' },
+  { code: 'EN', emoji: '🇬🇧', label: 'English' },
+]
+
+const selectedLangLabel = computed(() => langs.find(l => l.code === selectedLang.value)!)
+
+const toggleDropdown = () => {
+  dropdownOpen.value = !dropdownOpen.value
+}
+
+const changeLang = (lang: string) => {
+  selectedLang.value = lang
+  dropdownOpen.value = false
+}
 
 const menuItems = [
   { label: 'Servizi', route: '/servizi' },
@@ -22,18 +38,10 @@ const menuItems = [
   { label: 'Dove siamo', route: '/dovesiamo' },
   { label: 'Contatti', route: '/contatti' },
 ]
-const veicoliMenu = [
-  { label: 'Usato', route: '/usato' },
-  { label: 'Noleggio', route: '/noleggio' }
-]
-
-const toggleLang = () => {
-  selectedLang.value = selectedLang.value === 'IT' ? 'EN' : 'IT'
-}
 </script>
 
 <template>
-  <!-- Hamburger trigger (mobile only) -->
+  <!-- Hamburger (mobile only) -->
   <button
     v-if="isMobile"
     @click="emit('toggle')"
@@ -42,7 +50,7 @@ const toggleLang = () => {
     ☰
   </button>
 
-  <!-- Sidebar / Overlay -->
+  <!-- Sidebar -->
   <aside
     :class="[
       'transition-all duration-500 ease-in-out shadow-xl z-40',
@@ -57,7 +65,7 @@ const toggleLang = () => {
         <img src="/static/images/mycarslogo.png" alt="MyCars Logo" :class="[isOpen ? 'h-12' : 'h-8']" />
       </div>
 
-      <!-- Toggle (hidden on mobile since handled externally) -->
+      <!-- Toggle (desktop only) -->
       <button
         v-if="!isMobile"
         @click="emit('toggle')"
@@ -68,35 +76,52 @@ const toggleLang = () => {
       </button>
 
       <!-- Menu items -->
-<nav class="flex-1 text-white font-light text-lg space-y-8 px-6 mt-4">
-<div
-  v-for="item in menuItems"
-  :key="item.route"
-  class="cursor-pointer transition whitespace-nowrap overflow-hidden text-ellipsis"
-  :class="[route.path === item.route ? 'text-[#A30000]' : 'hover:text-[#A30000]']"
-  @click="() => { router.push(item.route); if (isMobile) emit('toggle') }"
->
-  {{ isOpen || isMobile ? item.label : '•' }}
-</div>
+      <nav class="flex-1 text-white font-light text-lg space-y-8 px-6 mt-4">
+        <div
+          v-for="item in menuItems"
+          :key="item.route"
+          class="cursor-pointer transition whitespace-nowrap overflow-hidden text-ellipsis"
+          :class="[route.path === item.route ? 'text-[#A30000]' : 'hover:text-[#A30000]']"
+          @click="() => { router.push(item.route); if (isMobile) emit('toggle') }"
+        >
+          {{ isOpen || isMobile ? item.label : '•' }}
+        </div>
       </nav>
 
-      <!-- Lingua & Login -->
-      <div class="px-6 pb-6 mt-auto flex flex-col gap-4 text-white">
-        <div
-          class="cursor-pointer flex items-center justify-between hover:text-[#A30000]"
-          @click="toggleLang"
-        >
-          <template v-if="isOpen || isMobile">
-            <span>Lingua:</span>
-            <span class="flex items-center gap-2 font-semibold">
-              {{ selectedLang }} <span>{{ langIcon }}</span>
-            </span>
-          </template>
-          <template v-else>
-            <span class="text-xl">{{ langIcon }}</span>
-          </template>
+      <!-- Lingua e login -->
+      <div class="px-6 pb-6 mt-auto flex flex-col gap-4 text-white relative">
+        <!-- Language Selector -->
+        <div class="relative">
+          <button
+            @click="toggleDropdown"
+            class="w-full flex items-center justify-left md:justify-between hover:text-[#A30000] focus:outline-none transition-all"
+          >
+            <span class="text-xl">{{ selectedLangLabel.emoji }}</span>
+            <transition name="fade">
+              <span
+                v-show="isOpen || isMobile"
+            class="ml-1 font-semibold whitespace-nowrap">
+              </span>
+            </transition>
+          </button>
+
+          <div
+            v-if="dropdownOpen"
+            class="absolute bottom-full mb-2 w-40 bg-white text-black rounded shadow z-50"
+          >
+            <div
+              v-for="lang in langs"
+              :key="lang.code"
+              @click="changeLang(lang.code)"
+              class="px-4 py-2 flex items-center gap-2 cursor-pointer hover:bg-gray-100"
+            >
+              <span>{{ lang.emoji }}</span>
+              <span>{{ lang.label }}</span>
+            </div>
+          </div>
         </div>
 
+        <!-- Login -->
         <div
           class="cursor-pointer flex items-center gap-2 hover:text-[#A30000]"
           @click="router.push('/login')"
@@ -111,3 +136,12 @@ const toggleLang = () => {
     </div>
   </aside>
 </template>
+
+<style scoped>
+.fade-enter-active, .fade-leave-active {
+  transition: opacity 0.2s ease;
+}
+.fade-enter-from, .fade-leave-to {
+  opacity: 0;
+}
+</style>
