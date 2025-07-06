@@ -15,7 +15,6 @@ const router = useRouter()
 const route = useRoute()
 
 const menuItems = [
-  { label: 'Homepage', route: '/' },
   { label: 'Servizi', route: '/servizi' },
   { label: 'Usato', route: '/usato' },
   { label: 'Noleggio', route: '/noleggio' },

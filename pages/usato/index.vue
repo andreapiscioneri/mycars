@@ -1,6 +1,33 @@
 <script setup>
 import { ref, computed, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
+import { useHead } from '#imports' // 👈 assicurati che sia presente
+
+useHead({
+  title: 'Auto Usate a Bergamo | Occasioni Garantite - MyCars',
+  meta: [
+    {
+      name: 'description',
+      content: 'Trova auto usate garantite a Bergamo. Filtra per marca, chilometri, prezzo e anno. Scopri le offerte di MyCars con chilometraggi certificati e controlli professionali.',
+    },
+    {
+      name: 'keywords',
+      content: 'auto usate Bergamo, auto in vendita, occasioni auto usate, veicoli garantiti, auto km 0, usato sicuro Bergamo',
+    },
+    { name: 'robots', content: 'index, follow' },
+    { property: 'og:title', content: 'Auto Usate a Bergamo | Occasioni Garantite - MyCars' },
+    {
+      property: 'og:description',
+      content: 'Cerca tra le migliori occasioni di auto usate garantite a Bergamo. MyCars offre veicoli certificati con chilometraggio trasparente.',
+    },
+    { property: 'og:type', content: 'website' },
+    { property: 'og:url', content: 'https://www.mycarsbergamo.it/usato' },
+    { property: 'og:image', content: 'https://www.mycarsbergamo.it/og-image.jpg' } // opzionale, se hai immagine OpenGraph
+  ],
+  link: [
+    { rel: 'canonical', href: 'https://www.mycarsbergamo.it/usato' }
+  ]
+})
 
 const veicoli = ref([])
 const filtroMarca = ref([])

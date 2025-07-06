@@ -1,6 +1,34 @@
 <script setup>
 import { ref, computed, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
+import { useHead } from '#imports'
+
+useHead({
+  title: 'Auto a Noleggio | MyCars Bergamo',
+  meta: [
+    {
+      name: 'description',
+      content: 'Scopri le nostre auto disponibili per il noleggio a breve e lungo termine. Veicoli controllati, garanzia inclusa e ampia scelta tra marche e modelli.'
+    },
+    {
+      name: 'keywords',
+      content: 'auto noleggio Bergamo, noleggio auto usate, veicoli a noleggio, autonoleggio, auto in affitto'
+    },
+    { name: 'robots', content: 'index, follow' },
+    { property: 'og:title', content: 'Auto a Noleggio | MyCars Bergamo' },
+    {
+      property: 'og:description',
+      content: 'Ampia selezione di veicoli a noleggio disponibili da MyCars a Bergamo. Controlla disponibilità, prezzi e caratteristiche.'
+    },
+    { property: 'og:url', content: 'https://www.mycarsbergamo.it/noleggio' },
+    { property: 'og:type', content: 'website' },
+    { property: 'og:image', content: 'https://www.mycarsbergamo.it/og-noleggio.jpg' }
+  ],
+  link: [
+    { rel: 'canonical', href: 'https://www.mycarsbergamo.it/noleggio' }
+  ]
+})
+
 
 const veicoli = ref([])
 const filtroMarca = ref([])

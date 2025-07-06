@@ -3,6 +3,7 @@ import { onMounted, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useHead } from '#imports'
 
+
 const route = useRoute()
 const router = useRouter()
 const veicolo = ref(null)

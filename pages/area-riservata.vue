@@ -1,6 +1,29 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
+import { useHead } from '#imports'
+
+useHead({
+  title: 'Gestione Veicoli | MyCars',
+  meta: [
+    {
+      name: 'description',
+      content: 'Gestione completa dei veicoli usati e a noleggio su MyCars. Aggiungi, modifica o elimina veicoli in modo semplice e veloce tramite l’area riservata.'
+    },
+    { name: 'robots', content: 'noindex, nofollow' },
+    { property: 'og:title', content: 'Gestione Veicoli | MyCars' },
+    {
+      property: 'og:description',
+      content: 'Pannello amministrativo per la gestione dei veicoli su MyCars. Accesso riservato.'
+    },
+    { property: 'og:type', content: 'website' },
+    { property: 'og:url', content: 'https://www.mycarsbergamo.it/area-riservata' }
+  ],
+  link: [
+    { rel: 'canonical', href: 'https://www.mycarsbergamo.it/area-riservata' }
+  ]
+})
+
 const addGalleryImages = (e, v) => {
   const files = Array.from(e.target.files)
   files.forEach(file => {

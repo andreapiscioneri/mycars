@@ -1,31 +1,46 @@
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted } from 'vue'
 
+// SEO con useHead (auto-importato in Nuxt 3)
+useHead({
+  title: 'Auto Usate e Noleggio a Bergamo - MyCars',
+  meta: [
+    { name: 'description', content: 'Scopri veicoli usati garantiti, noleggio auto, assistenza e finanziamenti personalizzati. Visita MyCars a Bergamo!' },
+    { name: 'keywords', content: 'auto usate Bergamo, noleggio auto Bergamo, veicoli usati, finanziamenti auto, officina autorizzata, MyCars Bergamo' },
+    { name: 'robots', content: 'index, follow' },
+    { property: 'og:title', content: 'Auto Usate e Noleggio a Bergamo - MyCars' },
+    { property: 'og:description', content: 'Veicoli nuovi e usati certificati, noleggio e assistenza completa. Scopri MyCars!' },
+    { property: 'og:image', content: 'https://www.mycarsbergamo.it/static/images/5.jpg' },
+    { property: 'og:url', content: 'https://www.mycarsbergamo.it' },
+    { property: 'og:type', content: 'website' },
+  ],
+  link: [{ rel: 'canonical', href: 'https://www.mycarsbergamo.it' }],
+})
+
 const sections = [
   {
     title: 'Gamma completa',
     text: 'Scopri la nostra selezione di veicoli nuovi e usati, accuratamente controllati per garantirti qualità e prestazioni.',
-    image: '/static/images/1.jpg',
+    image: '/static/images/5.jpg',
+    link: '/usato',
   },
   {
     title: 'Design e Tecnologia',
     text: 'Veicoli con stile, carattere e tecnologia d’avanguardia. Vieni a provarli.',
     image: '/static/images/2.jpg',
+    link: '/noleggio',
   },
   {
     title: 'Servizi Post-Vendita',
     text: 'Officina autorizzata, assistenza clienti e ricambi sempre disponibili.',
     image: '/static/images/3.jpg',
+    link: '/servizi',
   },
   {
     title: 'Finanziamenti Personalizzati',
     text: 'Tante soluzioni flessibili pensate per ogni esigenza di acquisto.',
     image: '/static/images/4.jpg',
-  },
-  {
-    title: 'Usato Garantito',
-    text: 'Solo auto certificate, testate e garantite per un acquisto in totale sicurezza.',
-    image: '/static/images/5.jpg',
+    link: '/contatti',
   },
 ]
 
@@ -35,18 +50,9 @@ const transitioning = ref(false)
 let slideInterval: any
 
 const testimonianze = [
-  {
-    nome: 'Marco B.',
-    testo: 'Servizio impeccabile e auto perfetta. Consigliatissimi!',
-  },
-  {
-    nome: 'Laura V.',
-    testo: 'Ampia scelta e personale super disponibile. Un’esperienza ottima!',
-  },
-  {
-    nome: 'Giorgio T.',
-    testo: 'Ho acquistato un usato garantito, come nuovo! Fantastici.',
-  },
+  { nome: 'Marco B.', testo: 'Servizio impeccabile e auto perfetta. Consigliatissimi!' },
+  { nome: 'Laura V.', testo: 'Ampia scelta e personale super disponibile. Un’esperienza ottima!' },
+  { nome: 'Giorgio T.', testo: 'Ho acquistato un usato garantito, come nuovo! Fantastici.' },
 ]
 
 onMounted(() => {
@@ -54,7 +60,6 @@ onMounted(() => {
     const total = document.body.scrollHeight - window.innerHeight
     scrollProgress.value = (window.scrollY / total) * 100
   })
-
   slideInterval = setInterval(() => nextSlide(), 5000)
 })
 
@@ -94,49 +99,37 @@ const goToSlide = (index: number) => {
     <div class="fixed top-0 left-0 h-1 bg-[#A30000] z-50 transition-all duration-300" :style="{ width: scrollProgress + '%' }" />
 
     <!-- HERO -->
-<section class="relative w-full min-h-[90vh] md:h-screen text-white flex items-center justify-center text-center group overflow-hidden px-4">
-  <!-- Video background -->
-<video
-  autoplay
-  muted
-  loop
-  playsinline
-  preload="auto"
-  class="absolute inset-0 w-full h-full object-cover z-0"
->
-  <source src="/public/static/images/def-2.mp4" type="video/mp4" />
-  Il tuo browser non supporta il video HTML5.
-</video>
+    <section class="relative w-full min-h-[90vh] md:h-screen flex items-center justify-center text-center group overflow-hidden px-4">
+      <video autoplay muted loop playsinline preload="auto" class="absolute inset-0 w-full h-full object-cover z-0">
+        <source src="/public/static/images/def-2.mp4" type="video/mp4" />
+        Il tuo browser non supporta il video HTML5.
+      </video>
+      <div class="absolute inset-0 bg-[#000000a1] bg-opacity-50 z-0 transition duration-500 group-hover:bg-opacity-60" />
+      <div class="relative z-10 space-y-6 transform transition duration-700 group-hover:scale-105 max-w-2xl">
+        <h1 class="text-3xl sm:text-4xl md:text-6xl font-bold uppercase tracking-wide animate-fadeInDown">
+          MyCars - La tua auto, il tuo stile
+        </h1>
+        <p class="text-base sm:text-lg text-white/80 animate-fadeIn">
+          Qualità, passione e servizi su misura. Scopri il tuo prossimo veicolo.
+        </p>
+        <NuxtLink
+          to="/chisiamo"
+          class="inline-block bg-[#A30000] hover:bg-red-800 text-white font-light px-6 py-3 rounded shadow-md transition transform hover:scale-105 hover:shadow-lg"
+        >
+          Scopri di più
+        </NuxtLink>
+      </div>
+    </section>
 
-  <!-- Overlay scuro -->
-  <div class="absolute inset-0 bg-[#000000a1] bg-opacity-50 z-0 transition duration-500 group-hover:bg-opacity-60" />
-
-  <!-- Contenuto -->
-  <div class="relative z-10 space-y-6 transform transition duration-700 group-hover:scale-105 max-w-2xl">
-    <h1 class="text-3xl sm:text-4xl md:text-6xl font-bold uppercase tracking-wide animate-fadeInDown">
-      MyCars - La tua auto, il tuo stile
-    </h1>
-    <p class="text-base sm:text-lg text-white/80 animate-fadeIn">
-      Qualità, passione e servizi su misura. Scopri il tuo prossimo veicolo.
-    </p>
-    <button class="bg-[#A30000] hover:bg-red-800 text-white font-bold px-6 py-3 rounded shadow-md transition transform hover:scale-105 hover:shadow-lg">
-      Scopri di più
-    </button>
-  </div>
-</section>
-
-
-    <!-- SECTION DINAMICHE -->
+    <!-- SEZIONI -->
     <section
       v-for="(section, idx) in sections"
       :key="idx"
       class="relative w-full min-h-[90vh] md:h-screen flex items-center justify-center text-center group overflow-hidden px-4"
     >
-      <div
-        class="absolute inset-0 bg-cover bg-center transition-transform duration-1000 group-hover:scale-105"
-        :style="`background-image: url('${section.image}')`"
-      />
-      <div class="absolute inset-0 bg-opacity-30 transition duration-500 group-hover:bg-opacity-40" />
+      <div class="absolute inset-0 bg-cover bg-center transition-transform duration-1000 group-hover:scale-105"
+           :style="`background-image: url('${section.image}')`" />
+      <div class="absolute inset-0 bg-black/30 transition duration-500 group-hover:bg-opacity-40" />
       <div class="relative z-10 px-4 max-w-2xl space-y-5 transform transition-all duration-700 group-hover:scale-105">
         <h2 class="text-3xl sm:text-4xl font-bold text-[#A30000] animate-fadeInDown">
           {{ section.title }}
@@ -144,9 +137,12 @@ const goToSlide = (index: number) => {
         <p class="text-sm sm:text-base md:text-lg text-white/90 animate-fadeIn">
           {{ section.text }}
         </p>
-        <button class="bg-[#A30000] hover:bg-red-800 text-white font-bold px-6 py-2 rounded shadow transition hover:shadow-lg hover:scale-105 transform">
+        <NuxtLink
+          :to="section.link"
+          class="inline-block bg-[#A30000] hover:bg-red-800 text-white font-light px-6 py-2 rounded shadow transition hover:shadow-lg hover:scale-105 transform"
+        >
           Scopri di più →
-        </button>
+        </NuxtLink>
       </div>
     </section>
 
@@ -182,24 +178,12 @@ const goToSlide = (index: number) => {
 
 <style scoped>
 @keyframes fadeIn {
-  0% {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  0% { opacity: 0; transform: translateY(20px); }
+  100% { opacity: 1; transform: translateY(0); }
 }
 @keyframes fadeInDown {
-  0% {
-    opacity: 0;
-    transform: translateY(-40px);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  0% { opacity: 0; transform: translateY(-40px); }
+  100% { opacity: 1; transform: translateY(0); }
 }
 .animate-fadeIn {
   animation: fadeIn 1s ease-out both;
@@ -207,12 +191,10 @@ const goToSlide = (index: number) => {
 .animate-fadeInDown {
   animation: fadeInDown 1s ease-out both;
 }
-.fade-enter-active,
-.fade-leave-active {
+.fade-enter-active, .fade-leave-active {
   transition: opacity 0.3s ease;
 }
-.fade-enter-from,
-.fade-leave-to {
+.fade-enter-from, .fade-leave-to {
   opacity: 0;
 }
 </style>
