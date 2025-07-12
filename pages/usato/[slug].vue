@@ -49,7 +49,7 @@ const scrollThumbs = (dir) => {
 }
 
 onMounted(async () => {
-  const res = await fetch('/veicoli.json') // ✅ file statico
+  const res = await fetch('/api/veicoli')
   const data = await res.json()
 
   veicolo.value = data.find(v => `${slugify(v.titolo)}-${v.codice}` === route.params.slug)
@@ -61,8 +61,7 @@ onMounted(async () => {
 
   selectedImage.value = veicolo.value.immagine || veicolo.value.galleria?.[0] || '/placeholder.jpg'
 
-  // Correlati per tipo usato
-  correlati.value = data.filter(v => v.codice !== veicolo.value.codice && v.tipo === 'usato')
+correlati.value = data.filter(v => v.codice !== veicolo.value.codice && v.tipo === 'usato')
 
   useHead({
     title: `${veicolo.value.titolo} | Veicolo Usato`,
@@ -76,7 +75,6 @@ onMounted(async () => {
 
   loading.value = false
 })
-
 </script>
 
 <template>
