@@ -2,7 +2,7 @@
 import { ref, computed, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useHead } from '#imports' // 👈 assicurati che sia presente
-
+const { data: veicoli } = await useFetch('/veicoli.json')
 useHead({
   title: 'Auto Usate a Bergamo | Occasioni Garantite - MyCars',
   meta: [
@@ -29,7 +29,7 @@ useHead({
   ]
 })
 
-const veicoli = ref([])
+
 const filtroMarca = ref([])
 const filtroCarrozzeria = ref([])
 const filtroCarburante = ref([])
@@ -62,10 +62,6 @@ const slugify = (str) =>
   str.toString().normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().trim()
     .replace(/\s+/g, '-').replace(/[^\w\-]+/g, '').replace(/\-\-+/g, '-')
 
-onMounted(async () => {
-  const res = await fetch('/api/veicoli')
-  veicoli.value = await res.json()
-})
 
 const filtraVeicoli = computed(() => {
   let result = veicoli.value.filter(v => v.tipo === 'usato')
