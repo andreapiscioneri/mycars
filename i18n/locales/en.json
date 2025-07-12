@@ -1,0 +1,13 @@
+{
+  "menu": {
+    "services": "Services",
+    "used": "Used",
+    "rentals": "Rentals",
+    "about": "About us",
+    "where": "Where we are",
+    "contact": "Contact"
+  },
+  "common": {
+    "login": "Login"
+  }
+}

@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
+import { useI18n, useLocalePath } from '#imports'
 
 const props = defineProps({
   isOpen: Boolean,
@@ -11,33 +12,47 @@ const emit = defineEmits(['toggle'])
 const router = useRouter()
 const route = useRoute()
 
-const selectedLang = ref('IT')
-const dropdownOpen = ref(false)
+const { t, locale } = useI18n()
+const localePath = useLocalePath()
 
 const langs = [
-  { code: 'IT', emoji: '🇮🇹', label: 'Italiano' },
-  { code: 'EN', emoji: '🇬🇧', label: 'English' },
+  { code: 'it', emoji: '🇮🇹', label: 'Italiano' },
+  { code: 'en', emoji: '🇬🇧', label: 'English' },
 ]
 
-const selectedLangLabel = computed(() => langs.find(l => l.code === selectedLang.value)!)
+const dropdownOpen = ref(false)
+
+const selectedLangLabel = computed(() => langs.find(l => l.code === locale.value)!)
 
 const toggleDropdown = () => {
   dropdownOpen.value = !dropdownOpen.value
 }
 
-const changeLang = (lang: string) => {
-  selectedLang.value = lang
-  dropdownOpen.value = false
+const changeLang = (lang: 'it' | 'en') => {
+  const fullPath = route.fullPath || '/'
+  const rawPath = typeof fullPath === 'string'
+    ? fullPath.replace(/^\/(it|en)/, '')
+    : '/'
+
+  const targetPath = localePath(rawPath, lang)
+  if (typeof targetPath === 'string') {
+    navigateTo(targetPath)
+    dropdownOpen.value = false
+  } else {
+    console.warn('localePath returned non-string:', targetPath)
+  }
 }
 
-const menuItems = [
-  { label: 'Servizi', route: '/servizi' },
-  { label: 'Usato', route: '/usato' },
-  { label: 'Noleggio', route: '/noleggio' },
-  { label: 'Chi siamo', route: '/chisiamo' },
-  { label: 'Dove siamo', route: '/dovesiamo' },
-  { label: 'Contatti', route: '/contatti' },
-]
+
+
+const menuItems = computed(() => [
+  { label: t('menu.services'), route: '/servizi' },
+  { label: t('menu.used'), route: '/usato' },
+  { label: t('menu.rentals'), route: '/noleggio' },
+  { label: t('menu.about'), route: '/chisiamo' },
+  { label: t('menu.where'), route: '/dovesiamo' },
+  { label: t('menu.contact'), route: '/contatti' },
+])
 </script>
 
 <template>
@@ -96,13 +111,7 @@ const menuItems = [
             @click="toggleDropdown"
             class="w-full flex items-center justify-left md:justify-between hover:text-[#A30000] focus:outline-none transition-all"
           >
-            <span class="text-xl">{{ selectedLangLabel.emoji }}</span>
-            <transition name="fade">
-              <span
-                v-show="isOpen || isMobile"
-            class="ml-1 font-semibold whitespace-nowrap">
-              </span>
-            </transition>
+            <span class="text-xl">{{ selectedLangLabel?.emoji }}</span>
           </button>
 
           <div
@@ -112,7 +121,7 @@ const menuItems = [
             <div
               v-for="lang in langs"
               :key="lang.code"
-              @click="changeLang(lang.code)"
+              @click="changeLang(lang.code as 'it' | 'en')"
               class="px-4 py-2 flex items-center gap-2 cursor-pointer hover:bg-gray-100"
             >
               <span>{{ lang.emoji }}</span>
@@ -130,7 +139,7 @@ const menuItems = [
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
               d="M5.121 17.804A10.978 10.978 0 0112 15c2.237 0 4.307.655 6.002 1.772M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
           </svg>
-          <span v-if="isOpen || isMobile" class="text-sm">Login</span>
+          <span v-if="isOpen || isMobile" class="text-sm">{{ t('common.login') }}</span>
         </div>
       </div>
     </div>
@@ -138,10 +147,12 @@ const menuItems = [
 </template>
 
 <style scoped>
-.fade-enter-active, .fade-leave-active {
+.fade-enter-active,
+.fade-leave-active {
   transition: opacity 0.2s ease;
 }
-.fade-enter-from, .fade-leave-to {
+.fade-enter-from,
+.fade-leave-to {
   opacity: 0;
 }
 </style>

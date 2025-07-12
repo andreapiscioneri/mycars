@@ -1,0 +1,13 @@
+{
+  "menu": {
+    "services": "Servizi",
+    "used": "Usato",
+    "rentals": "Noleggio",
+    "about": "Chi siamo",
+    "where": "Dove siamo",
+    "contact": "Contatti"
+  },
+  "common": {
+    "login": "Accedi"
+  }
+}
