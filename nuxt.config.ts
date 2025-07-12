@@ -2,12 +2,7 @@
 export default defineNuxtConfig({
   compatibilityDate: '2025-05-15',
   devtools: { enabled: true },
-
-  ssr: true, // ⬅️ importante per hosting server-side
-
-  nitro: {
-    preset: 'node' // ⬅️ obbligatorio per Railway, Render ecc.
-  },
+  
 
   modules: [
     '@nuxt/content',
