@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
+import { useI18n } from 'vue-i18n'
 
 const props = defineProps({
   isOpen: Boolean,
@@ -11,33 +12,43 @@ const emit = defineEmits(['toggle'])
 const router = useRouter()
 const route = useRoute()
 
-const selectedLang = ref('IT')
-const dropdownOpen = ref(false)
-
+const { locale, t } = useI18n()
+const selectedLang = ref(locale.value)
 const langs = [
-  { code: 'IT', emoji: '🇮🇹', label: 'Italiano' },
-  { code: 'EN', emoji: '🇬🇧', label: 'English' },
+  { code: 'it', emoji: '🇮🇹', label: 'Italiano' },
+  { code: 'en', emoji: '🇬🇧', label: 'English' },
 ]
 
-const selectedLangLabel = computed(() => langs.find(l => l.code === selectedLang.value)!)
+
+const dropdownOpen = ref(false)
+
+const selectedLangLabel = computed(() => {
+  return langs.find((l) => l.code === selectedLang.value) || langs[0]
+})
+
 
 const toggleDropdown = () => {
   dropdownOpen.value = !dropdownOpen.value
 }
 
 const changeLang = (lang: string) => {
+  locale.value = lang
   selectedLang.value = lang
   dropdownOpen.value = false
 }
 
-const menuItems = [
-  { label: 'Servizi', route: '/servizi' },
-  { label: 'Usato', route: '/usato' },
-  { label: 'Noleggio', route: '/noleggio' },
-  { label: 'Chi siamo', route: '/chisiamo' },
-  { label: 'Dove siamo', route: '/dovesiamo' },
-  { label: 'Contatti', route: '/contatti' },
-]
+const menuItems = computed(() => [
+  { key: 'services', route: '/servizi' },
+  { key: 'used', route: '/usato' },
+  { key: 'rent', route: '/noleggio' },
+  { key: 'about', route: '/chisiamo' },
+  { key: 'where', route: '/dovesiamo' },
+  { key: 'contact', route: '/contatti' }
+].map(item => ({
+  label: t(`menu.${item.key}`),
+  route: item.route
+})))
+
 </script>
 
 <template>
@@ -98,9 +109,8 @@ const menuItems = [
           >
             <span class="text-xl">{{ selectedLangLabel.emoji }}</span>
             <transition name="fade">
-              <span
-                v-show="isOpen || isMobile"
-            class="ml-1 font-semibold whitespace-nowrap">
+              <span v-show="isOpen || isMobile" class="ml-1 font-semibold whitespace-nowrap">
+                {{ selectedLangLabel.label }}
               </span>
             </transition>
           </button>
@@ -114,6 +124,7 @@ const menuItems = [
               :key="lang.code"
               @click="changeLang(lang.code)"
               class="px-4 py-2 flex items-center gap-2 cursor-pointer hover:bg-gray-100"
+              :class="selectedLang === lang.code ? 'font-bold bg-gray-200' : ''"
             >
               <span>{{ lang.emoji }}</span>
               <span>{{ lang.label }}</span>

@@ -1,0 +1,15 @@
+{
+  "menu": {
+    "services": "Services",
+    "used": "Used Cars",
+    "rent": "Rental",
+    "about": "About Us",
+    "where": "Where We Are",
+    "contact": "Contact"
+  },
+  "login": "Login",
+  "language": {
+    "en": "English",
+    "it": "Italian"
+  }
+}
