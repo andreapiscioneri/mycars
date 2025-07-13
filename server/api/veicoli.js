@@ -1,8 +1,10 @@
 import { readBody, createError } from 'h3'
 import fs from 'fs/promises'
+import path from 'path'
 
 export default defineEventHandler(async (event) => {
-  const method = getMethod(event)
+  //const method = getMethod(event)
+  const method = event.node.req.method
   const filePath = 'server/veicoli.json'
 
   const readData = async () =>
@@ -18,16 +20,25 @@ export default defineEventHandler(async (event) => {
   }
 
   if (method === 'GET') {
-    return await readData()
+    //return await readData()
+    const dataPath = path.resolve(filePath)
+    const file = await fs.readFile(dataPath, 'utf-8')
+    return JSON.parse(file)
   }
 
   if (method === 'POST') {
     const body = await readBody(event)
     validateVeicolo(body)
 
-    const current = await readData()
+    //const current = await readData()
+    const dataPath = path.resolve(filePath)
+    const file = await fs.readFile(dataPath, 'utf-8')
+    const current = JSON.parse(file)
+    
     current.push(body)
-    await fs.writeFile(filePath, JSON.stringify(current, null, 2))
+
+    // await fs.writeFile(filePath, JSON.stringify(current, null, 2))
+    await fs.writeFile(dataPath, JSON.stringify(current, null, 2))
     return { success: true, index: current.length - 1, item: body }
   }
 
@@ -39,13 +50,20 @@ export default defineEventHandler(async (event) => {
 
     validateVeicolo(body.data)
 
-    const current = await readData()
+    //const current = await readData()
+    const dataPath = path.resolve(filePath)
+    const file = await fs.readFile(dataPath, 'utf-8')
+    const current = JSON.parse(file)
+
     if (body.index < 0 || body.index >= current.length) {
       throw createError({ statusCode: 404, statusMessage: 'Indice non valido' })
     }
 
-    current[body.index] = body.data
-    await fs.writeFile(filePath, JSON.stringify(current, null, 2))
+    //current[body.index] = body.data
+    current[body.index] = { ...current[body.index], ...body}
+
+    // await fs.writeFile(filePath, JSON.stringify(current, null, 2))
+    await fs.writeFile(dataPath, JSON.stringify(current, null, 2))
     return { success: true, item: body.data }
   }
 
@@ -55,7 +73,11 @@ export default defineEventHandler(async (event) => {
       throw createError({ statusCode: 400, statusMessage: 'Index mancante o non valido' })
     }
 
-    const current = await readData()
+    //const current = await readData()
+    const dataPath = path.resolve(filePath)
+    const file = await fs.readFile(dataPath, 'utf-8')
+    const current = JSON.parse(file)
+    
     if (body.index < 0 || body.index >= current.length) {
       throw createError({ statusCode: 404, statusMessage: 'Indice non valido' })
     }
