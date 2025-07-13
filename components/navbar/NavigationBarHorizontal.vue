@@ -65,7 +65,7 @@ const menuItems = computed(() => [
     ☰
   </button>
 
-  <!-- Sidebar -->
+  <!-- Sidebar --> 
   <aside
     :class="[
       'transition-all duration-500 ease-in-out shadow-xl z-40',
