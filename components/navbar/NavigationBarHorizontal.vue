@@ -46,12 +46,12 @@ const changeLang = (lang: 'it' | 'en') => {
 
 
 const menuItems = computed(() => [
-  { label: t('menu.services'), route: '/servizi' },
-  { label: t('menu.used'), route: '/usato' },
-  { label: t('menu.rentals'), route: '/noleggio' },
-  { label: t('menu.about'), route: '/chisiamo' },
-  { label: t('menu.where'), route: '/dovesiamo' },
-  { label: t('menu.contact'), route: '/contatti' },
+  { label: "Servizi", route: '/servizi' },
+  { label: "Usati", route: '/usato' },
+  { label: "Noleggio", route: '/noleggio' },
+  { label: "Chi siamo", route: '/chisiamo' },
+  { label: "Dove siamo", route: '/dovesiamo' },
+  { label: "Contattaci", route: '/contatti' },
 ])
 </script>
 
