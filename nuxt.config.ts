@@ -32,7 +32,7 @@ export default defineNuxtConfig({
         strategy: 'prefix',
         defaultLocale: 'it',
         lazy: true,
-        langDir: 'i18n/locales',
+        //langDir: 'i18n/locales',
         reloadOnLanguageSwitch: true, // 🔥 chiave per risolvere il problema
         detectBrowserLanguage: {
           useCookie: true,
@@ -40,10 +40,10 @@ export default defineNuxtConfig({
           alwaysRedirect: false,
           fallbackLocale: 'it',
         },
-        locales: [
-          { code: 'it', name: 'Italiano', file: 'it.json' },
-          { code: 'en', name: 'English', file: 'en.json' },
-        ],
+        // locales: [
+        //   { code: 'it', name: 'Italiano', file: 'it.json' },
+        //   { code: 'en', name: 'English', file: 'en.json' },
+        // ],
       },
     ],
   ],
