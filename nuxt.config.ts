@@ -26,25 +26,23 @@ export default defineNuxtConfig({
     '@nuxt/ui',
     '@nuxtjs/tailwindcss',
 
-    [
-      '@nuxtjs/i18n',
-      {
-        strategy: 'prefix',
-        defaultLocale: 'it',
-        lazy: true,
-        //langDir: 'i18n/locales',
-        reloadOnLanguageSwitch: true, // 🔥 chiave per risolvere il problema
-        detectBrowserLanguage: {
-          useCookie: true,
-          cookieKey: 'i18n_redirected',
-          alwaysRedirect: false,
-          fallbackLocale: 'it',
-        },
-        // locales: [
-        //   { code: 'it', name: 'Italiano', file: 'it.json' },
-        //   { code: 'en', name: 'English', file: 'en.json' },
-        // ],
-      },
-    ],
+    '@nuxtjs/i18n',
   ],
+  i18n: {
+    strategy: 'prefix',
+    defaultLocale: 'it',
+    lazy: true,
+    //langDir: 'i18n/locales',
+    //reloadOnLanguageSwitch: true, // 🔥 chiave per risolvere il problema
+    detectBrowserLanguage: {
+      useCookie: true,
+      cookieKey: 'i18n_redirected',
+      alwaysRedirect: false,
+      fallbackLocale: 'it',
+    },
+    locales: [
+      { code: 'it', name: 'Italiano', file: 'it.json' },
+      { code: 'en', name: 'English', file: 'en.json' },
+    ],
+  },
 })
