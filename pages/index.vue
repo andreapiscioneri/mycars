@@ -95,6 +95,9 @@ const goToSlide = (index: number) => {
 
 <template>
   <div class="text-white relative">
+    <div class="testLocale">
+      {{ $t('test') }}
+    </div>
     <!-- Scroll bar -->
     <div class="fixed top-0 left-0 h-1 bg-[#A30000] z-50 transition-all duration-300" :style="{ width: scrollProgress + '%' }" />
 
@@ -196,5 +199,9 @@ const goToSlide = (index: number) => {
 }
 .fade-enter-from, .fade-leave-to {
   opacity: 0;
+}
+
+.testLocale {
+  color: red;
 }
 </style>
