@@ -1,7 +1,12 @@
 <script setup lang="ts">
-import { ref, computed } from 'vue'
+import { onMounted, ref, computed, inject } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import { useI18n, useLocalePath } from '#imports'
+import { auth, provider, db } from '@/firebase'
+import { signInWithPopup, signOut, onAuthStateChanged } from 'firebase/auth'
+import { doc, getDoc, setDoc } from 'firebase/firestore'
+import type { User } from 'firebase/auth'
+import type { Ref } from 'vue'
 
 const props = defineProps({
   isOpen: Boolean,
@@ -43,6 +48,54 @@ const changeLang = (lang: 'it' | 'en') => {
   }
 }
 
+const user = ref<User | null>(null)
+const userDoc = ref<any>(null)
+
+onMounted(() => {
+  onAuthStateChanged(auth, async (u) => {
+    user.value = u
+    if (u) {
+      const userRef = doc(db, 'users', u.uid)
+      const userSnap = await getDoc(userRef)
+      if (userSnap.exists()) {
+        userDoc.value = userSnap.data()
+      } else {
+        userDoc.value = null
+      }
+    } else {
+      userDoc.value = null
+    }
+  })
+})
+
+const login = async () => {
+  try {
+    const result = await signInWithPopup(auth, provider)
+    const u = result.user
+    // Check if user exists in Firestore
+    const userRef = doc(db, 'users', u.uid)
+    const userSnap = await getDoc(userRef)
+    if (!userSnap.exists()) {
+      await setDoc(userRef, {
+        roles: ['user']
+      })
+      userDoc.value = { roles: ['user'] }
+    } else {
+      userDoc.value = userSnap.data()
+    }
+  } catch (e) {
+    console.error(e)
+  }
+}
+
+const logout = async () => {
+  try {
+    await signOut(auth)
+    userDoc.value = null
+  } catch (e) {
+    console.error(e)
+  }
+}
 
 
 const menuItems = computed(() => [
@@ -130,16 +183,17 @@ const menuItems = computed(() => [
           </div>
         </div>
 
-        <!-- Login -->
-        <div
-          class="cursor-pointer flex items-center gap-2 hover:text-[#A30000]"
-          @click="router.push('/login')"
-        >
+        <!-- Login/Auth -->
+        <div v-if="!user" class="cursor-pointer flex items-center gap-2 hover:text-[#A30000]" @click="login">
           <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
               d="M5.121 17.804A10.978 10.978 0 0112 15c2.237 0 4.307.655 6.002 1.772M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
           </svg>
-          <span v-if="isOpen || isMobile" class="text-sm">Accedi</span>
+          <span v-if="isOpen || isMobile" class="text-sm">Accedi con Google</span>
+        </div>
+        <div v-else class="flex items-center gap-2">
+          <span v-if="isOpen || isMobile" class="text-xs truncate max-w-[120px]">{{ user.email }}</span>
+          <button class="text-xs underline hover:text-[#A30000] ml-2" @click="logout">Logout</button>
         </div>
       </div>
     </div>

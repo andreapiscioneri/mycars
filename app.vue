@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, provide } from 'vue'
 import NavigationBarHorizontal from '@/components/navbar/NavigationBarHorizontal.vue'
 import Footer from '@/components/Footer/Footer.vue'
 
