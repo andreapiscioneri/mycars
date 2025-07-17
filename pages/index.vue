@@ -95,7 +95,7 @@ const goToSlide = (index: number) => {
 
 <template>
   <div class="text-white relative">
-    <div class="testLocale">
+    <div v-if="false" class="testLocale">
       {{ $t('test') }}
     </div>
     <!-- Scroll bar -->
