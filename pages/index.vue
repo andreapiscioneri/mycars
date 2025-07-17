@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted } from 'vue'
+import ItemsList from '@/components/itemsList.vue'
 
 // SEO con useHead (auto-importato in Nuxt 3)
 useHead({
@@ -101,6 +102,8 @@ const goToSlide = (index: number) => {
     <!-- Scroll bar -->
     <div class="fixed top-0 left-0 h-1 bg-[#A30000] z-50 transition-all duration-300" :style="{ width: scrollProgress + '%' }" />
 
+    <ItemsList />
+
     <!-- HERO -->
     <section class="relative w-full min-h-[90vh] md:h-screen flex items-center justify-center text-center group overflow-hidden px-4">
       <video autoplay muted loop playsinline preload="auto" class="absolute inset-0 w-full h-full object-cover z-0">
@@ -176,6 +179,7 @@ const goToSlide = (index: number) => {
         </div>
       </div>
     </section>
+    
   </div>
 </template>
 

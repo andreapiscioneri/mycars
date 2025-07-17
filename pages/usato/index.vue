@@ -219,6 +219,7 @@ const filtraVeicoli = computed(() => {
 
     <!-- CONTENUTO -->
     <main class="space-y-6 w-full">
+      <ItemsList />
       <div class="flex flex-wrap justify-between items-center gap-4">
         <input
           v-model="ricerca"
