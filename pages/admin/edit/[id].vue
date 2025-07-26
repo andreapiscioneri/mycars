@@ -1,8 +1,9 @@
 <script setup>
 import { ref, onMounted } from 'vue';
-import { doc, getDoc } from 'firebase/firestore';
+import { doc, getDoc, updateDoc } from 'firebase/firestore';
 import { db } from '@/lib/firebase';
 import { useRoute, useRouter } from 'vue-router';
+import LoadingSpinner from '@/components/LoadingSpinner.vue'
 
 const route = useRoute();
 const router = useRouter();
@@ -32,10 +33,11 @@ const loadCar = async () => {
 
 const handleSubmit = async (formData) => {
   try {
-    // Here you would typically update the document in Firestore
-    console.log('Updating car with data:', formData);
-    // For now, just log the data
-    // You can implement the update logic here
+    // update car in firestore
+    const carId = route.params.id;
+    const carDoc = doc(db, 'cars', carId);
+    await updateDoc(carDoc, formData);
+    router.push('/admin');
   } catch (err) {
     console.error('Error updating car:', err);
   }
@@ -54,9 +56,7 @@ onMounted(() => {
       </NuxtLink>
     </div>
 
-    <div v-if="loading" class="text-center py-8">
-      <p>Loading...</p>
-    </div>
+    <LoadingSpinner v-if="loading" />
 
     <div v-else-if="error" class="text-center py-8">
       <p class="text-red-600">{{ error }}</p>
