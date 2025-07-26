@@ -1,124 +1,137 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
-import { useHead } from '#imports'
-
-useHead({
-  title: 'Gestione Veicoli | MyCars',
-  meta: [
-    {
-      name: 'description',
-      content: 'Gestione completa dei veicoli usati e a noleggio su MyCars. Aggiungi, modifica o elimina veicoli in modo semplice e veloce tramite l’area riservata.'
-    },
-    { name: 'robots', content: 'noindex, nofollow' },
-    { property: 'og:title', content: 'Gestione Veicoli | MyCars' },
-    {
-      property: 'og:description',
-      content: 'Pannello amministrativo per la gestione dei veicoli su MyCars. Accesso riservato.'
-    },
-    { property: 'og:type', content: 'website' },
-    { property: 'og:url', content: 'https://www.mycarsbergamo.it/area-riservata' }
-  ],
-  link: [
-    { rel: 'canonical', href: 'https://www.mycarsbergamo.it/area-riservata' }
-  ]
-})
-
-const addGalleryImages = (e, v) => {
-  const files = Array.from(e.target.files)
-  files.forEach(file => {
-    const reader = new FileReader()
-    reader.onload = () => {
-      v.galleria.push(reader.result)
-    }
-    reader.readAsDataURL(file)
-  })
-}
+import { db, auth } from '@/lib/firebase'
+import {
+  collection,
+  getDocs,
+  addDoc,
+  updateDoc,
+  deleteDoc,
+  doc,
+  serverTimestamp
+} from 'firebase/firestore'
 
 const router = useRouter()
 const veicoli = ref([])
-const venditoriDisponibili = ref(['Mario Rossi', 'Auto Srl', 'Venditore Demo'])
-const setAsMainImage = (v, img) => {
-  v.immagine = img
-}
-const labels = {
-  titolo: 'Titolo',
-  descrizione: 'Descrizione',
-  marca: 'Marca',
-  modello: 'Modello',
-  carrozzeria: 'Carrozzeria',
-  carburante: 'Carburante',
-  anno: 'Anno di Immatricolazione',
-  prezzo: 'Prezzo (€)',
-  chilometri: 'Chilometri',
-  venditore: 'Venditore',
-  tipo: 'Tipo',
-  immagine: 'Immagine Principale',
-  galleria: 'Galleria Immagini',
-  cerca: 'Cerca'
-}
+const editingId = ref(null)
+const errorMsg = ref('')
 
 const newVeicolo = ref({
-  titolo: '', descrizione: '', marca: '', modello: '', carrozzeria: '', carburante: '', anno: '', prezzo: '', chilometri: '', venditore: '', immagine: '', galleria: [], tipo: 'usato'
-})
-
-
-const ricerca = {
-  usato: ref(''),
-  noleggio: ref('')
-}
-
-const editingCodice = ref(null)
-const openSections = ref({ usato: false, noleggio: false })
-
-onMounted(async () => {
-  if (localStorage.getItem('auth') !== 'true') router.push('/login')
-  await loadData()
+  titolo: '',
+  descrizione: '',
+  marca: '',
+  modello: '',
+  carrozzeria: '',
+  carburante: '',
+  anno: '',
+  prezzo: '',
+  chilometri: '',
+  venditore: '',
+  immagine: '',
+  galleria: [],
+  tipo: 'usato'
 })
 
 const loadData = async () => {
+  const snapshot = await getDocs(collection(db, 'annunci'))
+  veicoli.value = snapshot.docs.map(doc => {
+    const data = doc.data()
+    return {
+      id: doc.id,
+      ...data,
+      anno: data.anno?.toDate?.() || null
+    }
+  })
+}
+
+const addVeicolo = async () => {
+  errorMsg.value = ''
+
   try {
-    const res = await fetch('/api/veicoli')
-    veicoli.value = await res.json()
-  } catch (e) {
-    console.error('Errore caricamento dati:', e)
+    console.log('👤 Utente corrente:', auth.currentUser)
+
+    if (!newVeicolo.value.titolo || !newVeicolo.value.marca) {
+      errorMsg.value = 'Compila almeno titolo e marca.'
+      return
+    }
+
+    const codice = Date.now()
+
+    const veicoloDaSalvare = {
+      ...newVeicolo.value,
+      codice,
+      prezzo: parseFloat(newVeicolo.value.prezzo) || 0,
+      chilometri: parseInt(newVeicolo.value.chilometri) || 0,
+      anno: newVeicolo.value.anno ? new Date(newVeicolo.value.anno) : null,
+      createdAt: serverTimestamp()
+    }
+
+    console.log('📦 Dati che sto per salvare:', veicoloDaSalvare)
+
+    const docRef = await addDoc(collection(db, 'annunci'), veicoloDaSalvare)
+
+    console.log('✅ Veicolo salvato con ID:', docRef.id)
+
+    resetForm()
+    await loadData()
+  } catch (err) {
+    console.error('❌ Errore durante il salvataggio:', err)
+    errorMsg.value = 'Errore durante il salvataggio: ' + err.message
   }
 }
 
-const saveVeicoloToServer = async (data) => {
-  await fetch('/api/veicoli', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(data)
-  })
+const saveEdit = async (v) => {
+  try {
+    await updateDoc(doc(db, 'annunci', v.id), {
+      ...v,
+      prezzo: parseFloat(v.prezzo) || 0,
+      chilometri: parseInt(v.chilometri) || 0,
+      anno: v.anno ? new Date(v.anno) : null
+    })
+    editingId.value = null
+    await loadData()
+  } catch (err) {
+    console.error('Errore modifica:', err)
+  }
 }
 
-const updateVeicoloOnServer = async (index, data) => {
-  await fetch('/api/veicoli', {
-    method: 'PUT',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ index, data })
-  })
+const deleteVeicolo = async (id) => {
+  if (confirm('Confermi eliminazione?')) {
+    try {
+      await deleteDoc(doc(db, 'annunci', id))
+      await loadData()
+    } catch (err) {
+      console.error('Errore eliminazione:', err)
+    }
+  }
 }
 
-const deleteVeicoloFromServer = async (index) => {
-  await fetch('/api/veicoli', {
-    method: 'DELETE',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ index })
-  })
-}
-
-const logout = () => {
-  localStorage.removeItem('auth')
-  router.push('/login')
+const resetForm = () => {
+  newVeicolo.value = {
+    titolo: '',
+    descrizione: '',
+    marca: '',
+    modello: '',
+    carrozzeria: '',
+    carburante: '',
+    anno: '',
+    prezzo: '',
+    chilometri: '',
+    venditore: '',
+    immagine: '',
+    galleria: [],
+    tipo: 'usato'
+  }
 }
 
 const handleNewFile = (e) => {
   const file = e.target.files[0]
   if (!file) return
   const reader = new FileReader()
-  reader.onload = () => { newVeicolo.value.immagine = reader.result }
+  reader.onload = () => {
+    newVeicolo.value.immagine = reader.result
+  }
   reader.readAsDataURL(file)
 }
 
@@ -132,360 +145,101 @@ const handleNewGallery = (e) => {
   })
 }
 
-const addVeicolo = async () => {
-  const codice = Date.now()
-  const nuovo = {
-    ...newVeicolo.value,
-    codice,
-    prezzo: parseFloat(newVeicolo.value.prezzo) || null
-    // NON convertiamo anno in numero, lasciamo stringa
-  }
-
-  await saveVeicoloToServer(nuovo)
-  await loadData()
-  resetForm()
+const logout = () => {
+  auth.signOut()
+  localStorage.removeItem('auth')
+  router.push('/login')
 }
 
-const resetForm = () => {
-  newVeicolo.value = { titolo: '', descrizione: '', marca: '', modello: '', carrozzeria: '', carburante: '', anno: '', prezzo: '', venditore: '', immagine: '', galleria: [], tipo: 'usato' }
-}
-
-const deleteVeicolo = async (codice) => {
-  if (!confirm('Confermi eliminazione?')) return
-  const index = veicoli.value.findIndex(v => v.codice === codice)
-  if (index !== -1) {
-    await deleteVeicoloFromServer(index)
-    await loadData()
-  }
-}
-
-const saveEditInline = async (v) => {
-  const index = veicoli.value.findIndex(item => item.codice === v.codice)
-  v.prezzo = parseFloat(v.prezzo) || null
-  editingCodice.value = null
-
-  if (index !== -1) {
-    await updateVeicoloOnServer(index, v)
-    await loadData()
-  }
-}
-
-const handleEditImageInline = (e, v) => {
-  const file = e.target.files[0]
-  if (!file) return
-  const reader = new FileReader()
-  reader.onload = () => { v.immagine = reader.result }
-  reader.readAsDataURL(file)
-}
-
-const handleEditGalleryImage = (e, v, index) => {
-  const file = e.target.files[0]
-  if (!file) return
-  const reader = new FileReader()
-  reader.onload = () => {
-    v.galleria.splice(index, 1, reader.result)
-  }
-  reader.readAsDataURL(file)
-}
-
-const removeGalleryImage = (v, index) => {
-  v.galleria.splice(index, 1)
-}
-
-const addGalleryImage = (e, v) => {
-  const file = e.target.files[0]
-  if (!file) return
-  const reader = new FileReader()
-  reader.onload = () => {
-    v.galleria.push(reader.result)
-  }
-  reader.readAsDataURL(file)
-}
-
-const filteredVeicoli = (tipo) => {
-  const q = ricerca[tipo].value.toLowerCase()
-  return veicoli.value.filter(v =>
-    v.tipo === tipo && (
-      v.titolo.toLowerCase().includes(q) ||
-      v.marca.toLowerCase().includes(q) ||
-      v.modello.toLowerCase().includes(q) ||
-      String(v.anno).includes(q) ||
-      String(v.prezzo).includes(q)
-    )
-  )
-}
-
+onMounted(() => {
+  auth.onAuthStateChanged(async (user) => {
+    console.log('🔐 Stato utente:', user)
+    if (user) {
+      await loadData()
+    } else {
+      router.push('/login')
+    }
+  })
+})
 </script>
 
 <template>
-  <section class="bg-black text-white min-h-screen py-16 px-4 md:px-10">
-    <div class="max-w-6xl mx-auto">
-      <div class="flex justify-between items-center mb-10">
-        <h1 class="text-2xl font-bold">Gestione Veicoli</h1>
-        <button @click="logout" class="text-red-500 hover:underline text-sm">Logout</button>
-      </div>
-
-      <!-- Form nuovo veicolo -->
-      <div class="mb-12 bg-white/5 p-6 rounded-xl space-y-4">
-        <h2 class="text-lg font-semibold">Aggiungi Veicolo</h2>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
-          <label> {{ labels.titolo }} <input v-model="newVeicolo.titolo" class="input" /> </label>
-          <label> {{ labels.marca }} <input v-model="newVeicolo.marca" class="input" /> </label>
-          <label> {{ labels.modello }} <input v-model="newVeicolo.modello" class="input" /> </label>
-          <label> {{ labels.carrozzeria }} <input v-model="newVeicolo.carrozzeria" class="input" /> </label>
-          <label> {{ labels.carburante }} <input v-model="newVeicolo.carburante" class="input" /> </label>
-          <label> {{ labels.anno }} <input v-model="newVeicolo.anno" type="date" class="input" /> </label>
-          <label> {{ labels.prezzo }} <input v-model="newVeicolo.prezzo" type="number" step="0.01" class="input" /> </label>
-          <label> {{ labels.chilometri }}
-  <input v-model="newVeicolo.chilometri" type="number" class="input" />
-</label>
-
-      <label>
-        {{ labels.venditore }}
-        <input v-model="newVeicolo.venditore" class="input" placeholder="Inserisci venditore" />
-      </label>
-          <label>
-            {{ labels.tipo }}
-            <select v-model="newVeicolo.tipo" class="input">
-              <option value="usato">Usato</option>
-              <option value="noleggio">Noleggio</option>
-            </select>
-          </label>
-        </div>
-
-<div class="mt-4 mb-8">
-  <label for="file-immagine" class="upload-btn mb-4">📎 {{ labels.immagine }}</label>
-  <input id="file-immagine" type="file" @change="handleNewFile" class="hidden" />
-
-  <div v-if="newVeicolo.immagine" class="relative w-full max-w-xs mt-2">
-    <img :src="newVeicolo.immagine" class="w-full rounded shadow" />
-    <button
-      @click="newVeicolo.immagine = ''"
-      class="absolute top-1 right-1 bg-black/70 text-white px-2 py-1 rounded-full text-xs hover:bg-red-700"
-    >
-      ✕
-    </button>
-  </div>
-</div>
-
-        <!-- GALLERIA -->
-<div class="mt-4">
-  <label class="block text-sm font-semibold mb-2">{{ labels.galleria }}</label>
-  <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
-    <!-- Immagini esistenti -->
-    <div
-      v-for="(img, i) in newVeicolo.galleria"
-      :key="i"
-      class="relative bg-white/10 p-2 rounded-md"
-    >
-      <img :src="img" class="w-full h-32 object-cover rounded-md" />
-
-      <!-- Pulsante rimozione -->
-      <button
-        @click="newVeicolo.galleria.splice(i, 1)"
-        class="absolute top-1 right-1 text-white bg-black/60 rounded-full px-1 text-xs hover:bg-red-600"
-      >
-        ✕
-      </button>
-
-      <!-- Imposta come immagine principale -->
-      <button
-        @click="setAsMainImage(newVeicolo, img)"
-        class="text-xs text-blue-400 hover:underline mt-2 block text-center"
-      >
-        {{ newVeicolo.immagine === img ? 'Immagine Principale ✅' : 'Imposta Principale' }}
-      </button>
+  <div class="p-6 text-white bg-black min-h-screen">
+    <div class="flex justify-between items-center mb-6">
+      <h1 class="text-2xl font-bold">Area Riservata</h1>
+      <button @click="logout" class="text-red-400 hover:underline text-sm">Logout</button>
     </div>
 
-    <!-- Aggiunta nuova immagine -->
-    <div class="flex items-center justify-center p-2 border-2 border-dashed border-white/30 rounded-md">
-      <input
-        type="file"
-        multiple
-        @change="e => addGalleryImages(e, newVeicolo)"
-        class="block w-full text-xs text-white cursor-pointer"
-      />
+    <div v-if="errorMsg" class="text-red-500 mb-4">{{ errorMsg }}</div>
+
+    <!-- FORM -->
+    <div class="space-y-3 mb-10">
+      <input v-model="newVeicolo.titolo" placeholder="Titolo" class="input" />
+      <input v-model="newVeicolo.marca" placeholder="Marca" class="input" />
+      <input v-model="newVeicolo.modello" placeholder="Modello" class="input" />
+      <input v-model="newVeicolo.carrozzeria" placeholder="Carrozzeria" class="input" />
+      <input v-model="newVeicolo.carburante" placeholder="Carburante" class="input" />
+      <input v-model="newVeicolo.anno" type="date" class="input" />
+      <input v-model="newVeicolo.prezzo" type="number" placeholder="Prezzo (€)" class="input" />
+      <input v-model="newVeicolo.chilometri" type="number" placeholder="Chilometri" class="input" />
+      <input v-model="newVeicolo.venditore" placeholder="Venditore" class="input" />
+      <select v-model="newVeicolo.tipo" class="input">
+        <option value="usato">Usato</option>
+        <option value="noleggio">Noleggio</option>
+      </select>
+      <textarea v-model="newVeicolo.descrizione" placeholder="Descrizione" class="input" />
+      <label class="block text-sm">Immagine principale</label>
+      <input type="file" @change="handleNewFile" class="input" />
+      <label class="block text-sm">Galleria immagini</label>
+      <input type="file" multiple @change="handleNewGallery" class="input" />
+      <button @click="addVeicolo" class="bg-red-600 px-4 py-2 rounded text-white">Salva Veicolo</button>
     </div>
-  </div>
-</div>
 
-
-        <label>{{ labels.descrizione }} <textarea v-model="newVeicolo.descrizione" class="input textarea-large" /></label>
-        <button @click="addVeicolo" class="bg-red-600 hover:bg-red-700 px-4 py-2 rounded text-sm">Salva Veicolo</button>
-      </div>
-
-      <!-- Lista veicoli -->
-      <div v-for="tipo in ['usato', 'noleggio']" :key="tipo" class="mb-10">
-        <div class="flex justify-between items-center mb-2 cursor-pointer" @click="openSections[tipo] = !openSections[tipo]">
-          <h2 class="text-xl font-bold">Veicoli {{ tipo === 'usato' ? 'usati' : 'a noleggio' }}</h2>
-          <span class="text-white text-2xl font-bold">{{ openSections[tipo] ? '−' : '+' }}</span>
-        </div>
-
-        <div v-if="openSections[tipo]" class="mb-6">
-          <label class="block text-sm font-medium text-white mb-2">{{ labels.cerca }}</label>
-          <input v-model="ricerca[tipo].value" type="text" class="input w-full" placeholder="Es. Panda, Mercedes..." />
-        </div>
-
-        <div v-if="openSections[tipo]" v-for="v in filteredVeicoli(tipo)" :key="v.codice" class="bg-white/5 p-5 rounded-xl mb-4 space-y-4">
-          <div v-if="editingCodice !== v.codice" class="flex flex-col md:flex-row md:items-center md:justify-between">
-            <div class="flex items-center gap-4">
-              <img :src="v.immagine" class="w-24 h-24 object-cover rounded" />
-              <div>
-                <h3 class="text-lg font-semibold">{{ v.titolo }}</h3>
-                <p class="text-sm text-white/70">{{ v.marca }} {{ v.modello }}</p>
-                <p class="text-xs text-white/50">{{ labels.prezzo }}: {{ v.prezzo ? v.prezzo + ' €' : 'n.d.' }}</p>
-                <p class="text-xs text-white/50">{{ labels.anno }}: {{ v.anno || 'n.d.' }}</p>
-              </div>
-            </div>
-            <div class="mt-4 md:mt-0 flex gap-4">
-              <button @click="editingCodice = v.codice" class="bg-blue-800 hover:bg-blue-900 px-4 py-2 rounded text-sm">Modifica</button>
-              <button @click="deleteVeicolo(v.codice)" class="text-sm text-red-400 hover:text-red-600">Elimina</button>
-            </div>
+    <!-- VEICOLI -->
+    <div class="space-y-8">
+      <div v-for="tipo in ['usato', 'noleggio']" :key="tipo">
+        <h2 class="text-xl font-bold mb-2">
+          Veicoli {{ tipo === 'usato' ? 'Usati' : 'a Noleggio' }}
+        </h2>
+        <div
+          v-for="v in veicoli.filter(ve => ve.tipo === tipo)"
+          :key="v.id"
+          class="border-t border-white/10 pt-4 mt-4"
+        >
+          <div v-if="editingId !== v.id">
+            <h3 class="text-xl font-semibold">{{ v.titolo }} - {{ v.prezzo }} €</h3>
+            <p class="text-sm text-white/60">
+              {{ v.marca }} {{ v.modello }} | {{ v.anno instanceof Date ? v.anno.getFullYear() : '' }}
+            </p>
+            <img v-if="v.immagine" :src="v.immagine" class="w-32 my-2 rounded" />
+            <button @click="editingId = v.id" class="text-blue-400 mr-4">Modifica</button>
+            <button @click="deleteVeicolo(v.id)" class="text-red-400">Elimina</button>
           </div>
-
-          <div v-else>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
-              <label> {{ labels.titolo }} <input v-model="v.titolo" class="input" /> </label>
-              <label> {{ labels.marca }} <input v-model="v.marca" class="input" /> </label>
-              <label> {{ labels.modello }} <input v-model="v.modello" class="input" /> </label>
-              <label> {{ labels.carrozzeria }} <input v-model="v.carrozzeria" class="input" /> </label>
-              <label> {{ labels.carburante }} <input v-model="v.carburante" class="input" /> </label>
-              <label> {{ labels.anno }} <input v-model="v.anno" type="date" class="input" /> </label>
-              <label> {{ labels.prezzo }} <input v-model="v.prezzo" type="number" step="0.01" class="input" /> </label>
-              <label> {{ labels.chilometri }}
-  <input v-model="v.chilometri" type="number" class="input" />
-</label>
-
-              <label>
-                {{ labels.venditore }}
-                <input v-model="v.venditore" class="input" placeholder="Modifica venditore" />
-              </label>
-              <label class="md:col-span-2">{{ labels.descrizione }} <textarea v-model="v.descrizione" class="input textarea-large" /></label>
-            </div>
-
- <!-- IMMAGINE PRINCIPALE -->
-<div class="mt-4 mb-8">
-  <label for="file-immagine-edit" class="upload-btn mb-4" >📎 {{ labels.immagine }}</label>
-  <input
-    id="file-immagine-edit"
-    type="file"
-    @change="e => handleEditImageInline(e, v)"
-    class="hidden"
-  />
-
-  <div v-if="v.immagine" class="relative w-full max-w-xs mt-2">
-    <img :src="v.immagine" class="w-full rounded shadow" />
-    <button
-      @click="v.immagine = ''"
-      class="absolute top-1 right-1 bg-black/70 text-white px-2 py-1 rounded-full text-xs hover:bg-red-700"
-    >
-      ✕
-    </button>
-  </div>
-</div>
-
-<!-- GALLERIA IMMAGINI -->
-<div class="mt-4">
-  <label class="block text-sm font-semibold mb-2">{{ labels.galleria }}</label>
-  <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
-    <!-- Immagini già caricate -->
-    <div
-      v-for="(img, i) in v.galleria"
-      :key="i"
-      class="relative bg-white/10 p-2 rounded-md"
-    >
-      <img :src="img" class="w-full h-32 object-cover rounded-md" />
-
-      <!-- Rimuovi -->
-      <button
-        @click="removeGalleryImage(v, i)"
-        class="absolute top-1 right-1 text-white bg-black/60 rounded-full px-1 text-xs hover:bg-red-600"
-      >
-        ✕
-      </button>
-
-      <!-- Imposta come principale -->
-      <button
-        @click="setAsMainImage(v, img)"
-        class="text-xs text-blue-400 hover:underline mt-2 block text-center"
-      >
-        {{ v.immagine === img ? 'Immagine Principale ✅' : 'Imposta Principale' }}
-      </button>
-    </div>
-
-    <!-- Upload nuove immagini -->
-    <div class="flex items-center justify-center p-2 border-2 border-dashed border-white/30 rounded-md">
-      <input
-        type="file"
-        multiple
-        @change="e => addGalleryImages(e, v)"
-        class="block w-full text-xs text-white cursor-pointer"
-      />
-    </div>
-  </div>
-</div>
-
-
-
-
-            <div class="flex gap-4 pt-3">
-              <button @click="saveEditInline(v)" class="bg-red-600 hover:bg-red-700 px-4 py-2 rounded text-sm">Salva</button>
-              <button @click="editingCodice = null" class="text-sm text-gray-300 hover:underline">Annulla</button>
-            </div>
+          <div v-else class="space-y-2">
+            <input v-model="v.titolo" class="input" />
+            <input v-model="v.marca" class="input" />
+            <input v-model="v.modello" class="input" />
+            <input v-model="v.anno" type="date" class="input" />
+            <input v-model="v.prezzo" type="number" class="input" />
+            <textarea v-model="v.descrizione" class="input" />
+            <button @click="saveEdit(v)" class="text-green-500 mr-4">Salva</button>
+            <button @click="editingId = null" class="text-white/70">Annulla</button>
           </div>
         </div>
       </div>
     </div>
-  </section>
+  </div>
 </template>
 
 <style scoped>
 .input {
-  background-color: #1a1a1a;
-  color: #fff;
-  padding: 0.5rem 0.75rem;
+  display: block;
+  width: 100%;
+  background: #111;
+  color: white;
+  padding: 0.5rem;
   border-radius: 0.375rem;
-  border: 1px solid rgba(255,255,255,0.1);
-  font-size: 0.875rem;
-  transition: border-color 0.2s;
-  appearance: none;
-  padding-right: 1rem;
-  font-family: 'Inter', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-
+  border: 1px solid #333;
+  margin-bottom: 0.5rem;
 }
-
-.input:focus {
-  outline: none;
-  border-color: #888;
-}
-.upload-btn {
-  display: inline-block;
-  background: #f1f1f1;
-  color: #111;
-  font-weight: 600;
-  padding: 0.6rem 1.2rem;
-  border-radius: 9999px;
-  font-size: 0.875rem;
-  cursor: pointer;
-  transition: background 0.2s, transform 0.2s;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
-}
-.upload-btn:hover {
-  background: #e2e2e2;
-  transform: scale(1.02);
-}
-label {
-  font-size: 0.875rem;
-  font-weight: 500;
-  color: #e2e2e2;
-  display: flex;
-  flex-direction: column;
-  gap: 0.25rem;
-}
-.textarea-large {
-  min-height: 120px; /* o l'altezza che preferisci */
-  resize: vertical;  /* opzionale: permette di ridimensionare */
-}
-
-
 </style>

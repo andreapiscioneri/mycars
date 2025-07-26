@@ -3,6 +3,7 @@ import { ref, computed } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import { useI18n, useLocalePath } from '#imports'
 
+
 const props = defineProps({
   isOpen: Boolean,
   isMobile: Boolean,
@@ -133,19 +134,18 @@ const menuItems = computed(() => [
         <!-- Login -->
         <div
           class="cursor-pointer flex items-center gap-2 hover:text-[#A30000]"
-          @click="router.push('/login')"
-        >
-          <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-              d="M5.121 17.804A10.978 10.978 0 0112 15c2.237 0 4.307.655 6.002 1.772M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-          </svg>
-          <span v-if="isOpen || isMobile" class="text-sm">Accedi</span>
-        </div>
+@click="() => { router.push('/area-riservata') }"
+  >
+    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+        d="M5.121 17.804A10.978 10.978 0 0112 15c2.237 0 4.307.655 6.002 1.772M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+    </svg>
+    <span v-if="isOpen || isMobile" class="text-sm">Accedi</span>
+  </div>
       </div>
     </div>
   </aside>
 </template>
-
 <style scoped>
 .fade-enter-active,
 .fade-leave-active {
