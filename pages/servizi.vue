@@ -1,23 +1,24 @@
 <script setup lang="ts">
+import { useI18n } from 'vue-i18n'
+
+const { t } = useI18n()
+
 useHead({
-  title: 'Servizi Auto - Vendita, Noleggio e Assistenza | MyCars Bergamo',
+  title: t('servizi.meta.title'),
   meta: [
     {
       name: 'description',
-      content:
-        'Scopri i servizi offerti da MyCars: auto usate, noleggio, assistenza post-vendita, consulenza personalizzata, permute e valutazioni gratuite.',
+      content: t('servizi.meta.description')
     },
     {
       name: 'keywords',
-      content:
-        'servizi auto usate, noleggio auto, permute auto, consulenza auto, assistenza post-vendita auto, valutazione auto usata Bergamo',
+      content: t('servizi.meta.keywords')
     },
     { name: 'robots', content: 'index, follow' },
-    { property: 'og:title', content: 'Servizi Auto - Vendita, Noleggio e Assistenza | MyCars Bergamo' },
+    { property: 'og:title', content: t('servizi.meta.title') },
     {
       property: 'og:description',
-      content:
-        'Vendita auto usate, noleggio e servizi completi post-vendita. Scopri tutti i servizi MyCars per la tua prossima auto.',
+      content: t('servizi.meta.ogDescription')
     },
     { property: 'og:image', content: 'https://www.mycarsbergamo.it/static/images/12.jpg' },
     { property: 'og:url', content: 'https://www.mycarsbergamo.it/servizi' },
@@ -34,8 +35,10 @@ useHead({
       class="h-[50vh] md:h-[60vh] bg-cover bg-center flex items-center justify-center relative"
       style="background-image: url('/static/images/12.jpg')"
     >
-      <div class="absolute inset-0 bg-opacity-60"></div>
-      <h1 class="relative text-4xl md:text-5xl font-extrabold text-white text-center">Servizi</h1>
+      <div class="absolute inset-0 bg-opacity-60 bg-black" />
+      <h1 class="relative text-4xl md:text-5xl font-extrabold text-white text-center">
+        {{ t('servizi.title') }}
+      </h1>
     </div>
 
     <!-- Contenuto -->
@@ -43,11 +46,8 @@ useHead({
       <!-- Blocco 1 -->
       <div class="grid md:grid-cols-2 gap-12 items-center">
         <div class="space-y-4">
-          <h2 class="text-3xl font-bold text-[#A30000]">Vendita Auto Usate e Noleggio</h2>
-          <p class="text-white/90">
-            Ogni veicolo è attentamente ispezionato e certificato per garantire qualità, affidabilità e sicurezza.
-            Offriamo solo auto usate in ottime condizioni, con chilometraggi certificati e garanzia inclusa.
-          </p>
+          <h2 class="text-3xl font-bold text-[#A30000]">{{ t('servizi.blocchi.0.titolo') }}</h2>
+          <p class="text-white/90">{{ t('servizi.blocchi.0.testo') }}</p>
         </div>
         <img
           src="/static/images/10.jpg"
@@ -64,22 +64,16 @@ useHead({
           class="rounded-lg shadow-xl w-full object-cover order-1 md:order-none"
         />
         <div class="space-y-4">
-          <h2 class="text-3xl font-bold text-[#A30000]">Consulenza e Ricerca Personalizzata</h2>
-          <p class="text-white/90">
-            Ti aiutiamo a trovare l’auto giusta per il tuo budget e le tue esigenze. Se non è in stock, la cerchiamo per
-            te grazie a una rete di partner selezionati.
-          </p>
+          <h2 class="text-3xl font-bold text-[#A30000]">{{ t('servizi.blocchi.1.titolo') }}</h2>
+          <p class="text-white/90">{{ t('servizi.blocchi.1.testo') }}</p>
         </div>
       </div>
 
       <!-- Blocco 3 -->
       <div class="grid md:grid-cols-2 gap-12 items-center">
         <div class="space-y-4">
-          <h2 class="text-3xl font-bold text-[#A30000]">Permute e Valutazione Gratuita</h2>
-          <p class="text-white/90">
-            Ritiriamo il tuo usato offrendoti una valutazione trasparente e in linea con il mercato. Nessun obbligo
-            d’acquisto, massima comodità.
-          </p>
+          <h2 class="text-3xl font-bold text-[#A30000]">{{ t('servizi.blocchi.2.titolo') }}</h2>
+          <p class="text-white/90">{{ t('servizi.blocchi.2.testo') }}</p>
         </div>
         <img
           src="/static/images/13.jpg"
@@ -96,21 +90,18 @@ useHead({
           class="rounded-lg shadow-xl w-full object-cover order-1 md:order-none"
         />
         <div class="space-y-4">
-          <h2 class="text-3xl font-bold text-[#A30000]">Assistenza Post-Vendita</h2>
-          <p class="text-white/90">
-            Siamo con te anche dopo l’acquisto: tagliandi, garanzie, supporto tecnico e pratiche burocratiche.
-            Il nostro servizio non finisce alla consegna.
-          </p>
+          <h2 class="text-3xl font-bold text-[#A30000]">{{ t('servizi.blocchi.3.titolo') }}</h2>
+          <p class="text-white/90">{{ t('servizi.blocchi.3.testo') }}</p>
         </div>
       </div>
 
-      <!-- CTA finale -->
+      <!-- CTA -->
       <div class="flex justify-center pt-10">
         <NuxtLink
           to="/contatti"
           class="inline-block bg-[#A30000] hover:bg-red-800 text-white font-semibold px-6 py-3 rounded shadow-md transition"
         >
-          Contattaci
+          {{ t('servizi.cta') }}
         </NuxtLink>
       </div>
     </div>

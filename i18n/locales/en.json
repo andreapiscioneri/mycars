@@ -1,3 +1,111 @@
 {
-    "test": "test EN"
+  "homepage": {
+    "heroTitle": "MyCars - Your car, your style",
+    "heroSubtitle": "Quality, passion and tailor-made services. Discover your next vehicle.",
+    "discoverMore": "Discover more",
+    "sections": [
+      {
+        "title": "Full Range",
+        "text": "Explore our selection of new and used vehicles, thoroughly inspected to ensure quality and performance."
+      },
+      {
+        "title": "Design & Technology",
+        "text": "Vehicles with style, character and cutting-edge technology. Come test them out."
+      },
+      {
+        "title": "After-Sales Services",
+        "text": "Authorized workshop, customer support and available spare parts."
+      },
+      {
+        "title": "Custom Financing",
+        "text": "Flexible solutions tailored to every purchasing need."
+      }
+    ],
+    "testimonialsTitle": "What our customers say",
+    "testimonials": [
+      {
+        "name": "Marco B.",
+        "text": "Impeccable service and perfect car. Highly recommended!"
+      },
+      {
+        "name": "Laura V.",
+        "text": "Great selection and very helpful staff. A great experience!"
+      },
+      {
+        "name": "Giorgio T.",
+        "text": "Bought a certified used car, like new! Fantastic."
+      }
+    ]
+  },
+  "servizi": {
+    "title": "Services",
+    "meta": {
+      "title": "Car Services - Sales, Rental & Support | MyCars Bergamo",
+      "description": "Discover the services offered by MyCars: used cars, rentals, after-sales support, personalized consulting, trade-ins and free evaluations.",
+      "keywords": "used car services, car rental, trade-in, car consulting, after-sales car support, used car appraisal Bergamo",
+      "ogDescription": "Used car sales, rentals and complete after-sales services. Discover all the MyCars services for your next vehicle."
+    },
+    "blocchi": [
+      {
+        "titolo": "Used Car Sales and Rentals",
+        "testo": "Each vehicle is carefully inspected and certified to ensure quality, reliability and safety. We only offer used cars in excellent condition, with certified mileage and included warranty."
+      },
+      {
+        "titolo": "Personalized Consulting and Search",
+        "testo": "We help you find the right car for your budget and needs. If it's not in stock, we’ll find it for you through our trusted partner network."
+      },
+      {
+        "titolo": "Trade-ins and Free Appraisals",
+        "testo": "We take your used car and offer you a transparent evaluation aligned with the market. No purchase obligation, maximum convenience."
+      },
+      {
+        "titolo": "After-Sales Support",
+        "testo": "We're with you even after the purchase: maintenance, warranties, technical support and paperwork assistance. Our service doesn't end at delivery."
+      }
+    ],
+    "cta": "Contact us"
+  },
+  "chisiamo": {
+    "title": "About Us",
+    "meta": {
+      "title": "About Us | MyCars Bergamo – Passion, Reliability and Service",
+      "description": "MyCars Bergamo: passion for cars, quality vehicle selection, personalized consulting and continuous support. Discover our story.",
+      "keywords": "MyCars, dealership Bergamo, used cars, car rental, after-sales service, about us, showroom Bergamo",
+      "ogTitle": "About Us | MyCars Bergamo",
+      "ogDescription": "Passion, professionalism and transparency in our showroom in Bergamo. Discover MyCars and our team."
+    },
+    "blocchi": [
+      {
+        "titolo": "Passion for Excellence",
+        "testo1": "MyCars was born from a passion for cars and a desire to offer customers a personalized, professional and reliable service. Our mission is to make buying and selling vehicles a simple and satisfying experience, with transparency and expertise.",
+        "testo2": "We carefully select each vehicle, guaranteeing quality, safety and great value. Our team is always available to find the perfect solution for your needs.",
+        "figcaption": "MyCars team in the showroom"
+      },
+      {
+        "titolo": "Your Satisfaction is Our Priority",
+        "testo1": "With strategic locations and a wide network of industry contacts, we offer personalized consulting, free evaluations, and ongoing after-sales service.",
+        "testo2": "Come visit our showroom or contact us for an appointment. We'll guide you to the right car for you.",
+        "figcaption": "Personalized consultation with a customer"
+      }
+    ],
+    "cta": "Contact us"
+  },
+  "dovesiamo": {
+    "meta": {
+      "title": "Costa di Mezzate | MyCars Bergamo",
+      "description": "Contact MyCars in Costa di Mezzate (BG). Find address, phone number, hours, and location on Google Maps. We are available for consultations and appointments.",
+      "keywords": "MyCars Costa di Mezzate contact, Bergamo dealership, phone, opening hours, email, map",
+      "ogTitle": "Costa di Mezzate Contact | MyCars",
+      "ogDescription": "Find out how to reach us at the Costa di Mezzate location. MyCars Bergamo: professionalism and availability."
+    },
+    "title": "Costa di Mezzate",
+    "indirizzo": "Via dei Livelli di Sopra\n24060 – Costa di Mezzate (BG)",
+    "orariTitolo": "Opening Hours:",
+    "orari": {
+      "lunven": "Monday – Friday: 09:00 – 12:30 / 14:30 – 19:00",
+      "sabato": "Saturday: 09:00 – 12:30",
+      "domenica": "Sunday: Closed"
+    }
+  }
 }
+
