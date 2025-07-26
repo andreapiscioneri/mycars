@@ -113,6 +113,7 @@ onMounted(async () => {
       <thead class="bg-gray-100">
         <tr>
           <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID</th>
+          <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Image</th>
           <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Title</th>
           <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Year</th>
           <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Category</th>
@@ -122,6 +123,19 @@ onMounted(async () => {
       <tbody class="divide-y divide-gray-200">
         <tr v-for="item in paginatedItems" :key="item.id" class="hover:bg-gray-50">
           <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ item.id }}</td>
+          <td class="px-6 py-4 whitespace-nowrap">
+            <div v-if="item.images && item.images.length > 0" class="w-[100px] h-auto">
+              <img 
+                :src="item.images[0]" 
+                :alt="item.title"
+                class="w-[100px] h-auto object-cover rounded border"
+                @error="$event.target.style.display='none'"
+              />
+            </div>
+            <div v-else class="w-[100px] h-[75px] bg-gray-300 rounded border flex items-center justify-center">
+              <span class="text-gray-500 text-sm">No image</span>
+            </div>
+          </td>
           <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ item.title }}</td>
           <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ item.year }}</td>
           <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ item.category }}</td>
