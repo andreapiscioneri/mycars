@@ -8,7 +8,7 @@ const firebaseConfig = {
   apiKey: "AIzaSyDONP2uUnVVy9Au5vP9BlAbr3gDxlWA7U8",
   authDomain: "mycarsbergamo.firebaseapp.com",
   projectId: "mycarsbergamo",
-  storageBucket: "mycarsbergamo.appspot.com",
+  storageBucket: "mycarsbergamo.firebasestorage.app",
   messagingSenderId: "194799387859",
   appId: "1:194799387859:web:1892045a63928dc3f7c026",
   measurementId: "G-ZYP3K3M7ZJ"
