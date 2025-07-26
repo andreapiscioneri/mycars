@@ -28,7 +28,7 @@ useHead({
       class="h-[50vh] md:h-[60vh] bg-cover bg-center flex items-center justify-center relative"
       style="background-image: url('/static/images/7.jpg')"
     >
-      <div class="absolute inset-0 bg-opacity-60 bg-black"></div>
+      <div class="absolute inset-0 bg-opacity-60"></div>
       <h1 id="hero-title" class="relative text-4xl md:text-5xl font-extrabold text-white text-center">
         {{ t('chisiamo.title') }}
       </h1>
