@@ -28,7 +28,7 @@ const handleSubmit = async (formData) => {
   <div class="container mx-auto p-4">
     <div class="mb-4">
       <NuxtLink to="/admin" class="text-blue-600 hover:text-blue-800">
-        ← Back to Admin
+        ← Back to list
       </NuxtLink>
     </div>
     <h1 class="text-2xl font-bold mb-6">Add New Car</h1>

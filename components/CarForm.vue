@@ -10,7 +10,8 @@ const props = defineProps({
 
 const formData = ref({
   title: '',
-  year: ''
+  year: '',
+  category: 'used',
 });
 
 const emit = defineEmits(['submit']);
@@ -20,7 +21,8 @@ watch(() => props.initialData, (newData) => {
   if (newData && Object.keys(newData).length > 0) {
     formData.value = {
       title: newData.title || '',
-      year: newData.year || ''
+      year: newData.year || '',
+      category: newData.category || 'used',
     };
   }
 }, { immediate: true });
@@ -56,6 +58,21 @@ const handleSubmit = () => {
         class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
         required
       >
+    </div>
+
+    <div class="mb-4">
+      <label class="block text-gray-700 text-sm font-bold mb-2" for="category">
+        Category
+      </label>
+      <select
+        id="category"
+        v-model="formData.category"
+        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+        required
+      >
+        <option value="used">Used</option>
+        <option value="rent">Rent</option>
+      </select>
     </div>
 
     <div class="flex items-center justify-between">

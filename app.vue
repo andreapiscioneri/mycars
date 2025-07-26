@@ -1,10 +1,16 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, computed } from 'vue'
 import NavigationBarHorizontal from '@/components/navbar/NavigationBarHorizontal.vue'
 import Footer from '@/components/Footer/Footer.vue'
+import { useRoute } from 'vue-router'
 
+const route = useRoute()
 const isOpen = ref(false)
 const isMobile = ref(false)
+
+const isAdminPage = computed(() => {
+  return route.path.includes('/admin')
+})
 
 const handleResize = () => {
   isMobile.value = window.innerWidth < 768
@@ -29,7 +35,7 @@ onMounted(() => {
       ]"
     >
       <NuxtPage />
-      <Footer />
+      <Footer v-if="!isAdminPage" />
     </main>
   </div>
 </template>

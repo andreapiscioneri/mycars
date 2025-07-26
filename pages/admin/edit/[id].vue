@@ -52,7 +52,7 @@ onMounted(() => {
   <div class="container mx-auto p-4">
     <div class="mb-4">
       <NuxtLink to="/admin" class="text-blue-600 hover:text-blue-800">
-        ← Back to Admin
+        ← Back to List
       </NuxtLink>
     </div>
 
@@ -61,7 +61,7 @@ onMounted(() => {
     <div v-else-if="error" class="text-center py-8">
       <p class="text-red-600">{{ error }}</p>
       <NuxtLink to="/admin" class="text-blue-600 hover:text-blue-800 mt-2 inline-block">
-        Back to Admin
+        Back to List
       </NuxtLink>
     </div>
 
