@@ -10,6 +10,7 @@ const loading = ref(true);
 const filter = ref('');
 const route = useRoute();
 const router = useRouter();
+const itemsPerPage = 10;
 
 const getList = async () => {
     try {
@@ -68,6 +69,27 @@ const filteredItems = computed(() => {
   )
 })
 
+const currentPage = computed(() => {
+  return parseInt(route.query.page) || 1
+})
+
+const totalPages = computed(() => {
+  return Math.ceil(filteredItems.value.length / itemsPerPage)
+})
+
+const paginatedItems = computed(() => {
+  const start = (currentPage.value - 1) * itemsPerPage
+  const end = start + itemsPerPage
+  return filteredItems.value.slice(start, end)
+})
+
+const goToPage = (page) => {
+  router.replace({
+    path: route.path,
+    query: { ...route.query, page: page > 1 ? page : undefined }
+  })
+}
+
 onMounted(async () => {
     await getList();
 });
@@ -98,7 +120,7 @@ onMounted(async () => {
         </tr>
       </thead>
       <tbody class="divide-y divide-gray-200">
-        <tr v-for="item in filteredItems" :key="item.id" class="hover:bg-gray-50">
+        <tr v-for="item in paginatedItems" :key="item.id" class="hover:bg-gray-50">
           <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ item.id }}</td>
           <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ item.title }}</td>
           <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ item.year }}</td>
@@ -110,6 +132,41 @@ onMounted(async () => {
         </tr>
       </tbody>
     </table>
+    
+    <!-- Pagination -->
+    <div v-if="totalPages > 1" class="mt-6 flex items-center justify-between">
+      <div class="text-sm text-gray-700">
+        Showing {{ (currentPage - 1) * itemsPerPage + 1 }} to {{ Math.min(currentPage * itemsPerPage, filteredItems.length) }} of {{ filteredItems.length }} results
+      </div>
+      <div class="flex space-x-2">
+        <button
+          @click="goToPage(currentPage - 1)"
+          :disabled="currentPage === 1"
+          class="px-3 py-2 text-sm border rounded disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50"
+        >
+          Previous
+        </button>
+        <span v-for="page in totalPages" :key="page">
+          <button
+            @click="goToPage(page)"
+            :class="[
+              'px-3 py-2 text-sm border rounded',
+              currentPage === page ? 'bg-blue-600 text-white' : 'hover:bg-gray-50'
+            ]"
+          >
+            {{ page }}
+          </button>
+        </span>
+        <button
+          @click="goToPage(currentPage + 1)"
+          :disabled="currentPage === totalPages"
+          class="px-3 py-2 text-sm border rounded disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50"
+        >
+          Next
+        </button>
+      </div>
+    </div>
+    
     <div class="mt-6">
       <NuxtLink to="/admin/new" class="inline-block bg-blue-600 hover:bg-blue-800 text-white font-bold py-2 px-4 rounded">
         + Add New Car
