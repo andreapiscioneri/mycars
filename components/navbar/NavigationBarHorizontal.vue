@@ -147,7 +147,7 @@ const menuItems = computed(() => {
         <!-- Login -->
         <div
           class="cursor-pointer flex items-center gap-2 hover:text-[#A30000]"
-          @click="() => { router.push('/login') }"
+          @click="() => { isLoggedIn ? router.push('/admin') : router.push('/login') }"
         >
           <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
