@@ -88,9 +88,9 @@ const menuItems = computed(() => {
         : 'fixed top-0 left-0 h-full ' + (isOpen ? 'w-80' : 'w-20') + ' bg-black'
     ]"
   >
-    <div class="flex flex-col h-full">
+    <div class="flex flex-col h-full items-start">
       <!-- Logo -->
-      <div class="flex items-center justify-center py-6 cursor-pointer" @click="router.push('/')">
+      <div class="flex items-start justify-start py-6 pl-4 cursor-pointer" @click="router.push('/')">
         <img src="/static/images/mycarslogo.png" alt="MyCars Logo" :class="[isOpen ? 'h-12' : 'h-8']" />
       </div>
 
@@ -105,11 +105,11 @@ const menuItems = computed(() => {
       </button>
 
       <!-- Menu items -->
-      <nav class="flex-1 text-white font-light text-lg space-y-8 px-6 mt-4">
+      <nav class="flex-1 text-white font-light text-lg space-y-8 px-6 mt-4 flex flex-col justify-start items-start">
         <div
           v-for="item in menuItems"
           :key="item.route"
-          class="cursor-pointer transition whitespace-nowrap overflow-hidden text-ellipsis"
+          class="cursor-pointer transition whitespace-nowrap overflow-hidden text-ellipsis flex items-center justify-start"
           :class="[route.path === item.route ? 'text-[#A30000]' : 'hover:text-[#A30000]']"
           @click="() => { router.push(item.route); if (isMobile) emit('toggle') }"
         >
@@ -120,10 +120,10 @@ const menuItems = computed(() => {
       <!-- Lingua e login -->
       <div class="px-6 pb-6 mt-auto flex flex-col gap-4 text-white relative">
         <!-- Language Selector -->
-        <div class="relative">
+        <div class="relative flex justify-start">
           <button
             @click="toggleDropdown"
-            class="w-full flex items-center justify-left md:justify-between hover:text-[#A30000] focus:outline-none transition-all"
+            class="w-full flex items-center justify-start hover:text-[#A30000] focus:outline-none transition-all"
           >
             <span class="text-xl">{{ selectedLangLabel?.emoji }}</span>
           </button>
@@ -147,14 +147,16 @@ const menuItems = computed(() => {
         <!-- Login -->
         <div
           class="cursor-pointer flex items-center gap-2 hover:text-[#A30000]"
-@click="() => { router.push('/login') }"
-  >
-    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-        d="M5.121 17.804A10.978 10.978 0 0112 15c2.237 0 4.307.655 6.002 1.772M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-    </svg>
-    <span v-if="isOpen || isMobile" class="text-sm">Accedi</span>
-  </div>
+          @click="() => { router.push('/login') }"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M5.121 17.804A10.978 10.978 0 0112 15c2.237 0 4.307.655 6.002 1.772M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+          </svg>
+          <span v-if="isOpen || isMobile" class="text-sm">
+            {{ isLoggedIn ? 'Ciao admin!' : 'Accedi' }}
+          </span>
+        </div>
       </div>
     </div>
   </aside>
