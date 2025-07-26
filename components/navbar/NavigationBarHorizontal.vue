@@ -48,8 +48,8 @@ const changeLang = (lang: 'it' | 'en') => {
 
 const menuItems = computed(() => [
   { label: "Servizi", route: '/servizi' },
-  { label: "Usati", route: '/usato' },
-  { label: "Noleggio", route: '/noleggio' },
+  { label: "Usati", route: '/list/used' },
+  { label: "Noleggio", route: '/list/rent' },
   { label: "Chi siamo", route: '/chisiamo' },
   { label: "Dove siamo", route: '/dovesiamo' },
   { label: "Contattaci", route: '/contatti' },

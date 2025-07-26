@@ -117,6 +117,7 @@ onMounted(async () => {
           <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Title</th>
           <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Year</th>
           <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Category</th>
+          <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Description</th>
           <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
         </tr>
       </thead>
@@ -139,6 +140,11 @@ onMounted(async () => {
           <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ item.title }}</td>
           <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ item.year }}</td>
           <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ item.category }}</td>
+          <td class="px-6 py-4 text-sm text-gray-500 max-w-xs">
+            <div class="truncate" :title="item.description">
+              {{ item.description || 'No description' }}
+            </div>
+          </td>
           <td class="px-6 py-4 whitespace-nowrap text-sm">
             <NuxtLink :to="`/admin/edit/${item.id}`" class="text-indigo-600 hover:text-indigo-900 mr-4">Edit</NuxtLink>
             <button @click="handleDelete(item.id)" class="text-red-600 hover:text-red-800">Delete</button>

@@ -49,6 +49,7 @@ const handleSubmit = async (formData) => {
       title: formData.title,
       year: formData.year,
       category: formData.category,
+      description: formData.description,
       images: imageUrls
     };
     

@@ -12,6 +12,7 @@ const formData = ref({
   title: '',
   year: '',
   category: 'used',
+  description: '',
   images: []
 });
 
@@ -36,6 +37,7 @@ watch(() => props.initialData, (newData) => {
       title: newData.title || '',
       year: newData.year || '',
       category: newData.category || 'used',
+      description: newData.description || '',
       images: newData.images || []
     };
   }
@@ -133,6 +135,19 @@ const onDrop = (e, dropIndex) => {
         <option value="used">Used</option>
         <option value="rent">Rent</option>
       </select>
+    </div>
+
+    <div class="mb-4">
+      <label class="block text-gray-700 text-sm font-bold mb-2" for="description">
+        Description
+      </label>
+      <textarea
+        id="description"
+        v-model="formData.description"
+        rows="4"
+        placeholder="Enter car description..."
+        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline resize-none"
+      ></textarea>
     </div>
 
     <!-- Images Section -->
