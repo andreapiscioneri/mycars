@@ -12,13 +12,13 @@ const formData = ref({
   title: '',
   subtitle: '',
   year: '',
-  month: '',
+  price: '',
+  kilometers: '',
+  powerSource: '',
+  brand: '',
+  seller: '',
   category: 'used',
   description: '',
-  brand: '',
-  bodyType: '',
-  powerSource: '',
-  price: '',
   images: []
 });
 
@@ -43,13 +43,13 @@ watch(() => props.initialData, (newData) => {
       title: newData.title || '',
       subtitle: newData.subtitle || '',
       year: newData.year || '',
-      month: newData.month || '',
       category: newData.category || 'used',
-      description: newData.description || '',
-      brand: newData.brand || '',
-      bodyType: newData.bodyType || '',
-      powerSource: newData.powerSource || '',
       price: newData.price || '',
+      kilometers: newData.kilometers || '',
+      powerSource: newData.powerSource || '',
+      brand: newData.brand || '',
+      seller: newData.seller || '',
+      description: newData.description || '',
       images: newData.images || []
     };
   }
@@ -129,48 +129,81 @@ const onDrop = (e, dropIndex) => {
         v-model="formData.subtitle"
         type="text"
         class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-        placeholder="Enter a subtitle (optional)"
+        required
       >
     </div>
 
-    <div class="mb-4 flex gap-4">
-      <div class="flex-1">
-        <label class="block text-gray-700 text-sm font-bold mb-2" for="year">
-          Year
-        </label>
-        <input
-          id="year"
-          v-model="formData.year"
-          type="number"
-          class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-          required
-        >
-      </div>
-      <div class="flex-1">
-        <label class="block text-gray-700 text-sm font-bold mb-2" for="month">
-          Month
-        </label>
-        <select
-          id="month"
-          v-model="formData.month"
-          class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-          required
-        >
-          <option value="">Select month</option>
-          <option value="01">January</option>
-          <option value="02">February</option>
-          <option value="03">March</option>
-          <option value="04">April</option>
-          <option value="05">May</option>
-          <option value="06">June</option>
-          <option value="07">July</option>
-          <option value="08">August</option>
-          <option value="09">September</option>
-          <option value="10">October</option>
-          <option value="11">November</option>
-          <option value="12">December</option>
-        </select>
-      </div>
+    <div class="mb-4">
+      <label class="block text-gray-700 text-sm font-bold mb-2" for="year">
+        Year
+      </label>
+      <input
+        id="year"
+        v-model="formData.year"
+        type="number"
+        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+        required
+      >
+    </div>
+    <div class="mb-4">
+      <label class="block text-gray-700 text-sm font-bold mb-2" for="price">
+        Price
+      </label>
+      <input
+        id="price"
+        v-model="formData.price"
+        type="number"
+        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+        required
+      >
+    </div>
+    <div class="mb-4">
+      <label class="block text-gray-700 text-sm font-bold mb-2" for="kilometers">
+        Kilometers
+      </label>
+      <input
+        id="kilometers"
+        v-model="formData.kilometers"
+        type="number"
+        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+        required
+      >
+    </div>
+    <div class="mb-4">
+      <label class="block text-gray-700 text-sm font-bold mb-2" for="powerSource">
+        Power Source
+      </label>
+      <input
+        id="powerSource"
+        v-model="formData.powerSource"
+        type="text"
+        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+        required
+      >
+    </div>
+    <div class="mb-4">
+      <label class="block text-gray-700 text-sm font-bold mb-2" for="brand">
+        Brand
+      </label>
+      <input
+        id="brand"
+        v-model="formData.brand"
+        type="text"
+        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+        required
+      >
+    </div>
+    <div class="mb-4">
+      <label class="block text-gray-700 text-sm font-bold mb-2" for="seller">
+        Seller
+      </label>
+      <input
+        id="seller"
+        v-model="formData.seller"
+        type="text"
+        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+        required
+      >
     </div>
 
     <div class="mb-4">
@@ -199,64 +232,6 @@ const onDrop = (e, dropIndex) => {
         placeholder="Enter car description..."
         class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline resize-none"
       ></textarea>
-    </div>
-
-    <!-- New Filters -->
-    <div class="mb-4">
-      <label class="block text-gray-700 text-sm font-bold mb-2" for="brand">
-        Brand
-      </label>
-      <input
-        id="brand"
-        v-model="formData.brand"
-        type="text"
-        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-        placeholder="e.g. Toyota"
-      >
-    </div>
-    <div class="mb-4">
-      <label class="block text-gray-700 text-sm font-bold mb-2" for="bodyType">
-        Body Type
-      </label>
-      <input
-        id="bodyType"
-        v-model="formData.bodyType"
-        type="text"
-        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-        placeholder="e.g. SUV, Sedan, Hatchback"
-      >
-    </div>
-    <div class="mb-4">
-      <label class="block text-gray-700 text-sm font-bold mb-2" for="powerSource">
-        Power Source
-      </label>
-      <select
-        id="powerSource"
-        v-model="formData.powerSource"
-        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-      >
-        <option value="">Select power source</option>
-        <option value="Petrol">Petrol</option>
-        <option value="Diesel">Diesel</option>
-        <option value="Electric">Electric</option>
-        <option value="Hybrid">Hybrid</option>
-        <option value="GPL">GPL</option>
-        <option value="Methane">Methane</option>
-        <option value="Other">Other</option>
-      </select>
-    </div>
-    <div class="mb-4">
-      <label class="block text-gray-700 text-sm font-bold mb-2" for="price">
-        Price
-      </label>
-      <input
-        id="price"
-        v-model="formData.price"
-        type="number"
-        min="0"
-        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-        placeholder="e.g. 15000"
-      >
     </div>
 
     <!-- Images Section -->

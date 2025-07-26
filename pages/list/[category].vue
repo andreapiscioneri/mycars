@@ -91,14 +91,70 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div class="container mx-auto p-4">
-    <h1 class="text-2xl font-bold mb-6">{{ categoryLabel }}</h1>
-    <LoadingSpinner v-if="loading" />
-    <Items :items="items" v-if="!loading" />
-    
-    <!-- Show message if no items found -->
-    <div v-if="!loading && items.length === 0" class="text-center py-8">
-      <p class="text-gray-500">Nessuna auto trovata in questa categoria.</p>
+  <div class="flex min-h-screen bg-black">
+    <!-- Sidebar Filter -->
+    <aside class="hidden md:block w-64 bg-black border-r border-gray-900 p-6 text-white min-h-screen">
+      <h2 class="text-2xl font-bold mb-8">Filtra</h2>
+      <div class="space-y-6">
+        <div class="flex justify-between items-center cursor-pointer mb-2">
+          <span>Marca</span>
+          <span class="text-2xl">+</span>
+        </div>
+        <div class="flex justify-between items-center cursor-pointer mb-2">
+          <span>Carrozzeria</span>
+          <span class="text-2xl">+</span>
+        </div>
+        <div class="flex justify-between items-center cursor-pointer mb-2">
+          <span>Carburante</span>
+          <span class="text-2xl">+</span>
+        </div>
+        <div class="flex justify-between items-center cursor-pointer mb-2">
+          <span>Venditore</span>
+          <span class="text-2xl">+</span>
+        </div>
+        <div class="flex justify-between items-center cursor-pointer mb-2">
+          <span>Prezzo</span>
+          <span class="text-2xl">+</span>
+        </div>
+        <div class="flex justify-between items-center cursor-pointer mb-2">
+          <span>Chilometri</span>
+          <span class="text-2xl">+</span>
+        </div>
+        <div class="flex justify-between items-center cursor-pointer mb-2">
+          <span>Anno</span>
+          <span class="text-2xl">+</span>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <div class="flex-1 flex flex-col min-h-screen">
+      <!-- Top Bar: Search & Sort -->
+      <div class="w-full px-4 py-6 flex flex-col md:flex-row md:items-center gap-4 bg-black border-b border-gray-800">
+        <input
+          type="text"
+          placeholder="Cerca per modello, codice, marca..."
+          class="flex-1 bg-[#18181b] text-white rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-[#A30000] placeholder-gray-400"
+        />
+        <div class="flex items-center gap-2">
+          <span class="text-white">Ordina</span>
+          <select class="bg-black text-white rounded px-3 py-2 focus:outline-none border border-gray-700">
+            <option>Ordine crescente</option>
+            <option>Ordine decrescente</option>
+          </select>
+          <button class="ml-2 p-2 rounded bg-black border border-gray-700 text-white">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" /></svg>
+          </button>
+        </div>
+      </div>
+      <div class="flex-1 w-full max-w-7xl mx-auto px-4 py-8">
+        <div class="mb-4 text-gray-400">{{ items.length }} veicoli trovati</div>
+        <Items :items="items" v-if="!loading" />
+        <LoadingSpinner v-if="loading" />
+        <div v-if="!loading && items.length === 0" class="text-center py-16">
+          <p class="text-gray-500 text-lg">Nessuna auto trovata in questa categoria.</p>
+        </div>
+      </div>
     </div>
   </div>
 </template> 

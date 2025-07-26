@@ -69,8 +69,14 @@ const handleSubmit = async (formData) => {
     const carDoc = doc(db, 'cars', carId);
     const updateData = {
       title: formData.title,
+      subtitle: formData.subtitle,
       year: formData.year,
       category: formData.category,
+      price: formData.price,
+      kilometers: formData.kilometers,
+      powerSource: formData.powerSource,
+      brand: formData.brand,
+      seller: formData.seller,
       description: formData.description,
       images: imageUrls
     };
