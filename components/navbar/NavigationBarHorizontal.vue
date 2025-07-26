@@ -1,7 +1,8 @@
 <script setup lang="ts">
-import { ref, computed } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import { useI18n, useLocalePath } from '#imports'
+import { auth } from '@/lib/firebase'
 
 
 const props = defineProps({
@@ -44,16 +45,28 @@ const changeLang = (lang: 'it' | 'en') => {
   }
 }
 
+const isLoggedIn = ref(false)
 
+onMounted(() => {
+  auth.onAuthStateChanged((user) => {
+    isLoggedIn.value = !!user
+  })
+})
 
-const menuItems = computed(() => [
-  { label: "Servizi", route: '/servizi' },
-  { label: "Usati", route: '/list/used' },
-  { label: "Noleggio", route: '/list/rent' },
-  { label: "Chi siamo", route: '/chisiamo' },
-  { label: "Dove siamo", route: '/dovesiamo' },
-  { label: "Contattaci", route: '/contatti' },
-])
+const menuItems = computed(() => {
+  const items = [
+    { label: "Servizi", route: '/servizi' },
+    { label: "Usati", route: '/list/used' },
+    { label: "Noleggio", route: '/list/rent' },
+    { label: "Chi siamo", route: '/chisiamo' },
+    { label: "Dove siamo", route: '/dovesiamo' },
+    { label: "Contattaci", route: '/contatti' },
+  ]
+  if (isLoggedIn.value) {
+    items.push({ label: "Area Riservata", route: '/admin' })
+  }
+  return items
+})
 </script>
 
 <template>
@@ -134,7 +147,7 @@ const menuItems = computed(() => [
         <!-- Login -->
         <div
           class="cursor-pointer flex items-center gap-2 hover:text-[#A30000]"
-@click="() => { router.push('/area-riservata') }"
+@click="() => { router.push('/login') }"
   >
     <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
