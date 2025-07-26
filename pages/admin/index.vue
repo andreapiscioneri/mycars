@@ -1,7 +1,7 @@
 <script setup>
 import { ref, onMounted, watch, computed } from 'vue';
 import { collection, getDocs, deleteDoc, doc } from 'firebase/firestore';
-import { db } from '@/lib/firebase';
+import { db, auth } from '@/lib/firebase';
 import LoadingSpinner from '@/components/LoadingSpinner.vue'
 import { useRoute, useRouter } from 'vue-router'
 
@@ -11,6 +11,12 @@ const filter = ref('');
 const route = useRoute();
 const router = useRouter();
 const itemsPerPage = 10;
+
+const logout = () => {
+  auth.signOut()
+  localStorage.removeItem('auth')
+  router.push('/login')
+}
 
 const getList = async () => {
     try {
@@ -99,7 +105,15 @@ onMounted(async () => {
 <div class="container mx-auto p-4">
   <LoadingSpinner v-if="loading" />
   <template v-else>
-    <h1 class="text-2xl font-bold mb-6">Cars</h1>
+    <div class="flex justify-between items-center mb-6">
+      <h1 class="text-2xl font-bold">Cars</h1>
+      <button 
+        @click="logout" 
+        class="bg-red-600 hover:bg-red-800 text-white font-bold py-2 px-4 rounded transition-colors"
+      >
+        Logout
+      </button>
+    </div>
     <div class="flex items-center mb-4 gap-4">
       <input
         v-model="filter"

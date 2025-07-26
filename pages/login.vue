@@ -31,7 +31,7 @@ const login = async () => {
   try {
     const userCredential = await signInWithEmailAndPassword(auth, email.value, password.value)
     console.log('✅ Login avvenuto:', userCredential.user.email)
-    router.push('/area-riservata')
+    router.push('/admin')
   } catch (err: any) {
     console.error('❌ Errore login Firebase:', err.code, err.message)
     
