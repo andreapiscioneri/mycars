@@ -154,7 +154,7 @@ const menuItems = computed(() => {
               d="M5.121 17.804A10.978 10.978 0 0112 15c2.237 0 4.307.655 6.002 1.772M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
           </svg>
           <span v-if="isOpen || isMobile" class="text-sm">
-            {{ isLoggedIn ? 'Ciao admin!' : 'Accedi' }}
+            {{ isLoggedIn ? 'Ciao admin' : 'Accedi' }}
           </span>
         </div>
       </div>
