@@ -1,29 +1,20 @@
 <script setup lang="ts">
+import { useI18n } from 'vue-i18n'
 import { useHead } from '#imports'
 
+const { t } = useI18n()
+
 const mezzateMapSrc =
-  "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2788.139195481139!2d9.774582312863232!3d45.66274542066452!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47814d4ea629b88d%3A0x5949ed7e5b6e4724!2sVia%20dei%20Livelli%20di%20Sopra%2C%2024060%20Costa%20di%20Mezzate%20BG!5e0!3m2!1sit!2sit!4v1749632701234!5m2!1sit!2sit";
+  "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2788.139195481139!2d9.774582312863232!3d45.66274542066452!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47814d4ea629b88d%3A0x5949ed7e5b6e4724!2sVia%20dei%20Livelli%20di%20Sopra%2C%2024060%20Costa%20di%20Mezzate%20BG!5e0!3m2!1sit!2sit!4v1749632701234!5m2!1sit!2sit"
 
 useHead({
-  title: 'Costa di Mezzate | MyCars Bergamo',
+  title: t('dovesiamo.meta.title'),
   meta: [
-    {
-      name: 'description',
-      content:
-        'Contatta MyCars a Costa di Mezzate (BG). Scopri indirizzo, telefono, orari e posizione su Google Maps. Siamo a disposizione per consulenze auto e appuntamenti.'
-    },
-    {
-      name: 'keywords',
-      content:
-        'Contatti MyCars Costa di Mezzate, concessionaria Bergamo, telefono, orari apertura, email, mappa'
-    },
+    { name: 'description', content: t('dovesiamo.meta.description') },
+    { name: 'keywords', content: t('dovesiamo.meta.keywords') },
     { name: 'robots', content: 'index, follow' },
-    { property: 'og:title', content: 'Contatti Costa di Mezzate | MyCars' },
-    {
-      property: 'og:description',
-      content:
-        'Scopri come raggiungerci nella sede di Costa di Mezzate. MyCars Bergamo: professionalità e disponibilità.'
-    },
+    { property: 'og:title', content: t('dovesiamo.meta.ogTitle') },
+    { property: 'og:description', content: t('dovesiamo.meta.ogDescription') },
     { property: 'og:url', content: 'https://www.mycarsbergamo.it/contatti/costa-di-mezzate' },
     { property: 'og:type', content: 'business.business' },
     { property: 'og:locale', content: 'it_IT' }
@@ -44,14 +35,11 @@ useHead({
         <!-- Info contatto -->
         <div class="p-6 md:p-12">
           <h1 id="contatti-title" class="text-3xl font-extrabold text-[#A30000] mb-4">
-            Costa di Mezzate
+            {{ t('dovesiamo.title') }}
           </h1>
 
           <address class="not-italic text-base font-medium leading-relaxed">
-            <p>
-              Via dei Livelli di Sopra<br />
-              24060 – Costa di Mezzate (BG)
-            </p>
+            <p>{{ t('dovesiamo.indirizzo') }}</p>
           </address>
 
           <!-- Telefono -->
@@ -82,11 +70,11 @@ useHead({
 
           <!-- Orari -->
           <div class="mt-4 text-sm leading-relaxed" aria-label="Orari di apertura">
-            <p><strong class="text-[#A30000]">Orari di apertura:</strong></p>
+            <p><strong class="text-[#A30000]">{{ t('dovesiamo.orariTitolo') }}</strong></p>
             <ul class="mt-1 space-y-1">
-              <li>Lunedì – Venerdì: 09:00 – 12:30 / 14:30 – 19:00</li>
-              <li>Sabato: 09:00 – 12:30</li>
-              <li>Domenica: Chiuso</li>
+              <li>{{ t('dovesiamo.orari.lunven') }}</li>
+              <li>{{ t('dovesiamo.orari.sabato') }}</li>
+              <li>{{ t('dovesiamo.orari.domenica') }}</li>
             </ul>
           </div>
 

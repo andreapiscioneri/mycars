@@ -1,3 +1,110 @@
 {
-    "test": "test IT"
+  "homepage": {
+    "heroTitle": "MyCars - La tua auto, il tuo stile",
+    "heroSubtitle": "Qualità, passione e servizi su misura. Scopri il tuo prossimo veicolo.",
+    "discoverMore": "Scopri di più",
+    "sections": [
+      {
+        "title": "Gamma completa",
+        "text": "Scopri la nostra selezione di veicoli nuovi e usati, accuratamente controllati per garantirti qualità e prestazioni."
+      },
+      {
+        "title": "Design e Tecnologia",
+        "text": "Veicoli con stile, carattere e tecnologia d’avanguardia. Vieni a provarli."
+      },
+      {
+        "title": "Servizi Post-Vendita",
+        "text": "Officina autorizzata, assistenza clienti e ricambi sempre disponibili."
+      },
+      {
+        "title": "Finanziamenti Personalizzati",
+        "text": "Tante soluzioni flessibili pensate per ogni esigenza di acquisto."
+      }
+    ],
+    "testimonialsTitle": "Cosa dicono i nostri clienti",
+    "testimonials": [
+      {
+        "name": "Marco B.",
+        "text": "Servizio impeccabile e auto perfetta. Consigliatissimi!"
+      },
+      {
+        "name": "Laura V.",
+        "text": "Ampia scelta e personale super disponibile. Un’esperienza ottima!"
+      },
+      {
+        "name": "Giorgio T.",
+        "text": "Ho acquistato un usato garantito, come nuovo! Fantastici."
+      }
+    ]
+  },
+  "servizi": {
+    "title": "Servizi",
+    "meta": {
+      "title": "Servizi Auto - Vendita, Noleggio e Assistenza | MyCars Bergamo",
+      "description": "Scopri i servizi offerti da MyCars: auto usate, noleggio, assistenza post-vendita, consulenza personalizzata, permute e valutazioni gratuite.",
+      "keywords": "servizi auto usate, noleggio auto, permute auto, consulenza auto, assistenza post-vendita auto, valutazione auto usata Bergamo",
+      "ogDescription": "Vendita auto usate, noleggio e servizi completi post-vendita. Scopri tutti i servizi MyCars per la tua prossima auto."
+    },
+    "blocchi": [
+      {
+        "titolo": "Vendita Auto Usate e Noleggio",
+        "testo": "Ogni veicolo è attentamente ispezionato e certificato per garantire qualità, affidabilità e sicurezza. Offriamo solo auto usate in ottime condizioni, con chilometraggi certificati e garanzia inclusa."
+      },
+      {
+        "titolo": "Consulenza e Ricerca Personalizzata",
+        "testo": "Ti aiutiamo a trovare l’auto giusta per il tuo budget e le tue esigenze. Se non è in stock, la cerchiamo per te grazie a una rete di partner selezionati."
+      },
+      {
+        "titolo": "Permute e Valutazione Gratuita",
+        "testo": "Ritiriamo il tuo usato offrendoti una valutazione trasparente e in linea con il mercato. Nessun obbligo d’acquisto, massima comodità."
+      },
+      {
+        "titolo": "Assistenza Post-Vendita",
+        "testo": "Siamo con te anche dopo l’acquisto: tagliandi, garanzie, supporto tecnico e pratiche burocratiche. Il nostro servizio non finisce alla consegna."
+      }
+    ],
+    "cta": "Contattaci"
+  },
+  "chisiamo": {
+    "title": "Chi siamo",
+    "meta": {
+      "title": "Chi Siamo | MyCars Bergamo – Passione, Affidabilità e Servizio",
+      "description": "MyCars Bergamo: passione per le auto, selezione veicoli di qualità, consulenze personalizzate e assistenza continua. Scopri la nostra storia.",
+      "keywords": "MyCars, concessionaria Bergamo, auto usate, noleggio auto, assistenza post vendita, chi siamo, showroom Bergamo",
+      "ogTitle": "Chi Siamo | MyCars Bergamo",
+      "ogDescription": "Passione, professionalità e trasparenza nel nostro showroom a Bergamo. Scopri MyCars e il nostro team."
+    },
+    "blocchi": [
+      {
+        "titolo": "Passione per l'eccellenza",
+        "testo1": "MyCars nasce dalla passione per le auto e dalla volontà di offrire ai clienti un servizio personalizzato, professionale e affidabile. La nostra missione è rendere l'acquisto e la vendita di veicoli un’esperienza semplice e soddisfacente, con trasparenza e competenza.",
+        "testo2": "Selezioniamo con cura ogni veicolo, garantendo qualità, sicurezza e un ottimo rapporto qualità-prezzo. Il nostro team è sempre a disposizione per trovare la soluzione perfetta per le tue esigenze.",
+        "figcaption": "Team MyCars nello showroom"
+      },
+      {
+        "titolo": "La tua soddisfazione è la nostra priorità",
+        "testo1": "Con sedi strategiche e un’ampia rete di contatti nel settore automobilistico, offriamo consulenze personalizzate, valutazioni gratuite e un servizio post-vendita sempre presente.",
+        "testo2": "Vieni a trovarci per scoprire il nostro showroom o contattaci per un appuntamento. Ti guideremo nella scelta dell’auto giusta per te.",
+        "figcaption": "Consulenza personalizzata con un cliente"
+      }
+    ],
+    "cta": "Contattaci"
+  },
+  "dovesiamo": {
+    "meta": {
+      "title": "Costa di Mezzate | MyCars Bergamo",
+      "description": "Contatta MyCars a Costa di Mezzate (BG). Scopri indirizzo, telefono, orari e posizione su Google Maps. Siamo a disposizione per consulenze auto e appuntamenti.",
+      "keywords": "Contatti MyCars Costa di Mezzate, concessionaria Bergamo, telefono, orari apertura, email, mappa",
+      "ogTitle": "Contatti Costa di Mezzate | MyCars",
+      "ogDescription": "Scopri come raggiungerci nella sede di Costa di Mezzate. MyCars Bergamo: professionalità e disponibilità."
+    },
+    "title": "Costa di Mezzate",
+    "indirizzo": "Via dei Livelli di Sopra\n24060 – Costa di Mezzate (BG)",
+    "orariTitolo": "Orari di apertura:",
+    "orari": {
+      "lunven": "Lunedì – Venerdì: 09:00 – 12:30 / 14:30 – 19:00",
+      "sabato": "Sabato: 09:00 – 12:30",
+      "domenica": "Domenica: Chiuso"
+    }
+  }
 }

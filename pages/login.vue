@@ -1,127 +1,115 @@
-<script setup>
+<script setup lang="ts">
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
+import { signInWithEmailAndPassword, sendPasswordResetEmail } from 'firebase/auth'
+import { auth } from '@/lib/firebase' // ✅ giusto percorso
 import { useHead } from '#imports'
 
-const user = ref('')
-const pass = ref('')
 const router = useRouter()
+
+const email = ref('')
+const password = ref('')
+const error = ref('')
 const showReset = ref(false)
 const resetEmail = ref('')
-const error = ref('')
 
 useHead({
   title: 'Login Area Riservata | MyCars',
   meta: [
-    {
-      name: 'description',
-      content: 'Accedi all’area riservata di MyCars per gestire i tuoi veicoli, annunci e contatti. Accesso protetto per utenti autorizzati.'
-    },
+    { name: 'description', content: 'Accedi all’area riservata di MyCars per gestire i tuoi veicoli.' },
     { name: 'robots', content: 'noindex, nofollow' },
     { property: 'og:title', content: 'Login Area Riservata | MyCars' },
-    {
-      property: 'og:description',
-      content: 'Pagina di accesso all’area riservata di MyCars Bergamo.'
-    },
+    { property: 'og:description', content: 'Accesso sicuro a MyCars Bergamo.' },
     { property: 'og:type', content: 'website' },
     { property: 'og:url', content: 'https://www.mycarsbergamo.it/login' }
   ],
-  link: [
-    { rel: 'canonical', href: 'https://www.mycarsbergamo.it/login' }
-  ]
+  link: [{ rel: 'canonical', href: 'https://www.mycarsbergamo.it/login' }]
 })
 
-const users = [
-  { username: 'admin', password: '1234' },
-  { username: 'andrypiscioneri@gmail.com', password: 'andrea' },
-  { username: 'umberto', password: 'azzolin' },
-]
-
-const login = () => {
+const login = async () => {
   error.value = ''
-  const match = users.find(
-    (u) => u.username === user.value && u.password === pass.value
-  )
-
-  if (match) {
-    localStorage.setItem('auth', 'true')
-    localStorage.setItem('user', user.value)
+  try {
+    const userCredential = await signInWithEmailAndPassword(auth, email.value, password.value)
+    console.log('✅ Login avvenuto:', userCredential.user.email)
     router.push('/area-riservata')
-  } else {
-    error.value = 'Credenziali errate. Riprova.'
+  } catch (err: any) {
+    console.error('❌ Errore login Firebase:', err.code, err.message)
+    
+    // Mostra errore più specifico se vuoi
+    switch (err.code) {
+      case 'auth/user-not-found':
+        error.value = 'Utente non trovato.'
+        break
+      case 'auth/wrong-password':
+        error.value = 'Password errata.'
+        break
+      case 'auth/invalid-email':
+        error.value = 'Email non valida.'
+        break
+      default:
+        error.value = 'Email o password non validi.'
+    }
   }
 }
 
-const resetPassword = () => {
+const resetPassword = async () => {
   error.value = ''
-  const match = users.find((u) => u.username === resetEmail.value)
-
-  if (match) {
-    alert(`È stata inviata una nuova password a: ${resetEmail.value}`)
+  try {
+    await sendPasswordResetEmail(auth, resetEmail.value)
+    alert(`Email inviata a ${resetEmail.value}`)
     showReset.value = false
     resetEmail.value = ''
-  } else {
-    error.value = 'Indirizzo email non autorizzato.'
+  } catch (err: any) {
+    console.error('❌ Errore reset password:', err)
+    error.value = 'Email non trovata o errore di rete.'
   }
 }
 </script>
 
 <template>
   <main>
-    <section
-      class="min-h-screen bg-black text-white flex items-center justify-center px-4 py-20"
-      aria-labelledby="login-title"
-    >
+    <section class="min-h-screen bg-black text-white flex items-center justify-center px-4 py-20">
       <div class="w-full max-w-md bg-white/5 backdrop-blur-lg p-8 rounded-lg shadow-lg space-y-6">
-        <h1 id="login-title" class="text-2xl font-bold text-white text-center">
-          Area Riservata
-        </h1>
+        <h1 class="text-2xl font-bold text-white text-center">Area Riservata</h1>
 
-        <div v-if="!showReset" class="space-y-4" aria-label="Form login">
+        <div v-if="!showReset" class="space-y-4">
           <input
-            v-model="user"
-            type="text"
-            placeholder="Email o Username"
-            class="w-full px-4 py-2 bg-white/10 text-white border border-white/20 rounded focus:outline-none focus:ring-2 focus:ring-[#A30000]"
+            v-model="email"
+            type="email"
+            placeholder="Email"
+            class="w-full px-4 py-2 bg-white/10 text-white border border-white/20 rounded"
             autocomplete="username"
-            aria-label="Email o Username"
           />
           <input
-            v-model="pass"
+            v-model="password"
             type="password"
             placeholder="Password"
-            class="w-full px-4 py-2 bg-white/10 text-white border border-white/20 rounded focus:outline-none focus:ring-2 focus:ring-[#A30000]"
+            class="w-full px-4 py-2 bg-white/10 text-white border border-white/20 rounded"
             autocomplete="current-password"
-            aria-label="Password"
           />
-
           <button
             @click="login"
             class="w-full bg-[#A30000] hover:bg-red-800 text-white py-2 rounded font-semibold transition"
           >
             Accedi
           </button>
-
           <p
             class="text-sm text-center underline cursor-pointer text-white/70 hover:text-white"
             @click="showReset = true"
-            aria-label="Password dimenticata"
           >
             Password dimenticata?
           </p>
         </div>
 
-        <div v-else class="space-y-4" aria-label="Form recupero password">
+        <div v-else class="space-y-4">
           <p class="text-sm text-white/80 text-center">
-            Inserisci la tua email per il recupero password:
+            Inserisci la tua email per reimpostare la password:
           </p>
           <input
             v-model="resetEmail"
             type="email"
-            placeholder="Email autorizzata"
-            class="w-full px-4 py-2 bg-white/10 text-white border border-white/20 rounded focus:outline-none focus:ring-2 focus:ring-[#A30000]"
-            autocomplete="email"
-            aria-label="Email per reset password"
+            placeholder="Email"
+            class="w-full px-4 py-2 bg-white/10 text-white border border-white/20 rounded"
           />
           <button
             @click="resetPassword"
@@ -132,7 +120,6 @@ const resetPassword = () => {
           <p
             class="text-sm text-center underline cursor-pointer text-white/70 hover:text-white"
             @click="showReset = false"
-            aria-label="Torna al login"
           >
             Torna al login
           </p>

@@ -2,7 +2,8 @@
 import { ref, computed, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useHead } from '#imports' // 👈 assicurati che sia presente
-
+import { db } from '@/lib/firebase'
+import { collection, getDocs } from 'firebase/firestore'
 useHead({
   title: 'Auto Usate a Bergamo | Occasioni Garantite - MyCars',
   meta: [
@@ -63,10 +64,12 @@ const slugify = (str) =>
     .replace(/\s+/g, '-').replace(/[^\w\-]+/g, '').replace(/\-\-+/g, '-')
 
 onMounted(async () => {
-  const res = await fetch('/api/veicoli')
-  veicoli.value = await res.json()
+  const snapshot = await getDocs(collection(db, 'annunci'))
+  veicoli.value = snapshot.docs.map(doc => ({
+    id: doc.id,
+    ...doc.data()
+  })).filter(v => v.tipo === 'usato') // carica solo veicoli usati
 })
-
 const filtraVeicoli = computed(() => {
   let result = veicoli.value.filter(v => v.tipo === 'usato')
 
