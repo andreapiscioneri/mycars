@@ -7,10 +7,12 @@ const items = ref([]);
 
 const getList = async () => {
     const list = await getDocs(collection(db, 'cars'));
-    items.value  =  list.docs.map(doc => doc.data());
-    console.log(data);
+    items.value = list.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data()
+    }));
+    console.log(items.value);
 }  
-
 
 onMounted(async () => {
     await getList();
@@ -34,7 +36,7 @@ onMounted(async () => {
         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ item.title }}</td>
         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ item.year }}</td>
         <td class="px-6 py-4 whitespace-nowrap text-sm">
-          <a href="#" class="text-indigo-600 hover:text-indigo-900">Edit</a>
+          <NuxtLink :to="`/admin/edit/${item.id}`" class="text-indigo-600 hover:text-indigo-900">Edit</NuxtLink>
         </td>
       </tr>
     </tbody>
