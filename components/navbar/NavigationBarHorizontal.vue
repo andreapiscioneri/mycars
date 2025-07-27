@@ -270,8 +270,8 @@ const isRouteActive = (itemRoute: string) => {
                 @click="changeLang(lang.code as 'it' | 'en')"
                 class="px-3 py-2 flex items-center gap-3 cursor-pointer hover:bg-gray-100 transition-colors"
               >
-                <span class="text-lg">{{ lang.emoji }}</span>
-                <span class="text-sm font-medium">{{ lang.label }}</span>
+                <span class="text-lg cursor-pointer">{{ lang.emoji }}</span>
+                <span class="text-sm font-medium cursor-pointer">{{ lang.label }}</span>
               </div>
             </div>
           </div>
