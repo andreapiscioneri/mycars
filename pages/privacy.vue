@@ -27,10 +27,7 @@ useHead({
 
 <template>
   <main>
-    <section
-      class="w-full bg-black text-white py-16 px-4 md:px-10 pb-40"
-      aria-labelledby="privacy-title"
-    >
+    <section class="w-full bg-black text-white py-16 px-4 md:px-10 pb-40" aria-labelledby="privacy-title">
       <article class="max-w-4xl mx-auto space-y-8">
         <h1 id="privacy-title" class="text-4xl font-bold text-white">
           Privacy Policy
@@ -42,47 +39,38 @@ useHead({
 
         <h2 class="text-2xl font-semibold text-white">Titolare del trattamento</h2>
         <p class="text-white/80">
-          Il titolare del trattamento dei dati è MyCars, con sede in Via dei Livelli di Sopra, 24060 Costa di Mezzate (BG).
-          Puoi contattarci via email all’indirizzo info@maycars.it.
+          Il titolare del trattamento dei dati è MyCars, con sede in Via dei Livelli di Sopra, 24060 Costa di Mezzate (BG). Puoi contattarci via email all’indirizzo info@maycars.it.
         </p>
 
         <h2 class="text-2xl font-semibold text-white">Dati raccolti</h2>
-        <ul class="list-disc list-inside text-white/80 space-y-2">
-          <li>Dati anagrafici (nome, cognome)</li>
-          <li>Contatti (email, telefono)</li>
-          <li>Dati forniti volontariamente tramite form</li>
-          <li>Dati di navigazione anonimi (IP, tipo di browser, ecc.)</li>
-        </ul>
+        <p class="text-white/80">Raccogliamo dati anagrafici come nome e cognome.</p>
+        <p class="text-white/80">Raccogliamo dati di contatto come email e numero di telefono.</p>
+        <p class="text-white/80">Raccogliamo dati forniti volontariamente attraverso i moduli presenti sul sito.</p>
+        <p class="text-white/80">Raccogliamo anche dati di navigazione anonimi, come indirizzo IP e tipo di browser utilizzato.</p>
 
         <h2 class="text-2xl font-semibold text-white">Finalità del trattamento</h2>
-        <p class="text-white/80">
-          I dati raccolti vengono utilizzati per:
-        </p>
-        <ul class="list-disc list-inside text-white/80 space-y-2">
-          <li>Gestione delle richieste di contatto</li>
-          <li>Comunicazioni promozionali (previo consenso)</li>
-          <li>Miglioramento del sito e dei servizi</li>
-        </ul>
+        <p class="text-white/80">I dati raccolti vengono utilizzati per gestire le richieste di contatto.</p>
+        <p class="text-white/80">Previo consenso, possiamo utilizzarli per inviare comunicazioni promozionali.</p>
+        <p class="text-white/80">Utilizziamo i dati anche per migliorare il nostro sito e i servizi offerti.</p>
 
         <h2 class="text-2xl font-semibold text-white">Conservazione dei dati</h2>
         <p class="text-white/80">
-          I dati saranno conservati per il tempo necessario a soddisfare le finalità indicate o secondo quanto previsto dalla legge.
+          I dati personali saranno conservati per il tempo necessario a soddisfare le finalità per cui sono stati raccolti o secondo quanto previsto dalla normativa vigente.
         </p>
 
         <h2 class="text-2xl font-semibold text-white">Diritti dell’utente</h2>
         <p class="text-white/80">
-          In qualsiasi momento hai il diritto di accedere, modificare, cancellare o opporti al trattamento dei tuoi dati personali.
-          Puoi esercitare questi diritti scrivendo a info@maycars.it.
+          Hai il diritto di accedere, modificare, cancellare o opporti al trattamento dei tuoi dati personali. Per esercitare questi diritti puoi scriverci all'indirizzo email info@maycars.it.
         </p>
 
         <h2 class="text-2xl font-semibold text-white">Sicurezza</h2>
         <p class="text-white/80">
-          Adottiamo misure tecniche e organizzative adeguate per proteggere i dati personali da accessi non autorizzati, perdita o distruzione.
+          Adottiamo misure tecniche e organizzative adeguate per garantire la sicurezza dei dati personali, evitando accessi non autorizzati, perdita o divulgazione indebita.
         </p>
 
         <h2 class="text-2xl font-semibold text-white">Modifiche</h2>
         <p class="text-white/80">
-          Questa informativa può essere aggiornata. Le modifiche saranno pubblicate su questa pagina.
+          La presente informativa può essere soggetta a modifiche. Eventuali aggiornamenti saranno pubblicati su questa pagina.
         </p>
 
         <p class="text-sm text-white/60 pt-6">
