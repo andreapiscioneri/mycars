@@ -258,5 +258,52 @@
     "footer": {
       "copyright": "© 2025 MyCars Bergamo. Tutti i diritti riservati."
     }
+  },
+  "category": {
+    "titles": {
+      "used": "Auto Usate a Bergamo | Occasioni Garantite - MyCars",
+      "rent": "Auto a Noleggio a Bergamo | Noleggio Auto - MyCars",
+      "default": "Lista Auto - MyCars"
+    },
+    "descriptions": {
+      "used": "Trova auto usate garantite a Bergamo. Filtra per marca, chilometri, prezzo e anno. Scopri le offerte di MyCars con chilometraggi certificati e controlli professionali.",
+      "rent": "Noleggia auto a Bergamo. Ampia flotta di veicoli per ogni esigenza. Noleggio breve e lungo termine con prezzi competitivi.",
+      "default": "Lista auto disponibili"
+    },
+    "labels": {
+      "used": "Auto Usate",
+      "rent": "Auto a Noleggio",
+      "default": "Auto"
+    },
+    "filters": {
+      "title": "Filtra",
+      "clearAll": "Pulisci tutto",
+      "openFilters": "Apri filtri",
+      "closeFilters": "Chiudi filtri",
+      "brand": "Marca",
+      "powerSource": "Carburante",
+      "seller": "Venditore",
+      "price": "Prezzo (€)",
+      "kilometers": "Chilometri",
+      "year": "Anno",
+      "minPlaceholder": "Min ({min})",
+      "maxPlaceholder": "Max ({max})",
+      "showResults": "Mostra {count} risultati"
+    },
+    "search": {
+      "placeholder": "Cerca per modello, marca...",
+      "resultsCount": "{count} veicoli trovati",
+      "noResults": "Nessuna auto trovata con i filtri selezionati.",
+      "removeFilters": "Rimuovi tutti i filtri"
+    },
+    "sorting": {
+      "label": "Ordina per:",
+      "priceAsc": "Prezzo ↑",
+      "priceDesc": "Prezzo ↓", 
+      "yearDesc": "Anno ↓",
+      "yearAsc": "Anno ↑",
+      "kmAsc": "Km ↑",
+      "kmDesc": "Km ↓"
+    }
   }
 }

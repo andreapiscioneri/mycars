@@ -258,6 +258,53 @@
     "footer": {
       "copyright": "© 2025 MyCars Bergamo. All rights reserved."
     }
+  },
+  "category": {
+    "titles": {
+      "used": "Used Cars in Bergamo | Guaranteed Deals - MyCars",
+      "rent": "Car Rental in Bergamo | Car Rental - MyCars",
+      "default": "Car List - MyCars"
+    },
+    "descriptions": {
+      "used": "Find guaranteed used cars in Bergamo. Filter by brand, mileage, price and year. Discover MyCars offers with certified mileage and professional checks.",
+      "rent": "Rent cars in Bergamo. Wide fleet of vehicles for every need. Short and long term rental with competitive prices.",
+      "default": "Available car list"
+    },
+    "labels": {
+      "used": "Used Cars",
+      "rent": "Car Rental",
+      "default": "Cars"
+    },
+    "filters": {
+      "title": "Filter",
+      "clearAll": "Clear all",
+      "openFilters": "Open filters",
+      "closeFilters": "Close filters",
+      "brand": "Brand",
+      "powerSource": "Fuel",
+      "seller": "Seller",
+      "price": "Price (€)",
+      "kilometers": "Kilometers",
+      "year": "Year",
+      "minPlaceholder": "Min ({min})",
+      "maxPlaceholder": "Max ({max})",
+      "showResults": "Show {count} results"
+    },
+    "search": {
+      "placeholder": "Search by model, brand...",
+      "resultsCount": "{count} vehicles found",
+      "noResults": "No cars found with selected filters.",
+      "removeFilters": "Remove all filters"
+    },
+    "sorting": {
+      "label": "Sort by:",
+      "priceAsc": "Price ↑",
+      "priceDesc": "Price ↓",
+      "yearDesc": "Year ↓", 
+      "yearAsc": "Year ↑",
+      "kmAsc": "Km ↑",
+      "kmDesc": "Km ↓"
+    }
   }
 }
 

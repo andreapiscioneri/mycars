@@ -1,13 +1,14 @@
 <script setup>
 import { ref, computed, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-import { useHead } from '#imports'
+import { useI18n } from 'vue-i18n'
 import { collection, getDocs } from 'firebase/firestore'
 import { db } from '@/lib/firebase'
 import LoadingSpinner from '@/components/LoadingSpinner.vue'
 
 const route = useRoute()
 const router = useRouter()
+const { t } = useI18n()
 const items = ref([])
 const loading = ref(true)
 
@@ -66,25 +67,21 @@ const activeFiltersCount = computed(() => {
 
 // Set page title and meta based on category
 const pageTitle = computed(() => {
-  if (category.value === 'used') return 'Auto Usate a Bergamo | Occasioni Garantite - MyCars'
-  if (category.value === 'rent') return 'Auto a Noleggio a Bergamo | Noleggio Auto - MyCars'
-  return 'Lista Auto - MyCars'
+  if (category.value === 'used') return t('category.titles.used')
+  if (category.value === 'rent') return t('category.titles.rent')
+  return t('category.titles.default')
 })
 
 const pageDescription = computed(() => {
-  if (category.value === 'used') {
-    return 'Trova auto usate garantite a Bergamo. Filtra per marca, chilometri, prezzo e anno. Scopri le offerte di MyCars con chilometraggi certificati e controlli professionali.'
-  }
-  if (category.value === 'rent') {
-    return 'Noleggia auto a Bergamo. Ampia flotta di veicoli per ogni esigenza. Noleggio breve e lungo termine con prezzi competitivi.'
-  }
-  return 'Lista auto disponibili'
+  if (category.value === 'used') return t('category.descriptions.used')
+  if (category.value === 'rent') return t('category.descriptions.rent')
+  return t('category.descriptions.default')
 })
 
 const categoryLabel = computed(() => {
-  if (category.value === 'used') return 'Auto Usate'
-  if (category.value === 'rent') return 'Auto a Noleggio'
-  return 'Auto'
+  if (category.value === 'used') return t('category.labels.used')
+  if (category.value === 'rent') return t('category.labels.rent')
+  return t('category.labels.default')
 })
 
 // Get unique values for filters from the loaded data
@@ -126,6 +123,22 @@ const yearRange = computed(() => {
     max: Math.max(...years)
   }
 })
+
+// Computed placeholders for translations
+const pricePlaceholders = computed(() => ({
+  min: t('category.filters.minPlaceholder', { min: priceRange.value.min }),
+  max: t('category.filters.maxPlaceholder', { max: priceRange.value.max })
+}))
+
+const kilometerPlaceholders = computed(() => ({
+  min: t('category.filters.minPlaceholder', { min: kilometersRange.value.min }),
+  max: t('category.filters.maxPlaceholder', { max: kilometersRange.value.max })
+}))
+
+const yearPlaceholders = computed(() => ({
+  min: t('category.filters.minPlaceholder', { min: yearRange.value.min }),
+  max: t('category.filters.maxPlaceholder', { max: yearRange.value.max })
+}))
 
 // Filtered and sorted items
 const filteredItems = computed(() => {
@@ -302,6 +315,18 @@ onMounted(async () => {
     loading.value = false
   }
 })
+
+// Set page metadata
+useHead({
+  title: pageTitle,
+  meta: [
+    { name: 'description', content: pageDescription },
+    { name: 'robots', content: 'index, follow' },
+    { property: 'og:title', content: pageTitle },
+    { property: 'og:description', content: pageDescription },
+    { property: 'og:type', content: 'website' }
+  ]
+})
 </script>
 
 <template>
@@ -350,13 +375,13 @@ onMounted(async () => {
       <div class="p-4 lg:p-6">
         <!-- Header with title and actions -->
         <div class="flex justify-between items-center mb-6 lg:mb-8 sticky top-0 bg-black pb-4 border-b border-gray-800 lg:border-b-0">
-          <h2 class="text-xl lg:text-2xl font-bold">Filtra</h2>
+          <h2 class="text-xl lg:text-2xl font-bold">{{ t('category.filters.title') }}</h2>
           <div class="flex items-center gap-3">
             <button 
               @click="clearFilters"
               class="text-sm text-[#A30000] hover:text-red-400 transition-colors px-2 py-1"
             >
-              Pulisci tutto
+              {{ t('category.filters.clearAll') }}
             </button>
             <button
               @click="toggleFilter('mobileFilters')"
@@ -374,7 +399,7 @@ onMounted(async () => {
               class="flex justify-between items-center cursor-pointer mb-2"
               @click="toggleFilter('brand')"
             >
-              <span class="font-medium">Marca</span>
+              <span class="font-medium">{{ t('category.filters.brand') }}</span>
               <span class="text-2xl transition-transform" :class="{ 'rotate-45': filterPanelStates.brand }">+</span>
             </div>
             <div v-show="filterPanelStates.brand" class="space-y-2 mt-3 max-h-40 overflow-y-auto">
@@ -401,7 +426,7 @@ onMounted(async () => {
               class="flex justify-between items-center cursor-pointer mb-2"
               @click="toggleFilter('powerSource')"
             >
-              <span class="font-medium">Carburante</span>
+              <span class="font-medium">{{ t('category.filters.powerSource') }}</span>
               <span class="text-2xl transition-transform" :class="{ 'rotate-45': filterPanelStates.powerSource }">+</span>
             </div>
             <div v-show="filterPanelStates.powerSource" class="space-y-2 mt-3">
@@ -428,7 +453,7 @@ onMounted(async () => {
               class="flex justify-between items-center cursor-pointer mb-2"
               @click="toggleFilter('seller')"
             >
-              <span class="font-medium">Venditore</span>
+              <span class="font-medium">{{ t('category.filters.seller') }}</span>
               <span class="text-2xl transition-transform" :class="{ 'rotate-45': filterPanelStates.seller }">+</span>
             </div>
             <div v-show="filterPanelStates.seller" class="space-y-2 mt-3">
@@ -455,7 +480,7 @@ onMounted(async () => {
               class="flex justify-between items-center cursor-pointer mb-2"
               @click="toggleFilter('price')"
             >
-              <span class="font-medium">Prezzo (€)</span>
+              <span class="font-medium">{{ t('category.filters.price') }}</span>
               <span class="text-2xl transition-transform" :class="{ 'rotate-45': filterPanelStates.price }">+</span>
             </div>
             <div v-show="filterPanelStates.price" class="space-y-3 mt-3">
@@ -463,13 +488,13 @@ onMounted(async () => {
                 <input 
                   v-model.number="filters.price.min"
                   type="number" 
-                  :placeholder="`Min (${priceRange.min})`"
+                  :placeholder="pricePlaceholders.min"
                   class="w-full px-3 py-2 text-xs bg-gray-700 border border-gray-600 rounded text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#A30000]"
                 />
                 <input 
                   v-model.number="filters.price.max"
                   type="number" 
-                  :placeholder="`Max (${priceRange.max})`"
+                  :placeholder="pricePlaceholders.max"
                   class="w-full px-3 py-2 text-xs bg-gray-700 border border-gray-600 rounded text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#A30000]"
                 />
               </div>
@@ -482,7 +507,7 @@ onMounted(async () => {
               class="flex justify-between items-center cursor-pointer mb-2"
               @click="toggleFilter('kilometers')"
             >
-              <span class="font-medium">Chilometri</span>
+              <span class="font-medium">{{ t('category.filters.kilometers') }}</span>
               <span class="text-2xl transition-transform" :class="{ 'rotate-45': filterPanelStates.kilometers }">+</span>
             </div>
             <div v-show="filterPanelStates.kilometers" class="space-y-3 mt-3">
@@ -490,13 +515,13 @@ onMounted(async () => {
                 <input 
                   v-model.number="filters.kilometers.min"
                   type="number" 
-                  :placeholder="`Min (${kilometersRange.min})`"
+                  :placeholder="kilometerPlaceholders.min"
                   class="w-full px-3 py-2 text-xs bg-gray-700 border border-gray-600 rounded text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#A30000]"
                 />
                 <input 
                   v-model.number="filters.kilometers.max"
                   type="number" 
-                  :placeholder="`Max (${kilometersRange.max})`"
+                  :placeholder="kilometerPlaceholders.max"
                   class="w-full px-3 py-2 text-xs bg-gray-700 border border-gray-600 rounded text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#A30000]"
                 />
               </div>
@@ -509,7 +534,7 @@ onMounted(async () => {
               class="flex justify-between items-center cursor-pointer mb-2"
               @click="toggleFilter('year')"
             >
-              <span class="font-medium">Anno</span>
+              <span class="font-medium">{{ t('category.filters.year') }}</span>
               <span class="text-2xl transition-transform" :class="{ 'rotate-45': filterPanelStates.year }">+</span>
             </div>
             <div v-show="filterPanelStates.year" class="space-y-3 mt-3">
@@ -517,13 +542,13 @@ onMounted(async () => {
                 <input 
                   v-model.number="filters.year.min"
                   type="number" 
-                  :placeholder="`Min (${yearRange.min})`"
+                  :placeholder="yearPlaceholders.min"
                   class="w-full px-3 py-2 text-xs bg-gray-700 border border-gray-600 rounded text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#A30000]"
                 />
                 <input 
                   v-model.number="filters.year.max"
                   type="number" 
-                  :placeholder="`Max (${yearRange.max})`"
+                  :placeholder="yearPlaceholders.max"
                   class="w-full px-3 py-2 text-xs bg-gray-700 border border-gray-600 rounded text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#A30000]"
                 />
               </div>
@@ -537,7 +562,7 @@ onMounted(async () => {
             @click="toggleFilter('mobileFilters')"
             class="w-full bg-[#A30000] hover:bg-red-800 text-white py-3 px-4 rounded-lg font-medium transition-colors"
           >
-            Mostra {{ filteredItems.length }} risultati
+            {{ t('category.filters.showResults', { count: filteredItems.length }) }}
           </button>
         </div>
       </div>
@@ -558,7 +583,7 @@ onMounted(async () => {
               <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.707A1 1 0 013 7V4z"></path>
               </svg>
-              <span>Filtri</span>
+              <span>{{ t('category.filters.title') }}</span>
               <div 
                 v-if="activeFiltersCount > 0" 
                 class="absolute -top-1 -right-1 bg-white text-[#A30000] text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center"
@@ -570,7 +595,7 @@ onMounted(async () => {
             <input
               v-model="searchQuery"
               type="text"
-              placeholder="Cerca per modello, marca..."
+              :placeholder="t('category.search.placeholder')"
               class="flex-1 bg-[#18181b] text-white rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#A30000] placeholder-gray-400 text-sm lg:text-base"
             />
           </div>
@@ -578,20 +603,20 @@ onMounted(async () => {
           <!-- Sort and results count -->
           <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
             <div class="text-gray-400 text-sm lg:text-base">
-              {{ filteredItems.length }} veicoli trovati
+              {{ t('category.search.resultsCount', { count: filteredItems.length }) }}
             </div>
             <div class="flex items-center gap-2">
-              <span class="text-white text-sm lg:text-base">Ordina per:</span>
+              <span class="text-white text-sm lg:text-base">{{ t('category.sorting.label') }}</span>
               <select 
                 v-model="sortBy"
                 class="bg-[#18181b] border border-white/10 text-white text-sm px-3 py-2 lg:px-4 lg:py-3 pr-8 rounded-lg appearance-none min-w-0"
               >
-                <option value="price-asc">Prezzo ↑</option>
-                <option value="price-desc">Prezzo ↓</option>
-                <option value="year-desc">Anno ↓</option>
-                <option value="year-asc">Anno ↑</option>
-                <option value="km-asc">Km ↑</option>
-                <option value="km-desc">Km ↓</option>
+                <option value="price-asc">{{ t('category.sorting.priceAsc') }}</option>
+                <option value="price-desc">{{ t('category.sorting.priceDesc') }}</option>
+                <option value="year-desc">{{ t('category.sorting.yearDesc') }}</option>
+                <option value="year-asc">{{ t('category.sorting.yearAsc') }}</option>
+                <option value="km-asc">{{ t('category.sorting.kmAsc') }}</option>
+                <option value="km-desc">{{ t('category.sorting.kmDesc') }}</option>
               </select>
             </div>
           </div>
@@ -602,12 +627,12 @@ onMounted(async () => {
         <Items :items="filteredItems" v-if="!loading" />
         <LoadingSpinner v-if="loading" />
         <div v-if="!loading && filteredItems.length === 0" class="text-center py-12 lg:py-16">
-          <p class="text-gray-500 text-base lg:text-lg mb-4">Nessuna auto trovata con i filtri selezionati.</p>
+          <p class="text-gray-500 text-base lg:text-lg mb-4">{{ t('category.search.noResults') }}</p>
           <button 
             @click="clearFilters"
             class="text-[#A30000] hover:text-red-400 transition-colors text-sm lg:text-base"
           >
-            Rimuovi tutti i filtri
+            {{ t('category.search.removeFilters') }}
           </button>
         </div>
       </div>
