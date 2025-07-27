@@ -39,7 +39,7 @@ useHead({
 
         <h2 class="text-2xl font-semibold text-white">Titolare del trattamento</h2>
         <p class="text-white/80">
-          Il titolare del trattamento dei dati è MyCars, con sede in Via dei Livelli di Sopra, 24060 Costa di Mezzate (BG). Puoi contattarci via email all’indirizzo info@maycars.it.
+          Il titolare del trattamento dei dati è MyCars, con sede in Via dei Livelli di Sopra, 24060 Costa di Mezzate (BG). Puoi contattarci via email all’indirizzo email.
         </p>
 
         <h2 class="text-2xl font-semibold text-white">Dati raccolti</h2>
@@ -60,7 +60,7 @@ useHead({
 
         <h2 class="text-2xl font-semibold text-white">Diritti dell’utente</h2>
         <p class="text-white/80">
-          Hai il diritto di accedere, modificare, cancellare o opporti al trattamento dei tuoi dati personali. Per esercitare questi diritti puoi scriverci all'indirizzo email info@maycars.it.
+          Hai il diritto di accedere, modificare, cancellare o opporti al trattamento dei tuoi dati personali. Per esercitare questi diritti puoi scriverci all'indirizzo email.
         </p>
 
         <h2 class="text-2xl font-semibold text-white">Sicurezza</h2>
