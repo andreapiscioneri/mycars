@@ -107,223 +107,312 @@ const onDrop = (e, dropIndex) => {
 </script>
 
 <template>
-  <form @submit.prevent="handleSubmit" class="max-w-md mx-auto p-4">
-    <div class="mb-4">
-      <label class="block text-gray-700 text-sm font-bold mb-2" for="title">
-        Title
-      </label>
-      <input
-        id="title"
-        v-model="formData.title"
-        type="text"
-        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-        required
-      >
-    </div>
-    <div class="mb-4">
-      <label class="block text-gray-700 text-sm font-bold mb-2" for="subtitle">
-        Subtitle
-      </label>
-      <input
-        id="subtitle"
-        v-model="formData.subtitle"
-        type="text"
-        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-        required
-      >
-    </div>
-
-    <div class="mb-4">
-      <label class="block text-gray-700 text-sm font-bold mb-2" for="year">
-        Year
-      </label>
-      <input
-        id="year"
-        v-model="formData.year"
-        type="number"
-        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-        required
-      >
-    </div>
-    <div class="mb-4">
-      <label class="block text-gray-700 text-sm font-bold mb-2" for="price">
-        Price
-      </label>
-      <input
-        id="price"
-        v-model="formData.price"
-        type="number"
-        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-        required
-      >
-    </div>
-    <div class="mb-4">
-      <label class="block text-gray-700 text-sm font-bold mb-2" for="kilometers">
-        Kilometers
-      </label>
-      <input
-        id="kilometers"
-        v-model="formData.kilometers"
-        type="number"
-        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-        required
-      >
-    </div>
-    <div class="mb-4">
-      <label class="block text-gray-700 text-sm font-bold mb-2" for="powerSource">
-        Power Source
-      </label>
-      <input
-        id="powerSource"
-        v-model="formData.powerSource"
-        type="text"
-        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-        required
-      >
-    </div>
-    <div class="mb-4">
-      <label class="block text-gray-700 text-sm font-bold mb-2" for="brand">
-        Brand
-      </label>
-      <input
-        id="brand"
-        v-model="formData.brand"
-        type="text"
-        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-        required
-      >
-    </div>
-    <div class="mb-4">
-      <label class="block text-gray-700 text-sm font-bold mb-2" for="seller">
-        Seller
-      </label>
-      <input
-        id="seller"
-        v-model="formData.seller"
-        type="text"
-        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-        required
-      >
+  <form @submit.prevent="handleSubmit" class="max-w-4xl mx-auto space-y-8">
+    <!-- Basic Information -->
+    <div class="bg-gray-50 rounded-lg p-6">
+      <h3 class="text-lg font-semibold text-gray-900 mb-6 flex items-center gap-2">
+        <svg class="w-5 h-5 text-[#A30000]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+        </svg>
+        Informazioni Generali
+      </h3>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div>
+          <label class="block text-gray-700 text-sm font-semibold mb-2" for="title">
+            Titolo *
+          </label>
+          <input
+            id="title"
+            v-model="formData.title"
+            type="text"
+            placeholder="Es. BMW Serie 3 320d"
+            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#A30000] focus:border-transparent transition-all"
+            required
+          >
+        </div>
+        
+        <div>
+          <label class="block text-gray-700 text-sm font-semibold mb-2" for="subtitle">
+            Sottotitolo *
+          </label>
+          <input
+            id="subtitle"
+            v-model="formData.subtitle"
+            type="text"
+            placeholder="Es. Touring Business Advantage"
+            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#A30000] focus:border-transparent transition-all"
+            required
+          >
+        </div>
+        
+        <div>
+          <label class="block text-gray-700 text-sm font-semibold mb-2" for="year">
+            Anno *
+          </label>
+          <input
+            id="year"
+            v-model="formData.year"
+            type="number"
+            min="1900"
+            max="2030"
+            placeholder="Es. 2020"
+            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#A30000] focus:border-transparent transition-all"
+            required
+          >
+        </div>
+        
+        <div>
+          <label class="block text-gray-700 text-sm font-semibold mb-2" for="category">
+            Categoria *
+          </label>
+          <select
+            id="category"
+            v-model="formData.category"
+            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#A30000] focus:border-transparent transition-all"
+            required
+          >
+            <option value="used">Usato</option>
+            <option value="rent">Noleggio</option>
+          </select>
+        </div>
+      </div>
     </div>
 
-    <div class="mb-4">
-      <label class="block text-gray-700 text-sm font-bold mb-2" for="category">
-        Category
-      </label>
-      <select
-        id="category"
-        v-model="formData.category"
-        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-        required
-      >
-        <option value="used">Used</option>
-        <option value="rent">Rent</option>
-      </select>
+    <!-- Technical Details -->
+    <div class="bg-gray-50 rounded-lg p-6">
+      <h3 class="text-lg font-semibold text-gray-900 mb-6 flex items-center gap-2">
+        <svg class="w-5 h-5 text-[#A30000]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+        </svg>
+        Dettagli Tecnici
+      </h3>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div>
+          <label class="block text-gray-700 text-sm font-semibold mb-2" for="price">
+            Prezzo (€) *
+          </label>
+          <input
+            id="price"
+            v-model="formData.price"
+            type="number"
+            min="0"
+            step="100"
+            placeholder="Es. 25000"
+            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#A30000] focus:border-transparent transition-all"
+            required
+          >
+        </div>
+        
+        <div>
+          <label class="block text-gray-700 text-sm font-semibold mb-2" for="kilometers">
+            Chilometri *
+          </label>
+          <input
+            id="kilometers"
+            v-model="formData.kilometers"
+            type="number"
+            min="0"
+            placeholder="Es. 50000"
+            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#A30000] focus:border-transparent transition-all"
+            required
+          >
+        </div>
+        
+        <div>
+          <label class="block text-gray-700 text-sm font-semibold mb-2" for="powerSource">
+            Alimentazione *
+          </label>
+          <input
+            id="powerSource"
+            v-model="formData.powerSource"
+            type="text"
+            placeholder="Es. Diesel, Benzina, Elettrica"
+            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#A30000] focus:border-transparent transition-all"
+            required
+          >
+        </div>
+        
+        <div>
+          <label class="block text-gray-700 text-sm font-semibold mb-2" for="brand">
+            Marca *
+          </label>
+          <input
+            id="brand"
+            v-model="formData.brand"
+            type="text"
+            placeholder="Es. BMW, Audi, Mercedes"
+            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#A30000] focus:border-transparent transition-all"
+            required
+          >
+        </div>
+      </div>
+      
+      <div class="mt-6">
+        <label class="block text-gray-700 text-sm font-semibold mb-2" for="seller">
+          Venditore *
+        </label>
+        <input
+          id="seller"
+          v-model="formData.seller"
+          type="text"
+          placeholder="Nome del venditore"
+          class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#A30000] focus:border-transparent transition-all"
+          required
+        >
+      </div>
     </div>
 
-    <div class="mb-4">
-      <label class="block text-gray-700 text-sm font-bold mb-2" for="description">
-        Description
-      </label>
+    <!-- Description -->
+    <div class="bg-gray-50 rounded-lg p-6">
+      <h3 class="text-lg font-semibold text-gray-900 mb-6 flex items-center gap-2">
+        <svg class="w-5 h-5 text-[#A30000]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h7"></path>
+        </svg>
+        Descrizione
+      </h3>
+      
       <textarea
         id="description"
         v-model="formData.description"
-        rows="4"
-        placeholder="Enter car description..."
-        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline resize-none"
+        rows="6"
+        placeholder="Inserisci una descrizione dettagliata del veicolo, le sue caratteristiche, gli optional inclusi, etc..."
+        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#A30000] focus:border-transparent transition-all resize-none"
       ></textarea>
     </div>
 
     <!-- Images Section -->
-    <div class="mb-4">
-      <label class="block text-gray-700 text-sm font-bold mb-2">
-        Images
-      </label>
+    <div class="bg-gray-50 rounded-lg p-6">
+      <h3 class="text-lg font-semibold text-gray-900 mb-6 flex items-center gap-2">
+        <svg class="w-5 h-5 text-[#A30000]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+        </svg>
+        Immagini
+      </h3>
       
       <!-- Upload new image -->
-      <div class="mb-4">
-        <input
-          ref="fileInput"
-          type="file"
-          accept="image/*"
-          multiple
-          @change="handleFileSelect"
-          class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
-        >
-      </div>
-
-      <!-- Existing images list -->
-      <div v-if="formData.images.length > 0" class="space-y-2 mb-4">
-        <h4 class="text-sm font-semibold text-gray-700">Existing Images</h4>
-        <div
-          v-for="(image, index) in formData.images"
-          :key="`existing-${index}`"
-          draggable="true"
-          @dragstart="onDragStart($event, index)"
-          @dragover="onDragOver"
-          @drop="onDrop($event, index)"
-          class="flex items-center gap-3 p-3 border rounded bg-gray-50 cursor-move hover:bg-gray-100"
-        >
-          <img
-            :src="image"
-            :alt="getFilename(image)"
-            class="w-16 h-16 object-cover rounded border"
-            @error="$event.target.style.display='none'"
-          >
-          <div class="flex-1 min-w-0">
-            <p class="text-sm text-gray-600 truncate">{{ getFilename(image) }}</p>
-            <p class="text-xs text-gray-400 truncate">{{ image }}</p>
-          </div>
-          <button
-            type="button"
-            @click="removeImage(index)"
-            class="text-red-600 hover:text-red-800 text-sm font-bold"
-          >
-            Delete
-          </button>
+      <div class="mb-6">
+        <div class="flex items-center justify-center w-full">
+          <label for="dropzone-file" class="flex flex-col items-center justify-center w-full h-32 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-white hover:bg-gray-50 transition-colors">
+            <div class="flex flex-col items-center justify-center pt-5 pb-6">
+              <svg class="w-8 h-8 mb-4 text-gray-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 16">
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"/>
+              </svg>
+              <p class="mb-2 text-sm text-gray-500"><span class="font-semibold">Clicca per caricare</span> o trascina qui</p>
+              <p class="text-xs text-gray-500">PNG, JPG (MAX. 10MB)</p>
+            </div>
+            <input
+              id="dropzone-file"
+              ref="fileInput"
+              type="file"
+              accept="image/*"
+              multiple
+              @change="handleFileSelect"
+              class="hidden"
+            />
+          </label>
         </div>
-        <p class="text-xs text-gray-500 italic">Drag the image items to sort them</p>
       </div>
 
-      <!-- New uploaded files list -->
-      <div v-if="uploadedFiles.length > 0" class="space-y-2">
-        <h4 class="text-sm font-semibold text-gray-700">New Images to Upload</h4>
-        <div
-          v-for="(file, index) in uploadedFiles"
-          :key="`new-${index}`"
-          class="flex items-center gap-3 p-3 border rounded bg-blue-50"
-        >
-          <img
-            v-if="isClient && filePreviewUrls[index]"
-            :src="filePreviewUrls[index]"
-            :alt="file.name"
-            class="w-16 h-16 object-cover rounded border"
+      <!-- Existing images -->
+      <div v-if="formData.images.length > 0" class="mb-6">
+        <h4 class="text-sm font-semibold text-gray-700 mb-3 flex items-center gap-2">
+          <svg class="w-4 h-4 text-[#A30000]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+          </svg>
+          Immagini Attuali
+        </h4>
+        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+          <div
+            v-for="(image, index) in formData.images"
+            :key="`existing-${index}`"
+            class="relative group bg-white rounded-lg border border-gray-200 p-2 hover:shadow-md transition-all"
+            draggable="true"
+            @dragstart="onDragStart($event, index)"
+            @dragover="onDragOver"
+            @drop="onDrop($event, index)"
           >
-          <div class="flex-1 min-w-0">
-            <p class="text-sm text-gray-600 truncate">{{ file.name }}</p>
-            <p class="text-xs text-gray-400">{{ (file.size / 1024 / 1024).toFixed(2) }} MB</p>
+            <img
+              :src="image"
+              :alt="`Immagine ${index + 1}`"
+              class="w-full h-24 object-cover rounded border cursor-move"
+              @error="$event.target.style.display='none'"
+            />
+            <button
+              type="button"
+              @click="removeImage(index)"
+              class="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs hover:bg-red-600 transition-colors opacity-0 group-hover:opacity-100"
+            >
+              ×
+            </button>
+            <div class="absolute bottom-1 left-1 bg-black bg-opacity-50 text-white text-xs px-1 rounded">
+              {{ index + 1 }}
+            </div>
           </div>
-          <button
-            type="button"
-            @click="removeUploadedFile(index)"
-            class="text-red-600 hover:text-red-800 text-sm font-bold"
+        </div>
+      </div>
+
+      <!-- New images to upload -->
+      <div v-if="uploadedFiles.length > 0" class="mb-6">
+        <h4 class="text-sm font-semibold text-gray-700 mb-3 flex items-center gap-2">
+          <svg class="w-4 h-4 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path>
+          </svg>
+          Nuove Immagini da Caricare
+        </h4>
+        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+          <div
+            v-for="(file, index) in uploadedFiles"
+            :key="`new-${index}`"
+            class="relative group bg-blue-50 rounded-lg border border-blue-200 p-2"
           >
-            Remove
-          </button>
+            <img
+              v-if="isClient && filePreviewUrls[index]"
+              :src="filePreviewUrls[index]"
+              :alt="file.name"
+              class="w-full h-24 object-cover rounded border"
+            />
+            <div class="mt-2">
+              <p class="text-xs text-gray-600 truncate" :title="file.name">{{ file.name }}</p>
+              <p class="text-xs text-gray-400">{{ (file.size / 1024 / 1024).toFixed(2) }} MB</p>
+            </div>
+            <button
+              type="button"
+              @click="removeUploadedFile(index)"
+              class="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs hover:bg-red-600 transition-colors opacity-0 group-hover:opacity-100"
+            >
+              ×
+            </button>
+          </div>
         </div>
       </div>
       
-      <div v-if="formData.images.length === 0 && uploadedFiles.length === 0" class="text-gray-500 text-sm italic">
-        No images added yet
+      <div v-if="formData.images.length === 0 && uploadedFiles.length === 0" class="text-center py-8">
+        <svg class="w-12 h-12 text-gray-400 mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+        </svg>
+        <p class="text-gray-500 text-sm">Nessuna immagine aggiunta</p>
       </div>
     </div>
 
-    <div class="flex items-center justify-between">
+    <!-- Submit Button -->
+    <div class="flex items-center justify-end space-x-4 pt-6">
+      <NuxtLink 
+        to="/admin" 
+        class="px-6 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors font-medium"
+      >
+        Annulla
+      </NuxtLink>
       <button
         type="submit"
-        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+        class="bg-[#A30000] hover:bg-red-800 text-white font-medium py-2 px-8 rounded-lg transition-all duration-300 transform hover:scale-105 shadow-md hover:shadow-lg flex items-center gap-2"
       >
-        {{ initialData && Object.keys(initialData).length > 0 ? 'Update' : 'Create' }}
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+        </svg>
+        {{ initialData && Object.keys(initialData).length > 0 ? 'Aggiorna Veicolo' : 'Crea Veicolo' }}
       </button>
     </div>
   </form>

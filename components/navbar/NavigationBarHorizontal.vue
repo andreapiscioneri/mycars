@@ -47,6 +47,13 @@ const changeLang = (lang: 'it' | 'en') => {
 
 const isLoggedIn = ref(false)
 
+const logout = () => {
+  auth.signOut()
+  localStorage.removeItem('auth')
+  router.push('/login')
+  if (props.isMobile) emit('toggle')
+}
+
 onMounted(() => {
   auth.onAuthStateChanged((user) => {
     isLoggedIn.value = !!user
@@ -114,6 +121,18 @@ const menuItems = computed(() => {
           @click="() => { router.push(item.route); if (isMobile) emit('toggle') }"
         >
           {{ isOpen || isMobile ? item.label : '•' }}
+        </div>
+        
+        <!-- Logout button (only when logged in) -->
+        <div
+          v-if="isLoggedIn"
+          class="cursor-pointer transition whitespace-nowrap overflow-hidden text-ellipsis flex items-center justify-start text-red-500 hover:text-red-400"
+          @click="logout"
+        >
+          <svg v-if="isOpen || isMobile" class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path>
+          </svg>
+          {{ isOpen || isMobile ? 'Logout' : '•' }}
         </div>
       </nav>
 

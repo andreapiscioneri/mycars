@@ -185,6 +185,33 @@ onMounted(async () => {
               <span>Categoria:</span>
               <span>{{ car.category === 'used' ? 'Usato' : 'Noleggio' }}</span>
             </li>
+            <li class="text-xl font-bold text-white border border-white bg-green-900/10 px-4 py-2 rounded w-fit">
+              <span>{{ car.price ? `€ ${car.price.toLocaleString()}` : 'n.d.' }}</span>
+            </li>
+            <li class="flex justify-between pt-2">
+              <span>Potenza:</span>
+              <span>{{ car.power || 'n.d.' }}</span>
+            </li>
+            <li class="flex justify-between pt-2">
+              <span>Colore:</span>
+              <span>{{ car.color || 'n.d.' }}</span>
+            </li>
+            <li class="flex justify-between pt-2">
+              <span>Chilometraggio:</span>
+              <span>{{ car.kilometers ? `${car.kilometers.toLocaleString()} km` : 'n.d.' }}</span>
+            </li>
+            <li class="flex justify-between pt-2">
+              <span>Fonte di alimentazione:</span>
+              <span>{{ car.powerSource || 'n.d.' }}</span>
+            </li>
+            <li class="flex justify-between pt-2">
+              <span>Marca:</span>
+              <span>{{ car.brand || 'n.d.' }}</span>
+            </li>
+            <li class="flex justify-between pt-2">
+              <span>Venditore:</span>
+              <span>{{ car.seller || 'n.d.' }}</span>
+            </li>
           </ul>
 
           <div v-if="car.description" class="pt-6 text-sm text-white/90 leading-relaxed">

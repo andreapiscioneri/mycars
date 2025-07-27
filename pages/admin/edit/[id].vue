@@ -97,28 +97,52 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="container mx-auto p-4">
-    <div class="mb-4">
-      <NuxtLink to="/admin" class="text-blue-600 hover:text-blue-800">
-        ← Back to Admin
-      </NuxtLink>
+  <div class="min-h-screen bg-gray-50">
+    <!-- Header -->
+    <div class="bg-white shadow-sm border-b border-gray-200">
+      <div class="container mx-auto px-4 py-6">
+        <div class="flex items-center space-x-4">
+          <NuxtLink 
+            to="/admin" 
+            class="text-[#A30000] hover:text-red-800 transition-colors flex items-center gap-2 font-medium"
+          >
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+            </svg>
+            Torna all'Area Riservata
+          </NuxtLink>
+          <span class="text-gray-500">|</span>
+          <h1 class="text-3xl font-bold text-[#A30000]">Modifica Veicolo</h1>
+        </div>
+      </div>
     </div>
 
-    <LoadingSpinner v-if="loading" />
+    <!-- Main Content -->
+    <div class="container mx-auto px-4 py-8">
+      <LoadingSpinner v-if="loading" />
 
-    <div v-else-if="error" class="text-center py-8">
-      <p class="text-red-600">{{ error }}</p>
-      <NuxtLink to="/admin" class="text-blue-600 hover:text-blue-800 mt-2 inline-block">
-        Back to Admin
-      </NuxtLink>
-    </div>
+      <div v-else-if="error" class="bg-white rounded-lg shadow-sm border border-gray-200 p-8 text-center">
+        <div class="flex flex-col items-center">
+          <svg class="w-16 h-16 text-red-500 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+          </svg>
+          <h2 class="text-xl font-semibold text-gray-900 mb-2">Si è verificato un errore</h2>
+          <p class="text-red-600 mb-4">{{ error }}</p>
+          <NuxtLink 
+            to="/admin" 
+            class="bg-[#A30000] hover:bg-red-800 text-white font-medium py-2 px-6 rounded-lg transition-all duration-300 transform hover:scale-105"
+          >
+            Torna all'Area Riservata
+          </NuxtLink>
+        </div>
+      </div>
 
-    <div v-else-if="car">
-      <h1 class="text-2xl font-bold mb-6">Edit Car</h1>
-      <CarForm 
-        :initial-data="car" 
-        @submit="handleSubmit"
-      />
+      <div v-else-if="car" class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+        <CarForm 
+          :initial-data="car" 
+          @submit="handleSubmit"
+        />
+      </div>
     </div>
   </div>
 </template>

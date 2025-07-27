@@ -64,16 +64,41 @@ const handleSubmit = async (formData) => {
 </script>
 
 <template>
-  <div class="container mx-auto p-4">
-    <div class="mb-4">
-      <NuxtLink to="/admin" class="text-blue-600 hover:text-blue-800">
-        ← Back to Admin
-      </NuxtLink>
+  <div class="min-h-screen bg-gray-50">
+    <!-- Header -->
+    <div class="bg-white shadow-sm border-b border-gray-200">
+      <div class="container mx-auto px-4 py-6">
+        <div class="flex items-center space-x-4">
+          <NuxtLink 
+            to="/admin" 
+            class="text-[#A30000] hover:text-red-800 transition-colors flex items-center gap-2 font-medium"
+          >
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+            </svg>
+            Torna all'Area Riservata
+          </NuxtLink>
+          <span class="text-gray-500">|</span>
+          <h1 class="text-3xl font-bold text-[#A30000]">Aggiungi Nuovo Veicolo</h1>
+        </div>
+      </div>
     </div>
-    <h1 class="text-2xl font-bold mb-6">Add New Car</h1>
-    <div v-if="error" class="text-red-600 mb-4">{{ error }}</div>
-    <CarForm @submit="handleSubmit" />
-    <LoadingSpinner v-if="loading" />
+
+    <!-- Main Content -->
+    <div class="container mx-auto px-4 py-8">
+      <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+        <div v-if="error" class="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg">
+          <div class="flex items-center">
+            <svg class="w-5 h-5 text-red-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+            <span class="text-red-700 font-medium">{{ error }}</span>
+          </div>
+        </div>
+        <CarForm @submit="handleSubmit" />
+        <LoadingSpinner v-if="loading" />
+      </div>
+    </div>
   </div>
 </template>
 
