@@ -634,7 +634,39 @@
     }
   },
   "lastUpdate": "Last updated: June 2025"
-}
+},
+  "privacy": {
+    "meta": {
+      "title": "Privacy Policy - MyCars Bergamo",
+      "description": "Privacy policy of MyCars Bergamo.",
+      "keywords": "privacy, personal data, data processing",
+      "ogTitle": "Privacy Policy",
+      "ogDescription": "Learn how we manage your personal data."
+    },
+    "title": "Privacy Policy",
+    "intro": "This policy describes how we collect and manage your personal data.",
+    "sections": {
+      "finalita": {
+        "title": "Purpose of Data Processing",
+        "content": "We explain why we collect your data."
+      },
+      "trattamento": {
+        "title": "Data Processing Methods",
+        "content": "How your personal data is handled."
+      },
+      "diritti": {
+        "title": "User Rights",
+        "content": "You have the right to access, modify, or delete your data."
+      },
+      "conservazione": {
+        "title": "Data Retention Period",
+        "content": "How long we retain your data."
+      }
+    },
+    "lastUpdate": "Last update: July 2025"
+  }
+
+
 
 }
 
