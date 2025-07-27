@@ -44,9 +44,9 @@ useHead({
 
         <h2 class="text-2xl font-semibold text-white">Tipologie di cookie utilizzati</h2>
         <ul class="list-disc list-inside text-white/80 space-y-2">
-          <li><strong>Cookie tecnici:</strong> necessari per il corretto funzionamento del sito.</li>
-          <li><strong>Cookie analitici:</strong> utilizzati per raccogliere informazioni anonime sul comportamento degli utenti.</li>
-          <li><strong>Cookie di terze parti:</strong> ad esempio da Google Analytics, per finalità statistiche e di marketing.</li>
+          <li>Cookie tecnici: necessari per il corretto funzionamento del sito.</li>
+          <li>Cookie analitici: utilizzati per raccogliere informazioni anonime sul comportamento degli utenti.</li>
+          <li>Cookie di terze parti: ad esempio da Google Analytics, per finalità statistiche e di marketing.</li>
         </ul>
 
         <h2 class="text-2xl font-semibold text-white">Gestione dei cookie</h2>
