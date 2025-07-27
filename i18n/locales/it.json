@@ -691,7 +691,16 @@
       }
     },
     "lastUpdate": "Ultimo aggiornamento: luglio 2025"
+  },
+  
+  "errorPage": {
+    "fallbackTitle": "Errore",
+    "heading": "Pagina non trovata",
+    "description": "La pagina che stai cercando non esiste o è stata rimossa. Controlla l'URL o torna alla homepage.",
+    "backButton": "Torna alla Homepage"
   }
+
+
 
 
 
