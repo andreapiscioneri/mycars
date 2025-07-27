@@ -134,5 +134,90 @@
       "success": "Messaggio inviato correttamente!",
       "emailSubject": "Richiesta informazioni da sito"
     }
+  },
+  "navbar": {
+    "menu": {
+      "servizi": "Servizi",
+      "usati": "Usati",
+      "noleggio": "Noleggio",
+      "chisiamo": "Chi siamo",
+      "dovesiamo": "Dove siamo",
+      "contattaci": "Contattaci",
+      "areaRiservata": "Area Riservata"
+    },
+    "actions": {
+      "openMenu": "Apri menu",
+      "closeMenu": "Chiudi menu"
+    }
+  },
+  "footer": {
+    "contatti": {
+      "title": "Contattaci",
+      "description": "Compila il modulo per ricevere informazioni personalizzate sui nostri servizi.",
+      "formTitle": "Scrivici un messaggio",
+      "form": {
+        "nome": "Nome",
+        "cognome": "Cognome",
+        "telefono": "Telefono",
+        "email": "Email",
+        "oggetto": "Oggetto",
+        "messaggio": "Messaggio",
+        "privacy": "Acconsento al trattamento dei miei dati personali secondo la Privacy Policy *",
+        "submit": "Invia Messaggio",
+        "error": "Devi accettare la privacy per inviare il messaggio."
+      }
+    },
+    "informazioni": {
+      "title": "Informazioni",
+      "links": {
+        "servizi": "Servizi",
+        "usate": "Auto Usate",
+        "noleggio": "Noleggio",
+        "chisiamo": "Chi Siamo",
+        "dovesiamo": "Dove Siamo",
+        "contatti": "Contatti"
+      }
+    },
+    "dovesiamo": {
+      "title": "Dove Siamo",
+      "indirizzo": "Indirizzo:",
+      "indirizzoValue": "Via dei Livelli di Sopra\n24060 Costa di Mezzate BG",
+      "telefono": "Telefono:",
+      "orari": "Orari di apertura",
+      "giorni": {
+        "domenica": "Domenica",
+        "lunedi": "Lunedì",
+        "martedi": "Martedì",
+        "mercoledi": "Mercoledì",
+        "giovedi": "Giovedì",
+        "venerdi": "Venerdì",
+        "sabato": "Sabato"
+      },
+      "orariValue": {
+        "domenica": "Chiuso",
+        "lunedi": "09:00–17:30",
+        "martedi": "09:00–17:30",
+        "mercoledi": "09:00–17:30",
+        "giovedi": "09:00–17:30",
+        "venerdi": "09:00–17:30",
+        "sabato": "Chiuso"
+      },
+      "provincia": "Provincia:",
+      "provinciaValue": "Bergamo"
+    },
+    "social": {
+      "title": "Seguici sui social"
+    },
+    "copyright": {
+      "text": "© {year} MyCars. Tutti i diritti riservati.",
+      "links": {
+        "cookie": "Cookie Policy",
+        "privacy": "Privacy",
+        "termini": "Termini"
+      }
+    },
+    "company": {
+      "description": "La tua concessionaria di fiducia per auto usate, noleggio e assistenza a Bergamo."
+    }
   }
 }

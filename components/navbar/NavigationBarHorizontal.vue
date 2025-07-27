@@ -89,15 +89,15 @@ onBeforeUnmount(() => {
 
 const menuItems = computed(() => {
   const items = [
-    { label: "Servizi", route: '/servizi' },
-    { label: "Usati", route: '/list/used' },
-    { label: "Noleggio", route: '/list/rent' },
-    { label: "Chi siamo", route: '/chisiamo' },
-    { label: "Dove siamo", route: '/dovesiamo' },
-    { label: "Contattaci", route: '/contatti' },
+    { label: t('navbar.menu.servizi'), route: '/servizi' },
+    { label: t('navbar.menu.usati'), route: '/list/used' },
+    { label: t('navbar.menu.noleggio'), route: '/list/rent' },
+    { label: t('navbar.menu.chisiamo'), route: '/chisiamo' },
+    { label: t('navbar.menu.dovesiamo'), route: '/dovesiamo' },
+    { label: t('navbar.menu.contattaci'), route: '/contatti' },
   ]
   if (isLoggedIn.value) {
-    items.push({ label: "Area Riservata", route: '/admin' })
+    items.push({ label: t('navbar.menu.areaRiservata'), route: '/admin' })
   }
   return items
 })
@@ -108,7 +108,7 @@ const menuItems = computed(() => {
   <button
     v-if="isMobile"
     @click="emit('toggle')"
-    :aria-label="isOpen ? 'Chiudi menu' : 'Apri menu'"
+    :aria-label="isOpen ? t('navbar.actions.closeMenu') : t('navbar.actions.openMenu')"
     :aria-expanded="isOpen"
     class="fixed top-3 left-3 z-50 bg-black/90 backdrop-blur-sm rounded-lg p-3 text-white focus:outline-none focus:ring-2 focus:ring-[#A30000] hover:bg-black transition-all duration-200 shadow-lg"
     :class="{ 'hamburger-active': isOpen }"

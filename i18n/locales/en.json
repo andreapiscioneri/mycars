@@ -134,6 +134,91 @@
       "success": "Message sent successfully!",
       "emailSubject": "Information request from website"
     }
+  },
+  "navbar": {
+    "menu": {
+      "servizi": "Services",
+      "usati": "Used Cars",
+      "noleggio": "Rental",
+      "chisiamo": "About Us",
+      "dovesiamo": "Where We Are",
+      "contattaci": "Contact Us",
+      "areaRiservata": "Admin Area"
+    },
+    "actions": {
+      "openMenu": "Open menu",
+      "closeMenu": "Close menu"
+    }
+  },
+  "footer": {
+    "contatti": {
+      "title": "Contact Us",
+      "description": "Fill out the form to receive personalized information about our services.",
+      "formTitle": "Send us a message",
+      "form": {
+        "nome": "First Name",
+        "cognome": "Last Name",
+        "telefono": "Phone",
+        "email": "Email",
+        "oggetto": "Subject",
+        "messaggio": "Message",
+        "privacy": "I consent to the processing of my personal data according to the Privacy Policy *",
+        "submit": "Send Message",
+        "error": "You must accept the privacy policy to send the message."
+      }
+    },
+    "informazioni": {
+      "title": "Information",
+      "links": {
+        "servizi": "Services",
+        "usate": "Used Cars",
+        "noleggio": "Rental",
+        "chisiamo": "About Us",
+        "dovesiamo": "Where We Are",
+        "contatti": "Contact"
+      }
+    },
+    "dovesiamo": {
+      "title": "Where We Are",
+      "indirizzo": "Address:",
+      "indirizzoValue": "Via dei Livelli di Sopra\n24060 Costa di Mezzate BG",
+      "telefono": "Phone:",
+      "orari": "Opening Hours",
+      "giorni": {
+        "domenica": "Sunday",
+        "lunedi": "Monday",
+        "martedi": "Tuesday",
+        "mercoledi": "Wednesday",
+        "giovedi": "Thursday",
+        "venerdi": "Friday",
+        "sabato": "Saturday"
+      },
+      "orariValue": {
+        "domenica": "Closed",
+        "lunedi": "09:00–17:30",
+        "martedi": "09:00–17:30",
+        "mercoledi": "09:00–17:30",
+        "giovedi": "09:00–17:30",
+        "venerdi": "09:00–17:30",
+        "sabato": "Closed"
+      },
+      "provincia": "Province:",
+      "provinciaValue": "Bergamo"
+    },
+    "social": {
+      "title": "Follow us on social media"
+    },
+    "copyright": {
+      "text": "© {year} MyCars. All rights reserved.",
+      "links": {
+        "cookie": "Cookie Policy",
+        "privacy": "Privacy",
+        "termini": "Terms"
+      }
+    },
+    "company": {
+      "description": "Your trusted dealership for used cars, rentals and assistance in Bergamo."
+    }
   }
 }
 
