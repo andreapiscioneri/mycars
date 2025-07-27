@@ -603,6 +603,38 @@
       }
     },
     "lastUpdate": "Last updated: July 2025"
-  }
+  },
+  "cookie": {
+  "meta": {
+    "title": "Cookie Policy | MyCars Bergamo",
+    "description": "Read our Cookie Policy to learn how MyCars uses cookies on this website and how you can manage them in your browser.",
+    "keywords": "cookie policy, cookie management, privacy, personal data, tracking",
+    "ogTitle": "Cookie Policy | MyCars Bergamo",
+    "ogDescription": "Discover which cookies we use and how to manage them."
+  },
+  "title": "Cookie Policy",
+  "intro": "This Cookie Policy explains what cookies are, how we use them, and how you can manage them. By continuing to browse this website, you consent to the use of cookies as described below.",
+  "sections": {
+    "cosaSono": {
+      "title": "1. What are cookies?",
+      "content": "Cookies are small text files stored on your device when you visit a website. They help improve your browsing experience by remembering your preferences and collecting anonymous usage data."
+    },
+    "tipologie": {
+      "title": "2. Types of cookies we use",
+      "content": "We use different types of cookies to ensure the proper functioning of the website and to enhance user experience.",
+      "paragraph": "Specifically, we use technical cookies (necessary for website functionality), analytical cookies (to collect anonymous information about user behavior), and third-party cookies (like Google Analytics, for statistical and marketing purposes)."
+    },
+    "gestione": {
+      "title": "3. Managing cookies",
+      "content": "You can modify your browser settings to accept or reject cookies. Disabling cookies may affect your browsing experience."
+    },
+    "consenso": {
+      "title": "4. Consent",
+      "content": "By continuing to use this website without changing your browser settings, you consent to the use of cookies as outlined in this policy."
+    }
+  },
+  "lastUpdate": "Last updated: June 2025"
+}
+
 }
 

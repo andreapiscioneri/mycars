@@ -612,5 +612,37 @@
       }
     },
     "lastUpdate": "Ultimo aggiornamento: luglio 2025"
-  }
+  },
+  "cookie": {
+  "meta": {
+    "title": "Cookie Policy | MyCars Bergamo",
+    "description": "Leggi la nostra Cookie Policy per sapere come MyCars utilizza i cookie sul sito web e come puoi gestirli nel tuo browser.",
+    "keywords": "cookie policy, gestione cookie, privacy, dati personali, tracciamento",
+    "ogTitle": "Cookie Policy | MyCars Bergamo",
+    "ogDescription": "Scopri quali cookie utilizziamo e come gestirli."
+  },
+  "title": "Cookie Policy",
+  "intro": "Questa Cookie Policy spiega cosa sono i cookie, come li utilizziamo e come puoi gestirli. Continuando a navigare su questo sito, acconsenti all'uso dei cookie secondo quanto descritto qui di seguito.",
+  "sections": {
+    "cosaSono": {
+      "title": "1. Cosa sono i cookie?",
+      "content": "I cookie sono piccoli file di testo che vengono memorizzati sul tuo dispositivo quando visiti un sito web. Servono a migliorare l’esperienza di navigazione, ricordando le tue preferenze e raccogliendo informazioni anonime sull’uso del sito."
+    },
+    "tipologie": {
+      "title": "2. Tipologie di cookie utilizzati",
+      "content": "Utilizziamo diverse tipologie di cookie per garantire il corretto funzionamento del sito e migliorare l’esperienza utente.",
+      "paragraph": "In particolare, utilizziamo cookie tecnici (necessari per il funzionamento del sito), cookie analitici (per raccogliere informazioni anonime sul comportamento degli utenti) e cookie di terze parti (come Google Analytics, per finalità statistiche e di marketing)."
+    },
+    "gestione": {
+      "title": "3. Gestione dei cookie",
+      "content": "Puoi modificare le impostazioni del tuo browser per accettare o rifiutare i cookie. Disattivare i cookie potrebbe influenzare l'esperienza di navigazione."
+    },
+    "consenso": {
+      "title": "4. Consenso",
+      "content": "Continuando a utilizzare questo sito senza modificare le impostazioni del browser, acconsenti all’uso dei cookie secondo quanto indicato nella presente policy."
+    }
+  },
+  "lastUpdate": "Ultimo aggiornamento: giugno 2025"
+}
+
 }
