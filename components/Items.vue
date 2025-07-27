@@ -38,10 +38,6 @@ const props = defineProps({
               <span>{{ $t('items.kilometers') }}:</span>
               <span class="text-white font-medium">{{ Number(item.kilometers).toLocaleString() }} km</span>
             </div>
-            <div v-if="item.price" class="flex justify-between">
-              <span>{{ $t('items.price') }}:</span>
-              <span class="text-white font-medium">€ {{ Number(item.price).toLocaleString() }}</span>
-            </div>
             <div v-if="item.seller" class="flex justify-between">
               <span>{{ $t('items.seller') }}:</span>
               <span class="text-white font-medium text-xs">{{ translateSeller(item.seller) }}</span>
@@ -49,6 +45,10 @@ const props = defineProps({
             <div v-if="item.powerSource" class="flex justify-between">
               <span>{{ $t('items.powerSource') }}:</span>
               <span class="text-white font-medium text-xs">{{ translatePowerSource(item.powerSource) }}</span>
+            </div>
+            <div v-if="item.price" class="flex justify-between">
+              <span>{{ $t('items.price') }}:</span>
+              <span class="text-white font-bold text-xl ">€ {{ Number(item.price).toLocaleString() }}</span>
             </div>
           </div>
           
