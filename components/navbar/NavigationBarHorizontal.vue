@@ -280,10 +280,10 @@ const menuItems = computed(() => {
 
           <!-- Login -->
           <button
-            class="w-full flex items-center justify-start p-2 rounded-lg hover:bg-white/5 transition-all duration-200 group"
+            class="w-full flex items-center justify-start p-2 rounded-lgs transition-all duration-200 group"
             @click="() => { isLoggedIn ? router.push('/') : router.push('/login') }"
           >
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mr-3 flex-shrink-0 group-hover:text-[#A30000] transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <svg xmlns="http://www.w3.org/2000/svg" class="bg-white w-5 h-5 mr-3 flex-shrink-0 group-hover:text-[#A30000] transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                 d="M5.121 17.804A10.978 10.978 0 0112 15c2.237 0 4.307.655 6.002 1.772M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
             </svg>

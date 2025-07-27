@@ -106,6 +106,34 @@
       "sabato": "Saturday: 09:00 – 12:30",
       "domenica": "Sunday: Closed"
     }
+  },
+  "contatti": {
+    "meta": {
+      "title": "Contact Us | MyCars Bergamo",
+      "description": "Fill out the form to contact MyCars. We are in Costa di Mezzate (BG) and ready to help you choose the right car. Contact us by email or phone.",
+      "keywords": "MyCars Contact, car request form, Costa di Mezzate, car dealership Bergamo",
+      "ogTitle": "Contact Us | MyCars Bergamo",
+      "ogDescription": "Fill out the form to speak with a MyCars expert."
+    },
+    "title": "Contact us for more information",
+    "recapiti": {
+      "indirizzo": "Address:",
+      "indirizzoValue": "Via dei Livelli di Sopra, 24060 Costa di Mezzate (BG)",
+      "telefono": "Phone:",
+      "email": "Email:"
+    },
+    "form": {
+      "nome": "First Name *",
+      "cognome": "Last Name *",
+      "telefono": "Phone *",
+      "email": "Email *",
+      "messaggio": "Message *",
+      "privacy": "I consent to the processing of my personal data *",
+      "submit": "Send message",
+      "error": "Please fill in all required fields and accept the privacy policy.",
+      "success": "Message sent successfully!",
+      "emailSubject": "Information request from website"
+    }
   }
 }
 

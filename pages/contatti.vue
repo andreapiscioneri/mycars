@@ -1,6 +1,9 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { useHead } from '#imports'
+import { useI18n } from 'vue-i18n'
+
+const { t } = useI18n()
 
 const form = ref({
   nome: '',
@@ -15,19 +18,19 @@ const errors = ref<string[]>([])
 const success = ref(false)
 
 useHead({
-  title: 'Contattaci | MyCars Bergamo',
+  title: t('contatti.meta.title'),
   meta: [
     {
       name: 'description',
-      content: 'Compila il modulo per contattare MyCars. Siamo a Costa di Mezzate (BG) e pronti ad aiutarti nella scelta dell’auto giusta. Contattaci via email o telefono.'
+      content: t('contatti.meta.description')
     },
     {
       name: 'keywords',
-      content: 'Contatti MyCars, modulo richiesta auto, Costa di Mezzate, concessionaria auto Bergamo'
+      content: t('contatti.meta.keywords')
     },
     { name: 'robots', content: 'index, follow' },
-    { property: 'og:title', content: 'Contattaci | MyCars Bergamo' },
-    { property: 'og:description', content: 'Compila il modulo per parlare con un esperto MyCars.' },
+    { property: 'og:title', content: t('contatti.meta.ogTitle') },
+    { property: 'og:description', content: t('contatti.meta.ogDescription') },
     { property: 'og:type', content: 'website' },
     { property: 'og:url', content: 'https://www.mycarsbergamo.it/contatti' },
     { property: 'og:locale', content: 'it_IT' }
@@ -49,11 +52,11 @@ const submitForm = () => {
     !form.value.messaggio ||
     !form.value.privacy
   ) {
-    errors.value.push('Per favore compila tutti i campi obbligatori e accetta la privacy.')
+    errors.value.push(t('contatti.form.error'))
     return
   }
 
-  const subject = encodeURIComponent('Richiesta informazioni da sito')
+  const subject = encodeURIComponent(t('contatti.form.emailSubject'))
   const body = encodeURIComponent(
     `Nome: ${form.value.nome}\n` +
     `Cognome: ${form.value.cognome}\n` +
@@ -83,20 +86,20 @@ const submitForm = () => {
     <section class="w-full bg-black text-white py-16 px-4 md:px-10 pb-40" aria-labelledby="contatti-title">
       <div class="max-w-screen-xl mx-auto">
         <h1 id="contatti-title" class="text-3xl md:text-4xl font-bold text-white mb-8">
-          Contattaci per ulteriori informazioni
+          {{ t('contatti.title') }}
         </h1>
 
         <!-- Recapiti -->
         <address class="mb-10 space-y-3 text-sm md:text-base not-italic">
-          <p><strong>Indirizzo:</strong> Via dei Livelli di Sopra, 24060 Costa di Mezzate (BG)</p>
+          <p><strong>{{ t('contatti.recapiti.indirizzo') }}</strong> {{ t('contatti.recapiti.indirizzoValue') }}</p>
           <p class="flex items-center gap-2">
             <img src="/static/images/telefono.png" alt="Icona telefono" class="w-4 h-4" loading="lazy" />
-            <strong>Telefono:</strong>
+            <strong>{{ t('contatti.recapiti.telefono') }}</strong>
             <a href="tel:+393803850700" class="underline">+39 380 385 0700</a>
           </p>
           <p class="flex items-center gap-2">
             <img src="/static/images/mailblack.png" alt="Icona email" class="w-4 h-3" loading="lazy" />
-            <strong>Email:</strong>
+            <strong>{{ t('contatti.recapiti.email') }}</strong>
             <a href="mailto:info@maycars.it" class="underline">info@maycars.it</a>
           </p>
         </address>
@@ -108,7 +111,7 @@ const submitForm = () => {
             <input
               type="text"
               v-model="form.nome"
-              placeholder="Nome *"
+              :placeholder="t('contatti.form.nome')"
               aria-label="Nome"
               class="input"
               required
@@ -116,7 +119,7 @@ const submitForm = () => {
             <input
               type="text"
               v-model="form.cognome"
-              placeholder="Cognome *"
+              :placeholder="t('contatti.form.cognome')"
               aria-label="Cognome"
               class="input"
               required
@@ -128,7 +131,7 @@ const submitForm = () => {
             <input
               type="tel"
               v-model="form.telefono"
-              placeholder="Telefono *"
+              :placeholder="t('contatti.form.telefono')"
               aria-label="Telefono"
               class="input"
               required
@@ -136,7 +139,7 @@ const submitForm = () => {
             <input
               type="email"
               v-model="form.email"
-              placeholder="Email *"
+              :placeholder="t('contatti.form.email')"
               aria-label="Email"
               class="input"
               required
@@ -147,7 +150,7 @@ const submitForm = () => {
           <textarea
             v-model="form.messaggio"
             rows="5"
-            placeholder="Messaggio *"
+            :placeholder="t('contatti.form.messaggio')"
             aria-label="Messaggio"
             class="input resize-none h-32"
             required
@@ -156,7 +159,7 @@ const submitForm = () => {
           <!-- Privacy -->
           <label class="flex items-center gap-2 text-sm">
             <input type="checkbox" v-model="form.privacy" class="accent-[#A30000]" required />
-            Acconsento al trattamento dei miei dati personali *
+            {{ t('contatti.form.privacy') }}
           </label>
 
           <!-- Errori -->
@@ -167,14 +170,14 @@ const submitForm = () => {
           </div>
 
           <!-- Success (opzionale) -->
-          <div v-if="success" class="text-green-500 text-sm">Messaggio inviato correttamente!</div>
+          <div v-if="success" class="text-green-500 text-sm">{{ t('contatti.form.success') }}</div>
 
           <!-- Submit -->
           <button
             type="submit"
             class="bg-[#A30000] hover:bg-red-800 text-white px-6 py-3 rounded font-semibold transition"
           >
-            Invia messaggio
+            {{ t('contatti.form.submit') }}
           </button>
         </form>
       </div>
