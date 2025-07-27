@@ -278,18 +278,18 @@ onMounted(async () => {
             </div>
 
             <!-- Actions -->
-            <div class="flex flex-col sm:flex-row gap-3 lg:gap-4 pt-4">
+            <div class="flex flex-col gap-3 pt-6">
               <a
                 :href="`mailto:info@mycarsbergamo.it?subject=Richiesta%20informazioni%20su%20${car.title}&body=Salve,%0A%0ASono interessato/a al veicolo ${car.title} che ho visto sul vostro sito.%0A%0APotreste fornirmi maggiori informazioni?%0A%0AGrazie.`"
-                class="flex-1 bg-[#A30000] hover:bg-red-700 text-white text-center px-6 py-3 lg:py-4 rounded-lg font-semibold transition-all duration-300 transform hover:scale-105 text-sm sm:text-base"
+                class="w-full bg-[#A30000] hover:bg-red-700 text-white text-center px-6 py-4 rounded-lg font-semibold transition-all duration-300 transform hover:scale-[1.02] shadow-lg hover:shadow-xl"
               >
-                📧 Richiedi Informazioni
+                Richiedi Informazioni
               </a>
               <a
                 href="tel:3803850700"
-                class="flex-1 bg-white/10 hover:bg-white/20 text-white text-center px-6 py-3 lg:py-4 rounded-lg font-semibold transition-all duration-300 border border-white/20 text-sm sm:text-base"
+                class="w-full bg-white/10 hover:bg-white/20 text-white text-center px-6 py-4 rounded-lg font-semibold transition-all duration-300 border border-white/20 hover:border-white/40 transform hover:scale-[1.02]"
               >
-                📞 Chiama Ora
+                Chiama Ora
               </a>
             </div>
           </div>
