@@ -49,6 +49,7 @@ const handleSubmit = async (formData) => {
       title: formData.title,
       subtitle: formData.subtitle,
       year: formData.year,
+      month: formData.month,
       category: formData.category,
       price: formData.price,
       kilometers: formData.kilometers,

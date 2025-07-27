@@ -12,6 +12,7 @@ const formData = ref({
   title: '',
   subtitle: '',
   year: '',
+  month: '',
   price: '',
   kilometers: '',
   powerSource: '',
@@ -43,6 +44,7 @@ watch(() => props.initialData, (newData) => {
       title: newData.title || '',
       subtitle: newData.subtitle || '',
       year: newData.year || '',
+      month: newData.month || '',
       category: newData.category || 'used',
       price: newData.price || '',
       kilometers: newData.kilometers || '',
@@ -104,6 +106,25 @@ const onDrop = (e, dropIndex) => {
     formData.value.images = images;
   }
 };
+
+const onDragStartUploaded = (e, index) => {
+  e.dataTransfer.setData('text/plain', index);
+  e.dataTransfer.setData('source', 'uploaded');
+};
+
+const onDropUploaded = (e, dropIndex) => {
+  e.preventDefault();
+  const dragIndex = parseInt(e.dataTransfer.getData('text/plain'));
+  const source = e.dataTransfer.getData('source');
+  
+  if (source === 'uploaded' && dragIndex !== dropIndex) {
+    const files = [...uploadedFiles.value];
+    const draggedItem = files[dragIndex];
+    files.splice(dragIndex, 1);
+    files.splice(dropIndex, 0, draggedItem);
+    uploadedFiles.value = files;
+  }
+};
 </script>
 
 <template>
@@ -117,7 +138,7 @@ const onDrop = (e, dropIndex) => {
         Informazioni Generali
       </h3>
       
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         <div>
           <label class="block text-gray-300 text-sm font-semibold mb-2" for="title">
             Titolo *
@@ -160,6 +181,32 @@ const onDrop = (e, dropIndex) => {
             class="w-full px-4 py-2 border border-gray-600 bg-gray-700 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-[#A30000] focus:border-transparent transition-all placeholder-gray-400"
             required
           >
+        </div>
+        
+        <div>
+          <label class="block text-gray-300 text-sm font-semibold mb-2" for="month">
+            Mese *
+          </label>
+          <select
+            id="month"
+            v-model="formData.month"
+            class="bg-gray-700 border border-gray-600 text-white text-sm px-4 py-2 pr-8 rounded-lg appearance-none w-full focus:outline-none focus:ring-2 focus:ring-[#A30000] focus:border-transparent transition-all"
+            required
+          >
+            <option value="">Seleziona mese</option>
+            <option value="01">Gennaio</option>
+            <option value="02">Febbraio</option>
+            <option value="03">Marzo</option>
+            <option value="04">Aprile</option>
+            <option value="05">Maggio</option>
+            <option value="06">Giugno</option>
+            <option value="07">Luglio</option>
+            <option value="08">Agosto</option>
+            <option value="09">Settembre</option>
+            <option value="10">Ottobre</option>
+            <option value="11">Novembre</option>
+            <option value="12">Dicembre</option>
+          </select>
         </div>
         
         <div>
@@ -320,12 +367,13 @@ const onDrop = (e, dropIndex) => {
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
           </svg>
           Immagini Attuali
+          <span class="text-xs text-gray-400 font-normal">(Trascina per riordinare)</span>
         </h4>
         <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
           <div
             v-for="(image, index) in formData.images"
             :key="`existing-${index}`"
-            class="relative group bg-gray-700 rounded-lg border border-gray-600 p-2 hover:shadow-md transition-all"
+            class="relative group bg-gray-700 rounded-lg border border-gray-600 p-2 hover:shadow-md transition-all cursor-move"
             draggable="true"
             @dragstart="onDragStart($event, index)"
             @dragover="onDragOver"
@@ -334,7 +382,7 @@ const onDrop = (e, dropIndex) => {
             <img
               :src="image"
               :alt="`Immagine ${index + 1}`"
-              class="w-full h-24 object-cover rounded border cursor-move"
+              class="w-full h-24 object-cover rounded border"
               @error="$event.target.style.display='none'"
             />
             <button
@@ -347,6 +395,11 @@ const onDrop = (e, dropIndex) => {
             <div class="absolute bottom-1 left-1 bg-black bg-opacity-50 text-white text-xs px-1 rounded">
               {{ index + 1 }}
             </div>
+            <div class="absolute top-1 left-1 bg-green-500 bg-opacity-75 text-white text-xs px-1 rounded flex items-center gap-1">
+              <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4"></path>
+              </svg>
+            </div>
           </div>
         </div>
       </div>
@@ -358,12 +411,17 @@ const onDrop = (e, dropIndex) => {
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path>
           </svg>
           Nuove Immagini da Caricare
+          <span class="text-xs text-gray-400 font-normal">(Trascina per riordinare)</span>
         </h4>
         <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
           <div
             v-for="(file, index) in uploadedFiles"
             :key="`new-${index}`"
-            class="relative group bg-blue-900/20 rounded-lg border border-blue-700 p-2"
+            class="relative group bg-blue-900/20 rounded-lg border border-blue-700 p-2 hover:shadow-md transition-all cursor-move"
+            draggable="true"
+            @dragstart="onDragStartUploaded($event, index)"
+            @dragover="onDragOver"
+            @drop="onDropUploaded($event, index)"
           >
             <img
               v-if="isClient && filePreviewUrls[index]"
@@ -382,6 +440,14 @@ const onDrop = (e, dropIndex) => {
             >
               ×
             </button>
+            <div class="absolute bottom-1 left-1 bg-black bg-opacity-50 text-white text-xs px-1 rounded">
+              {{ index + 1 }}
+            </div>
+            <div class="absolute top-1 left-1 bg-blue-500 bg-opacity-75 text-white text-xs px-1 rounded flex items-center gap-1">
+              <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4"></path>
+              </svg>
+            </div>
           </div>
         </div>
       </div>
