@@ -564,6 +564,45 @@
       "create": "Create Vehicle",
       "update": "Update Vehicle"
     }
+  },
+  "termini": {
+    "meta": {
+      "title": "Terms and Conditions | MyCars Bergamo",
+      "description": "Read the Terms and Conditions for using the MyCars website. Discover the navigation rules, responsibilities and legal rights of users.",
+      "keywords": "terms and conditions, terms of use, website rules, MyCars, legal liability, Italian law",
+      "ogTitle": "Terms and Conditions | MyCars Bergamo",
+      "ogDescription": "Read the Terms and Conditions for using the MyCars website, governed by Italian law.",
+      "canonical": "https://www.mycarsbergamo.it/en/terms-and-conditions"
+    },
+    "title": "Terms and Conditions",
+    "intro": "These Terms and Conditions govern access to and use of the MyCars website. By using the site, you fully accept these terms. Otherwise, we invite you not to use our services.",
+    "sections": {
+      "utilizzo": {
+        "title": "1. Use of the website",
+        "content": "The website is intended for personal and non-commercial use. Any activity that may damage or compromise the operation of the website or interfere with the access of other users is prohibited."
+      },
+      "proprieta": {
+        "title": "2. Intellectual property",
+        "content": "All content on the website, including texts, images, logos and trademarks, is owned by MyCars or licensed. Reproduction, distribution or modification without written authorization is prohibited."
+      },
+      "limitazioni": {
+        "title": "3. Liability limitations",
+        "content": "While we strive to provide accurate and up-to-date information, we do not guarantee that the website is free from errors, viruses or interruptions. The use of the information is at the user's risk."
+      },
+      "collegamenti": {
+        "title": "4. External links",
+        "content": "The website may contain links to third-party sites. MyCars is not responsible for the content, policies or practices of such sites."
+      },
+      "modifiche": {
+        "title": "5. Changes to terms",
+        "content": "We reserve the right to modify these terms at any time. Changes will be published on this page and will take immediate effect."
+      },
+      "legge": {
+        "title": "6. Applicable law",
+        "content": "These Terms and Conditions are governed by Italian law. In case of disputes, the court of Bergamo will have jurisdiction."
+      }
+    },
+    "lastUpdate": "Last updated: July 2025"
   }
 }
 

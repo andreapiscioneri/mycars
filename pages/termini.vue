@@ -1,31 +1,31 @@
 <script setup lang="ts">
-import { useHead } from '#imports'
+import { useI18n } from 'vue-i18n'
+
+const { t } = useI18n()
 
 useHead({
-  title: 'Termini e Condizioni | MyCars Bergamo',
+  title: t('termini.meta.title'),
   meta: [
     {
       name: 'description',
-      content:
-        'Consulta i Termini e Condizioni di utilizzo del sito MyCars. Scopri le regole di navigazione, le responsabilità e i diritti legali degli utenti.'
+      content: t('termini.meta.description')
     },
     {
       name: 'keywords',
-      content:
-        'termini e condizioni, condizioni d’uso, regolamento sito, MyCars, responsabilità legale, legge italiana'
+      content: t('termini.meta.keywords')
     },
     { name: 'robots', content: 'index, follow' },
-    { property: 'og:title', content: 'Termini e Condizioni | MyCars Bergamo' },
+    { property: 'og:title', content: t('termini.meta.ogTitle') },
     {
       property: 'og:description',
-      content: 'Leggi i Termini e Condizioni di utilizzo del sito MyCars, regolati dalla legge italiana.'
+      content: t('termini.meta.ogDescription')
     },
     { property: 'og:type', content: 'website' },
-    { property: 'og:url', content: 'https://www.mycarsbergamo.it/termini-e-condizioni' },
+    { property: 'og:url', content: t('termini.meta.canonical') },
     { property: 'og:locale', content: 'it_IT' }
   ],
   link: [
-    { rel: 'canonical', href: 'https://www.mycarsbergamo.it/termini-e-condizioni' }
+    { rel: 'canonical', href: t('termini.meta.canonical') }
   ]
 })
 </script>
@@ -38,46 +38,45 @@ useHead({
     >
       <article class="max-w-4xl mx-auto space-y-8">
         <h1 id="terms-title" class="text-4xl font-bold text-white">
-          Termini e Condizioni
+          {{ t('termini.title') }}
         </h1>
 
         <p class="text-white/90">
-          I presenti Termini e Condizioni regolano l’accesso e l’utilizzo del sito web di MyCars.
-          Utilizzando il sito, accetti integralmente questi termini. In caso contrario, ti invitiamo a non utilizzare i nostri servizi.
+          {{ t('termini.intro') }}
         </p>
 
-        <h2 class="text-2xl font-semibold text-white">1. Utilizzo del sito</h2>
+        <h2 class="text-2xl font-semibold text-white">{{ t('termini.sections.utilizzo.title') }}</h2>
         <p class="text-white/80">
-          Il sito è destinato a un uso personale e non commerciale. È vietata qualsiasi attività che possa danneggiare o compromettere il funzionamento del sito o interferire con l’accesso di altri utenti.
+          {{ t('termini.sections.utilizzo.content') }}
         </p>
 
-        <h2 class="text-2xl font-semibold text-white">2. Proprietà intellettuale</h2>
+        <h2 class="text-2xl font-semibold text-white">{{ t('termini.sections.proprieta.title') }}</h2>
         <p class="text-white/80">
-          Tutti i contenuti presenti sul sito, inclusi testi, immagini, loghi e marchi, sono di proprietà di MyCars o concessi in licenza. Ne è vietata la riproduzione, distribuzione o modifica senza autorizzazione scritta.
+          {{ t('termini.sections.proprieta.content') }}
         </p>
 
-        <h2 class="text-2xl font-semibold text-white">3. Limitazioni di responsabilità</h2>
+        <h2 class="text-2xl font-semibold text-white">{{ t('termini.sections.limitazioni.title') }}</h2>
         <p class="text-white/80">
-          Pur impegnandoci a fornire informazioni accurate e aggiornate, non garantiamo che il sito sia privo di errori, virus o interruzioni. L’uso delle informazioni è a rischio dell’utente.
+          {{ t('termini.sections.limitazioni.content') }}
         </p>
 
-        <h2 class="text-2xl font-semibold text-white">4. Collegamenti esterni</h2>
+        <h2 class="text-2xl font-semibold text-white">{{ t('termini.sections.collegamenti.title') }}</h2>
         <p class="text-white/80">
-          Il sito può contenere link a siti di terze parti. MyCars non è responsabile per i contenuti, le politiche o le pratiche di tali siti.
+          {{ t('termini.sections.collegamenti.content') }}
         </p>
 
-        <h2 class="text-2xl font-semibold text-white">5. Modifiche ai termini</h2>
+        <h2 class="text-2xl font-semibold text-white">{{ t('termini.sections.modifiche.title') }}</h2>
         <p class="text-white/80">
-          Ci riserviamo il diritto di modificare i presenti termini in qualsiasi momento. Le modifiche saranno pubblicate su questa pagina e avranno effetto immediato.
+          {{ t('termini.sections.modifiche.content') }}
         </p>
 
-        <h2 class="text-2xl font-semibold text-white">6. Legge applicabile</h2>
+        <h2 class="text-2xl font-semibold text-white">{{ t('termini.sections.legge.title') }}</h2>
         <p class="text-white/80">
-          I presenti Termini e Condizioni sono regolati dalla legge italiana. In caso di controversie sarà competente il foro di Bergamo.
+          {{ t('termini.sections.legge.content') }}
         </p>
 
         <p class="text-sm text-white/60 pt-6">
-          Ultimo aggiornamento: giugno 2025
+          {{ t('termini.lastUpdate') }}
         </p>
       </article>
     </section>
