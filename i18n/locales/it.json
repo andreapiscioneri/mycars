@@ -138,7 +138,7 @@
   "navbar": {
     "menu": {
       "servizi": "SERVIZI",
-      "usati": "USATI",
+      "usati": "USATO",
       "noleggio": "NOLEGGIO",
       "chisiamo": "CHI SIAMO",
       "dovesiamo": "DOVE SIAMO",
@@ -171,7 +171,7 @@
       "title": "Informazioni",
       "links": {
         "servizi": "Servizi",
-        "usate": "Auto Usate",
+        "usate": "Usato",
         "noleggio": "Noleggio",
         "chisiamo": "Chi Siamo",
         "dovesiamo": "Dove Siamo",
