@@ -71,7 +71,7 @@ const isLoggedIn = ref(false)
 const logout = () => {
   auth.signOut()
   localStorage.removeItem('auth')
-  router.push('/login')
+  router.push(localePath('/login'))
   if (props.isMobile) emit('toggle')
 }
 
@@ -89,18 +89,22 @@ onBeforeUnmount(() => {
 
 const menuItems = computed(() => {
   const items = [
-    { label: t('navbar.menu.servizi'), route: '/servizi' },
-    { label: t('navbar.menu.usati'), route: '/list/used' },
-    { label: t('navbar.menu.noleggio'), route: '/list/rent' },
-    { label: t('navbar.menu.chisiamo'), route: '/chisiamo' },
-    { label: t('navbar.menu.dovesiamo'), route: '/dovesiamo' },
-    { label: t('navbar.menu.contattaci'), route: '/contatti' },
+    { label: t('navbar.menu.servizi'), route: localePath('/servizi') },
+    { label: t('navbar.menu.usati'), route: localePath('/list/used') },
+    { label: t('navbar.menu.noleggio'), route: localePath('/list/rent') },
+    { label: t('navbar.menu.chisiamo'), route: localePath('/chisiamo') },
+    { label: t('navbar.menu.dovesiamo'), route: localePath('/dovesiamo') },
+    { label: t('navbar.menu.contattaci'), route: localePath('/contatti') },
   ]
   if (isLoggedIn.value) {
-    items.push({ label: t('navbar.menu.areaRiservata'), route: '/admin' })
+    items.push({ label: t('navbar.menu.areaRiservata'), route: localePath('/admin') })
   }
   return items
 })
+
+const isRouteActive = (itemRoute: string) => {
+  return route.path === itemRoute
+}
 </script>
 
 <template>
@@ -169,7 +173,7 @@ const menuItems = computed(() => {
       </button>
 
       <!-- Logo -->
-      <div class="flex items-center justify-start py-6 px-4 cursor-pointer" @click="router.push('/')">
+      <div class="flex items-center justify-start py-6 px-4 cursor-pointer" @click="router.push(localePath('/'))">
         <img 
           src="/static/images/mycarslogo.png" 
           alt="MyCars Logo" 
@@ -202,19 +206,19 @@ const menuItems = computed(() => {
             v-for="item in menuItems"
             :key="item.route"
             class="group cursor-pointer transition-all duration-200 rounded-lg hover:bg-white/5"
-            :class="[route.path === item.route ? 'bg-[#A30000]/20 border-l-4 border-[#A30000]' : '']"
+            :class="[isRouteActive(item.route) ? 'bg-[#A30000]/20 border-l-4 border-[#A30000]' : '']"
             @click="() => { router.push(item.route); if (isMobile) emit('toggle') }"
           >
             <div class="flex items-center px-3 py-3">
               <div 
                 v-if="!isOpen && !isMobile" 
                 class="w-2 h-2 rounded-full bg-white group-hover:bg-[#A30000] transition-colors"
-                :class="[route.path === item.route ? 'bg-[#A30000]' : '']"
+                :class="[isRouteActive(item.route) ? 'bg-[#A30000]' : '']"
               ></div>
               <span 
                 v-if="isOpen || isMobile" 
                 class="text-sm font-medium group-hover:text-[#A30000] transition-colors"
-                :class="[route.path === item.route ? 'text-[#A30000]' : '']"
+                :class="[isRouteActive(item.route) ? 'text-[#A30000]' : '']"
               >
                 {{ item.label }}
               </span>
@@ -275,7 +279,7 @@ const menuItems = computed(() => {
           <!-- Login -->
           <button
             class="w-full flex items-center justify-start p-2 rounded-lgs transition-all duration-200 group"
-            @click="() => { isLoggedIn ? router.push('/') : router.push('/login') }"
+            @click="() => { isLoggedIn ? router.push(localePath('/')) : router.push(localePath('/login')) }"
           >
             <svg xmlns="http://www.w3.org/2000/svg" class="bg-white w-5 h-5 mr-3 flex-shrink-0 group-hover:text-[#A30000] transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
