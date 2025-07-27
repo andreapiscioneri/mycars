@@ -72,13 +72,13 @@ const handleFileSelect = (event) => {
 };
 
 const removeImage = (index) => {
-  if (window.confirm('Are you sure you want to delete this image?')) {
+  if (window.confirm($t('carForm.images.deleteConfirm'))) {
     formData.value.images.splice(index, 1);
   }
 };
 
 const removeUploadedFile = (index) => {
-  if (window.confirm('Are you sure you want to delete this image?')) {
+  if (window.confirm($t('carForm.images.deleteConfirm'))) {
     uploadedFiles.value.splice(index, 1);
   }
 };
@@ -139,19 +139,19 @@ const onDropUploaded = (e, dropIndex) => {
         <svg class="w-5 h-5 text-[#A30000]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
         </svg>
-        Informazioni Generali
+        {{ $t('carForm.sections.generalInfo') }}
       </h3>
       
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         <div>
           <label class="block text-gray-300 text-sm font-semibold mb-2" for="title">
-            Titolo *
+            {{ $t('carForm.fields.title.label') }} *
           </label>
           <input
             id="title"
             v-model="formData.title"
             type="text"
-            placeholder="Es. BMW Serie 3 320d"
+            :placeholder="$t('carForm.fields.title.placeholder')"
             class="w-full px-4 py-2 border border-gray-600 bg-gray-700 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-[#A30000] focus:border-transparent transition-all placeholder-gray-400"
             required
           >
@@ -159,13 +159,13 @@ const onDropUploaded = (e, dropIndex) => {
         
         <div>
           <label class="block text-gray-300 text-sm font-semibold mb-2" for="subtitle">
-            Sottotitolo
+            {{ $t('carForm.fields.subtitle.label') }}
           </label>
           <input
             id="subtitle"
             v-model="formData.subtitle"
             type="text"
-            placeholder="Es. Touring Business Advantage"
+            :placeholder="$t('carForm.fields.subtitle.placeholder')"
             class="w-full px-4 py-2 border border-gray-600 bg-gray-700 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-[#A30000] focus:border-transparent transition-all placeholder-gray-400"
            
           >
@@ -173,7 +173,7 @@ const onDropUploaded = (e, dropIndex) => {
         
         <div>
           <label class="block text-gray-300 text-sm font-semibold mb-2" for="year">
-            Anno *
+            {{ $t('carForm.fields.year.label') }} *
           </label>
           <input
             id="year"
@@ -181,7 +181,7 @@ const onDropUploaded = (e, dropIndex) => {
             type="number"
             min="1900"
             max="2030"
-            placeholder="Es. 2020"
+            :placeholder="$t('carForm.fields.year.placeholder')"
             class="w-full px-4 py-2 border border-gray-600 bg-gray-700 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-[#A30000] focus:border-transparent transition-all placeholder-gray-400"
             required
           >
@@ -189,7 +189,7 @@ const onDropUploaded = (e, dropIndex) => {
         
         <div>
           <label class="block text-gray-300 text-sm font-semibold mb-2" for="month">
-            Mese *
+            {{ $t('carForm.fields.month.label') }} *
           </label>
           <select
             id="month"
@@ -197,25 +197,25 @@ const onDropUploaded = (e, dropIndex) => {
             class="bg-gray-700 border border-gray-600 text-white text-sm px-4 py-2 pr-8 rounded-lg appearance-none w-full focus:outline-none focus:ring-2 focus:ring-[#A30000] focus:border-transparent transition-all"
             required
           >
-            <option value="">Seleziona mese</option>
-            <option value="01">Gennaio</option>
-            <option value="02">Febbraio</option>
-            <option value="03">Marzo</option>
-            <option value="04">Aprile</option>
-            <option value="05">Maggio</option>
-            <option value="06">Giugno</option>
-            <option value="07">Luglio</option>
-            <option value="08">Agosto</option>
-            <option value="09">Settembre</option>
-            <option value="10">Ottobre</option>
-            <option value="11">Novembre</option>
-            <option value="12">Dicembre</option>
+            <option value="">{{ $t('carForm.fields.month.placeholder') }}</option>
+            <option value="01">{{ $t('carForm.fields.month.options.01') }}</option>
+            <option value="02">{{ $t('carForm.fields.month.options.02') }}</option>
+            <option value="03">{{ $t('carForm.fields.month.options.03') }}</option>
+            <option value="04">{{ $t('carForm.fields.month.options.04') }}</option>
+            <option value="05">{{ $t('carForm.fields.month.options.05') }}</option>
+            <option value="06">{{ $t('carForm.fields.month.options.06') }}</option>
+            <option value="07">{{ $t('carForm.fields.month.options.07') }}</option>
+            <option value="08">{{ $t('carForm.fields.month.options.08') }}</option>
+            <option value="09">{{ $t('carForm.fields.month.options.09') }}</option>
+            <option value="10">{{ $t('carForm.fields.month.options.10') }}</option>
+            <option value="11">{{ $t('carForm.fields.month.options.11') }}</option>
+            <option value="12">{{ $t('carForm.fields.month.options.12') }}</option>
           </select>
         </div>
         
         <div>
           <label class="block text-gray-300 text-sm font-semibold mb-2" for="category">
-            Categoria *
+            {{ $t('carForm.fields.category.label') }} *
           </label>
           <select
             id="category"
@@ -223,8 +223,8 @@ const onDropUploaded = (e, dropIndex) => {
             class="bg-gray-700 border border-white/10 text-white text-sm px-4 py-2 pr-8 rounded-lg appearance-none w-full"
             required
           >
-            <option value="used">Usato</option>
-            <option value="rent">Noleggio</option>
+            <option value="used">{{ $t('carForm.fields.category.options.used') }}</option>
+            <option value="rent">{{ $t('carForm.fields.category.options.rent') }}</option>
           </select>
         </div>
       </div>
@@ -237,19 +237,19 @@ const onDropUploaded = (e, dropIndex) => {
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
         </svg>
-        Dettagli Tecnici
+        {{ $t('carForm.sections.technicalDetails') }}
       </h3>
       
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         <div>
           <label class="block text-gray-300 text-sm font-semibold mb-2" for="price">
-            Prezzo (€) *
+            {{ $t('carForm.fields.price.label') }} *
           </label>
           <input
             id="price"
             v-model="formData.price"
             type="number"
-            placeholder="Es. 25000"
+            :placeholder="$t('carForm.fields.price.placeholder')"
             class="w-full px-4 py-2 border border-gray-600 bg-gray-700 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-[#A30000] focus:border-transparent transition-all placeholder-gray-400"
             required
           >
@@ -257,13 +257,13 @@ const onDropUploaded = (e, dropIndex) => {
         
         <div>
           <label class="block text-gray-300 text-sm font-semibold mb-2" for="kilometers">
-            Chilometri *
+            {{ $t('carForm.fields.kilometers.label') }} *
           </label>
           <input
             id="kilometers"
             v-model="formData.kilometers"
             type="number"
-            placeholder="Es. 50000"
+            :placeholder="$t('carForm.fields.kilometers.placeholder')"
             class="w-full px-4 py-2 border border-gray-600 bg-gray-700 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-[#A30000] focus:border-transparent transition-all placeholder-gray-400"
             required
           >
@@ -271,13 +271,13 @@ const onDropUploaded = (e, dropIndex) => {
         
         <div>
           <label class="block text-gray-300 text-sm font-semibold mb-2" for="powerSource">
-            Alimentazione *
+            {{ $t('carForm.fields.powerSource.label') }} *
           </label>
           <input
             id="powerSource"
             v-model="formData.powerSource"
             type="text"
-            placeholder="Es. Diesel, Benzina, Elettrica"
+            :placeholder="$t('carForm.fields.powerSource.placeholder')"
             class="w-full px-4 py-2 border border-gray-600 bg-gray-700 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-[#A30000] focus:border-transparent transition-all placeholder-gray-400"
             required
           >
@@ -285,13 +285,13 @@ const onDropUploaded = (e, dropIndex) => {
         
         <div>
           <label class="block text-gray-300 text-sm font-semibold mb-2" for="brand">
-            Marca *
+            {{ $t('carForm.fields.brand.label') }} *
           </label>
           <input
             id="brand"
             v-model="formData.brand"
             type="text"
-            placeholder="Es. BMW, Audi, Mercedes"
+            :placeholder="$t('carForm.fields.brand.placeholder')"
             class="w-full px-4 py-2 border border-gray-600 bg-gray-700 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-[#A30000] focus:border-transparent transition-all placeholder-gray-400"
             required
           >
@@ -299,26 +299,26 @@ const onDropUploaded = (e, dropIndex) => {
 
         <div>
           <label class="block text-gray-300 text-sm font-semibold mb-2" for="color">
-            Colore
+            {{ $t('carForm.fields.color.label') }}
           </label>
           <input
             id="color"
             v-model="formData.color"
             type="text"
-            placeholder="Es. Nero, Bianco, Rosso"
+            :placeholder="$t('carForm.fields.color.placeholder')"
             class="w-full px-4 py-2 border border-gray-600 bg-gray-700 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-[#A30000] focus:border-transparent transition-all placeholder-gray-400"
           >
         </div>
 
         <div>
           <label class="block text-gray-300 text-sm font-semibold mb-2" for="power">
-            Potenza
+            {{ $t('carForm.fields.power.label') }}
           </label>
           <input
             id="power"
             v-model="formData.power"
             type="text"
-            placeholder="Es. 150 CV, 2.0 TDI, Hybrid 180CV"
+            :placeholder="$t('carForm.fields.power.placeholder')"
             class="w-full px-4 py-2 border border-gray-600 bg-gray-700 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-[#A30000] focus:border-transparent transition-all placeholder-gray-400"
           >
         </div>
@@ -326,13 +326,13 @@ const onDropUploaded = (e, dropIndex) => {
       
       <div class="mt-6">
         <label class="block text-gray-300 text-sm font-semibold mb-2" for="seller">
-          Venditore
+          {{ $t('carForm.fields.seller.label') }}
         </label>
         <input
           id="seller"
           v-model="formData.seller"
           type="text"
-          placeholder="Nome del venditore"
+          :placeholder="$t('carForm.fields.seller.placeholder')"
           class="w-full px-4 py-2 border border-gray-600 bg-gray-700 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-[#A30000] focus:border-transparent transition-all placeholder-gray-400"
           
         >
@@ -345,14 +345,14 @@ const onDropUploaded = (e, dropIndex) => {
         <svg class="w-5 h-5 text-[#A30000]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h7"></path>
         </svg>
-        Descrizione
+        {{ $t('carForm.sections.description') }}
       </h3>
       
       <textarea
         id="description"
         v-model="formData.description"
         rows="6"
-        placeholder="Inserisci una descrizione dettagliata del veicolo, le sue caratteristiche, gli optional inclusi, etc..."
+        :placeholder="$t('carForm.fields.description.placeholder')"
         class="w-full px-4 py-3 border border-gray-600 bg-gray-700 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-[#A30000] focus:border-transparent transition-all resize-none placeholder-gray-400"
       ></textarea>
     </div>
@@ -363,7 +363,7 @@ const onDropUploaded = (e, dropIndex) => {
         <svg class="w-5 h-5 text-[#A30000]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
         </svg>
-        Immagini
+        {{ $t('carForm.sections.images') }}
       </h3>
       
       <!-- Upload new image -->
@@ -374,8 +374,8 @@ const onDropUploaded = (e, dropIndex) => {
               <svg class="w-8 h-8 mb-4 text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 16">
                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"/>
               </svg>
-              <p class="mb-2 text-sm text-gray-300"><span class="font-semibold">Clicca per caricare</span> o trascina qui</p>
-              <p class="text-xs text-gray-400">PNG, JPG (MAX. 10MB)</p>
+              <p class="mb-2 text-sm text-gray-300"><span class="font-semibold">{{ $t('carForm.images.upload.title') }}</span> {{ $t('carForm.images.upload.subtitle') }}</p>
+              <p class="text-xs text-gray-400">{{ $t('carForm.images.upload.formats') }}</p>
             </div>
             <input
               id="dropzone-file"
@@ -396,8 +396,8 @@ const onDropUploaded = (e, dropIndex) => {
           <svg class="w-4 h-4 text-[#A30000]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
           </svg>
-          Immagini Attuali
-          <span class="text-xs text-gray-400 font-normal">(Trascina per riordinare)</span>
+          {{ $t('carForm.images.existing.title') }}
+          <span class="text-xs text-gray-400 font-normal">{{ $t('carForm.images.existing.subtitle') }}</span>
         </h4>
         <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
           <div
@@ -440,8 +440,8 @@ const onDropUploaded = (e, dropIndex) => {
           <svg class="w-4 h-4 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path>
           </svg>
-          Nuove Immagini da Caricare
-          <span class="text-xs text-gray-400 font-normal">(Trascina per riordinare)</span>
+          {{ $t('carForm.images.new.title') }}
+          <span class="text-xs text-gray-400 font-normal">{{ $t('carForm.images.new.subtitle') }}</span>
         </h4>
         <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
           <div
@@ -486,7 +486,7 @@ const onDropUploaded = (e, dropIndex) => {
         <svg class="w-12 h-12 text-gray-500 mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
         </svg>
-        <p class="text-gray-400 text-sm">Nessuna immagine aggiunta</p>
+        <p class="text-gray-400 text-sm">{{ $t('carForm.images.noImages') }}</p>
       </div>
     </div>
 
@@ -496,7 +496,7 @@ const onDropUploaded = (e, dropIndex) => {
         to="/admin" 
         class="px-6 py-2 border border-gray-600 bg-gray-700 rounded-lg text-gray-300 hover:bg-gray-600 transition-colors font-medium"
       >
-        Annulla
+        {{ $t('carForm.actions.cancel') }}
       </NuxtLink>
       <button
         type="submit"
@@ -505,7 +505,7 @@ const onDropUploaded = (e, dropIndex) => {
         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
         </svg>
-        {{ initialData && Object.keys(initialData).length > 0 ? 'Aggiorna Veicolo' : 'Crea Veicolo' }}
+        {{ initialData && Object.keys(initialData).length > 0 ? $t('carForm.actions.update') : $t('carForm.actions.create') }}
       </button>
     </div>
   </form>

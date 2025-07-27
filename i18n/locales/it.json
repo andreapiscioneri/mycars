@@ -456,5 +456,114 @@
       "carNotFound": "Veicolo non trovato",
       "errorLoading": "Errore nel caricamento del veicolo"
     }
+  },
+  "carForm": {
+    "sections": {
+      "generalInfo": "Informazioni Generali",
+      "technicalDetails": "Dettagli Tecnici", 
+      "description": "Descrizione",
+      "images": "Immagini"
+    },
+    "fields": {
+      "title": {
+        "label": "Titolo",
+        "placeholder": "Es. BMW Serie 3 320d",
+        "required": true
+      },
+      "subtitle": {
+        "label": "Sottotitolo",
+        "placeholder": "Es. Touring Business Advantage"
+      },
+      "year": {
+        "label": "Anno",
+        "placeholder": "Es. 2020",
+        "required": true
+      },
+      "month": {
+        "label": "Mese",
+        "placeholder": "Seleziona mese",
+        "required": true,
+        "options": {
+          "01": "Gennaio",
+          "02": "Febbraio", 
+          "03": "Marzo",
+          "04": "Aprile",
+          "05": "Maggio",
+          "06": "Giugno",
+          "07": "Luglio",
+          "08": "Agosto",
+          "09": "Settembre",
+          "10": "Ottobre",
+          "11": "Novembre",
+          "12": "Dicembre"
+        }
+      },
+      "category": {
+        "label": "Categoria",
+        "required": true,
+        "options": {
+          "used": "Usato",
+          "rent": "Noleggio"
+        }
+      },
+      "price": {
+        "label": "Prezzo (€)",
+        "placeholder": "Es. 25000",
+        "required": true
+      },
+      "kilometers": {
+        "label": "Chilometri",
+        "placeholder": "Es. 50000",
+        "required": true
+      },
+      "powerSource": {
+        "label": "Alimentazione",
+        "placeholder": "Es. Diesel, Benzina, Elettrica",
+        "required": true
+      },
+      "brand": {
+        "label": "Marca",
+        "placeholder": "Es. BMW, Audi, Mercedes",
+        "required": true
+      },
+      "color": {
+        "label": "Colore",
+        "placeholder": "Es. Nero, Bianco, Rosso"
+      },
+      "power": {
+        "label": "Potenza",
+        "placeholder": "Es. 150 CV, 2.0 TDI, Hybrid 180CV"
+      },
+      "seller": {
+        "label": "Venditore",
+        "placeholder": "Nome del venditore"
+      },
+      "description": {
+        "label": "Descrizione",
+        "placeholder": "Inserisci una descrizione dettagliata del veicolo, le sue caratteristiche, gli optional inclusi, etc..."
+      }
+    },
+    "images": {
+      "upload": {
+        "title": "Clicca per caricare",
+        "subtitle": "o trascina qui",
+        "formats": "PNG, JPG (MAX. 10MB)"
+      },
+      "existing": {
+        "title": "Immagini Attuali",
+        "subtitle": "(Trascina per riordinare)"
+      },
+      "new": {
+        "title": "Nuove Immagini da Caricare",
+        "subtitle": "(Trascina per riordinare)"
+      },
+      "noImages": "Nessuna immagine aggiunta",
+      "deleteConfirm": "Sei sicuro di voler eliminare questa immagine?"
+    },
+    "actions": {
+      "cancel": "Annulla",
+      "create": "Crea Veicolo",
+      "update": "Aggiorna Veicolo"
+    }
   }
 }
