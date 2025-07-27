@@ -1,12 +1,13 @@
 <script setup>
 import { onMounted, ref, computed } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-import { useHead } from '#imports'
+import { useI18n } from 'vue-i18n'
 import { doc, getDoc } from 'firebase/firestore'
 import { db } from '@/lib/firebase'
 
 const route = useRoute()
 const router = useRouter()
+const { t } = useI18n()
 const car = ref(null)
 const selectedImage = ref('')
 const loading = ref(true)
@@ -41,13 +42,32 @@ const scrollThumbs = (dir) => {
 // Get category label
 const categoryLabel = computed(() => {
   if (!car.value) return ''
-  return car.value.category === 'used' ? 'Auto Usata' : 'Auto a Noleggio'
+  return car.value.category === 'used' ? t('detail.category.used') : t('detail.category.rent')
 })
 
 // Get back link
 const backLink = computed(() => {
   if (!car.value) return '/list/used'
   return `/list/${car.value.category}`
+})
+
+// Generate email URL with translations
+const emailUrl = computed(() => {
+  if (!car.value) return 'mailto:info@mycarsbergamo.it'
+  const subject = t('detail.actions.emailSubject', { title: car.value.title })
+  const body = t('detail.actions.emailBody', { title: car.value.title })
+  return `mailto:info@mycarsbergamo.it?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`
+})
+
+// Meta data for SEO
+const pageTitle = computed(() => {
+  if (!car.value) return 'MyCars'
+  return `${car.value.title} | ${categoryLabel.value} - MyCars`
+})
+
+const pageDescription = computed(() => {
+  if (!car.value) return 'MyCars Bergamo'
+  return car.value.description || `Scopri ${car.value.title} - anno ${car.value.year}, categoria ${car.value.category}.`
 })
 
 onMounted(async () => {
@@ -82,11 +102,11 @@ onMounted(async () => {
 
     // Set page meta
     useHead({
-      title: `${car.value.title} | ${categoryLabel.value} - MyCars`,
+      title: pageTitle,
       meta: [
         {
           name: 'description',
-          content: car.value.description || `Scopri ${car.value.title} - anno ${car.value.year}, categoria ${car.value.category}.`
+          content: pageDescription
         },
         {
           name: 'keywords',
@@ -95,10 +115,10 @@ onMounted(async () => {
             : 'noleggio auto Bergamo, auto a noleggio, affitto auto, noleggio breve termine',
         },
         { name: 'robots', content: 'index, follow' },
-        { property: 'og:title', content: `${car.value.title} | ${categoryLabel.value} - MyCars` },
+        { property: 'og:title', content: pageTitle },
         {
           property: 'og:description',
-          content: car.value.description || `Scopri ${car.value.title} - anno ${car.value.year}, categoria ${car.value.category}.`,
+          content: pageDescription,
         },
         { property: 'og:type', content: 'website' },
         { property: 'og:url', content: `https://www.mycarsbergamo.it/detail/${car.value.id}` },
@@ -156,7 +176,7 @@ onMounted(async () => {
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
             </svg>
-            Torna alla lista
+            {{ t('detail.backToList') }}
           </NuxtLink>
         </div>
 
@@ -166,7 +186,7 @@ onMounted(async () => {
             <div class="relative">
               <img
                 :src="selectedImage || '/placeholder.jpg'"
-                alt="Immagine principale"
+                :alt="t('detail.imageModal.mainImageAlt')"
                 class="w-full h-64 sm:h-80 lg:h-96 rounded-xl shadow-xl object-cover bg-black border border-white/10 cursor-pointer"
                 @click="openModal"
               />
@@ -236,7 +256,7 @@ onMounted(async () => {
             <!-- Price highlight -->
             <div v-if="car.price" class="bg-gradient-to-r from-[#A30000]/20 to-transparent border border-[#A30000]/30 rounded-xl p-4 lg:p-6">
               <div class="text-center lg:text-left">
-                <p class="text-sm text-white/70 mb-1">Prezzo</p>
+                <p class="text-sm text-white/70 mb-1">{{ t('detail.vehicleInfo.price') }}</p>
                 <p class="text-2xl sm:text-3xl lg:text-4xl font-bold text-white">
                   € {{ Number(car.price).toLocaleString() }}
                 </p>
@@ -246,50 +266,50 @@ onMounted(async () => {
             <!-- Details grid -->
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 lg:gap-6">
               <div v-if="car.year" class="bg-white/5 rounded-lg p-3 lg:p-4">
-                <p class="text-xs text-white/60 mb-1">Anno</p>
+                <p class="text-xs text-white/60 mb-1">{{ t('detail.vehicleInfo.year') }}</p>
                 <p class="text-lg font-semibold">{{ car.year }}</p>
               </div>
               <div v-if="car.kilometers" class="bg-white/5 rounded-lg p-3 lg:p-4">
-                <p class="text-xs text-white/60 mb-1">Chilometri</p>
+                <p class="text-xs text-white/60 mb-1">{{ t('detail.vehicleInfo.kilometers') }}</p>
                 <p class="text-lg font-semibold">{{ Number(car.kilometers).toLocaleString() }} km</p>
               </div>
               <div v-if="car.powerSource" class="bg-white/5 rounded-lg p-3 lg:p-4">
-                <p class="text-xs text-white/60 mb-1">Carburante</p>
+                <p class="text-xs text-white/60 mb-1">{{ t('detail.vehicleInfo.fuel') }}</p>
                 <p class="text-lg font-semibold">{{ car.powerSource }}</p>
               </div>
               <div v-if="car.power" class="bg-white/5 rounded-lg p-3 lg:p-4">
-                <p class="text-xs text-white/60 mb-1">Potenza</p>
+                <p class="text-xs text-white/60 mb-1">{{ t('detail.vehicleInfo.power') }}</p>
                 <p class="text-lg font-semibold">{{ car.power }}</p>
               </div>
               <div v-if="car.color" class="bg-white/5 rounded-lg p-3 lg:p-4">
-                <p class="text-xs text-white/60 mb-1">Colore</p>
+                <p class="text-xs text-white/60 mb-1">{{ t('detail.vehicleInfo.color') }}</p>
                 <p class="text-lg font-semibold">{{ car.color }}</p>
               </div>
               <div v-if="car.brand" class="bg-white/5 rounded-lg p-3 lg:p-4">
-                <p class="text-xs text-white/60 mb-1">Marca</p>
+                <p class="text-xs text-white/60 mb-1">{{ t('detail.vehicleInfo.brand') }}</p>
                 <p class="text-lg font-semibold">{{ car.brand }}</p>
               </div>
             </div>
 
             <!-- Description -->
             <div v-if="car.description" class="bg-white/5 rounded-lg p-4 lg:p-6">
-              <h3 class="font-semibold text-lg mb-3">Descrizione</h3>
+              <h3 class="font-semibold text-lg mb-3">{{ t('detail.vehicleInfo.description') }}</h3>
               <p class="text-sm sm:text-base text-white/90 leading-relaxed">{{ car.description }}</p>
             </div>
 
             <!-- Actions -->
             <div class="flex flex-col gap-3 pt-6">
               <a
-                :href="`mailto:info@mycarsbergamo.it?subject=Richiesta%20informazioni%20su%20${car.title}&body=Salve,%0A%0ASono interessato/a al veicolo ${car.title} che ho visto sul vostro sito.%0A%0APotreste fornirmi maggiori informazioni?%0A%0AGrazie.`"
+                :href="emailUrl"
                 class="w-full bg-[#A30000] hover:bg-red-700 text-white text-center px-6 py-4 rounded-lg font-semibold transition-all duration-300 transform hover:scale-[1.02] shadow-lg hover:shadow-xl"
               >
-                Richiedi Informazioni
+                {{ t('detail.actions.requestInfo') }}
               </a>
               <a
                 href="tel:3803850700"
                 class="w-full bg-white/10 hover:bg-white/20 text-white text-center px-6 py-4 rounded-lg font-semibold transition-all duration-300 border border-white/20 hover:border-white/40 transform hover:scale-[1.02]"
               >
-                Chiama Ora
+                {{ t('detail.actions.callNow') }}
               </a>
             </div>
           </div>
@@ -298,8 +318,8 @@ onMounted(async () => {
         <!-- Related cars -->
         <div v-if="relatedCars.length > 0" class="pt-8 lg:pt-12">
           <h2 class="text-2xl sm:text-3xl lg:text-4xl font-bold text-center mb-8 lg:mb-12">
-            <span class="text-white">Veicoli</span>&nbsp;
-            <span class="text-[#A30000]">correlati</span>
+            <span class="text-white">{{ t('detail.relatedCars.title').split(' ')[0] }}</span>&nbsp;
+            <span class="text-[#A30000]">{{ t('detail.relatedCars.title').split(' ')[1] }}</span>
           </h2>
 
           <div class="relative">
@@ -331,7 +351,7 @@ onMounted(async () => {
                     <img
                       :src="relatedCar.images?.[0] || '/placeholder.jpg'"
                       class="w-full h-48 sm:h-52 object-cover transition-transform duration-300 group-hover:scale-110"
-                      alt="Immagine veicolo"
+                      :alt="t('detail.relatedCars.imageAlt')"
                     />
                     <div class="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all duration-300"></div>
                   </div>
@@ -340,8 +360,8 @@ onMounted(async () => {
                       {{ relatedCar.title }}
                     </h3>
                     <div class="flex justify-between items-center text-sm text-white/70 mb-2">
-                      <span>{{ relatedCar.year || 'n.d.' }}</span>
-                      <span>{{ relatedCar.kilometers ? `${Number(relatedCar.kilometers).toLocaleString()} km` : 'n.d.' }}</span>
+                      <span>{{ relatedCar.year || t('detail.vehicleInfo.notAvailable') }}</span>
+                      <span>{{ relatedCar.kilometers ? `${Number(relatedCar.kilometers).toLocaleString()} km` : t('detail.vehicleInfo.notAvailable') }}</span>
                     </div>
                     <div v-if="relatedCar.price" class="bg-gradient-to-r from-[#A30000]/20 to-transparent border border-[#A30000]/30 rounded-xl p-4 lg:p-2">
                       € {{ Number(relatedCar.price).toLocaleString() }}
@@ -381,7 +401,7 @@ onMounted(async () => {
           </button>
           <img
             :src="modalImage"
-            alt="Immagine zoomata"
+            :alt="t('detail.imageModal.zoomedImageAlt')"
             class="w-full max-h-[90vh] object-contain rounded-lg shadow-2xl"
           />
         </div>

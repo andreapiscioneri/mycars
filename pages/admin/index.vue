@@ -4,6 +4,22 @@ import { collection, getDocs, deleteDoc, doc } from 'firebase/firestore';
 import { db, auth } from '@/lib/firebase';
 import LoadingSpinner from '@/components/LoadingSpinner.vue'
 import { useRoute, useRouter } from 'vue-router'
+import { useI18n } from 'vue-i18n';
+
+const { t } = useI18n();
+
+// Set SEO meta tags
+useHead({
+  title: t('admin.index.title'),
+  meta: [
+    { name: 'description', content: t('admin.index.meta.description') },
+    { name: 'keywords', content: t('admin.index.meta.keywords') },
+    { name: 'robots', content: 'noindex, nofollow' },
+    { property: 'og:title', content: t('admin.index.meta.ogTitle') },
+    { property: 'og:description', content: t('admin.index.meta.ogDescription') },
+    { property: 'og:type', content: 'website' },
+  ]
+});
 
 const items = ref([]);
 const loading = ref(true);
@@ -33,7 +49,7 @@ const getList = async () => {
 }
 
 const handleDelete = async (id) => {
-  if (window.confirm('Are you sure you want to delete this car?')) {
+  if (window.confirm(t('admin.index.confirmDelete'))) {
     loading.value = true;
     try {
       await deleteDoc(doc(db, 'cars', id));
@@ -96,6 +112,14 @@ const goToPage = (page) => {
   })
 }
 
+const paginationText = computed(() => {
+  const start = (currentPage.value - 1) * itemsPerPage + 1;
+  const end = Math.min(currentPage.value * itemsPerPage, filteredItems.value.length);
+  const total = filteredItems.value.length;
+  
+  return t('admin.index.pagination.showing', { start, end, total });
+});
+
 onMounted(async () => {
     await getList();
 });
@@ -110,15 +134,15 @@ onMounted(async () => {
       <div class="container mx-auto px-4 py-6">
         <div class="flex justify-between items-center">
           <div class="flex items-center space-x-4">
-            <h1 class="text-3xl font-bold text-[#A30000]">Area Riservata</h1>
+            <h1 class="text-3xl font-bold text-[#A30000]">{{ t('admin.index.header.title') }}</h1>
             <span class="text-gray-400">|</span>
-            <span class="text-gray-300">Gestione Veicoli</span>
+            <span class="text-gray-300">{{ t('admin.index.header.subtitle') }}</span>
           </div>
           <button 
             @click="logout" 
             class="bg-[#A30000] hover:bg-red-800 text-white font-medium py-2 px-6 rounded-lg transition-all duration-300 transform hover:scale-105 shadow-md hover:shadow-lg"
           >
-            Logout
+            {{ t('admin.index.header.logout') }}
           </button>
         </div>
       </div>
@@ -136,7 +160,7 @@ onMounted(async () => {
               <input
                 v-model="filter"
                 type="text"
-                placeholder="Cerca veicoli..."
+                :placeholder="t('admin.index.search.placeholder')"
                 class="border border-gray-600 bg-gray-900 text-white rounded-lg px-4 py-2 w-64 focus:outline-none focus:ring-2 focus:ring-[#A30000] focus:border-transparent transition-all placeholder-gray-400"
               />
               <svg class="absolute right-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -144,7 +168,7 @@ onMounted(async () => {
               </svg>
             </div>
             <NuxtLink v-if="filter" to="/admin" class="text-white hover:text-red-400 text-sm font-medium transition-colors">
-              Rimuovi filtro
+              {{ t('admin.index.search.removeFilter') }}
             </NuxtLink>
           </div>
           <NuxtLink 
@@ -154,7 +178,7 @@ onMounted(async () => {
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
             </svg>
-            Aggiungi Veicolo
+            {{ t('admin.index.search.addVehicle') }}
           </NuxtLink>
         </div>
       </div>
@@ -166,20 +190,20 @@ onMounted(async () => {
       <!-- Table Section -->
       <div class="bg-gray-950 rounded-lg shadow-sm border border-gray-700 overflow-hidden">
         <div class="px-6 py-4 border-b border-gray-700 bg-gray-900">
-          <h3 class="text-lg font-semibold text-white">Lista Veicoli</h3>
-          <p class="text-sm text-gray-400 mt-1">Gestisci tutti i veicoli presenti nel sistema</p>
+          <h3 class="text-lg font-semibold text-white">{{ t('admin.index.table.title') }}</h3>
+          <p class="text-sm text-gray-400 mt-1">{{ t('admin.index.table.subtitle') }}</p>
         </div>
         <div class="overflow-x-auto">
           <table class="min-w-full divide-y divide-gray-700">
             <thead class="bg-gray-800">
               <tr>
-                <th class="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">ID</th>
-                <th class="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Immagine</th>
-                <th class="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Titolo</th>
-                <th class="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Anno</th>
-                <th class="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Categoria</th>
-                <th class="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Descrizione</th>
-                <th class="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Azioni</th>
+                <th class="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">{{ t('admin.index.table.headers.id') }}</th>
+                <th class="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">{{ t('admin.index.table.headers.image') }}</th>
+                <th class="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">{{ t('admin.index.table.headers.title') }}</th>
+                <th class="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">{{ t('admin.index.table.headers.year') }}</th>
+                <th class="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">{{ t('admin.index.table.headers.category') }}</th>
+                <th class="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">{{ t('admin.index.table.headers.description') }}</th>
+                <th class="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">{{ t('admin.index.table.headers.actions') }}</th>
               </tr>
             </thead>
             <tbody class="bg-gray-950 divide-y divide-gray-700">
@@ -209,7 +233,7 @@ onMounted(async () => {
                 </td>
                 <td class="px-6 py-4 text-sm text-gray-300 max-w-xs">
                   <div class="truncate" :title="item.description">
-                    {{ item.description || 'Nessuna descrizione' }}
+                    {{ item.description || t('admin.index.table.noDescription') }}
                   </div>
                 </td>
                 <td class="px-6 py-4 whitespace-nowrap text-sm space-x-3">
@@ -217,13 +241,13 @@ onMounted(async () => {
                     :to="`/admin/edit/${item.id}`" 
                     class="text-white hover:text-red-400 font-medium transition-colors"
                   >
-                    Modifica
+                    {{ t('admin.index.table.edit') }}
                   </NuxtLink>
                   <button 
                     @click="handleDelete(item.id)" 
                     class="text-red-400 hover:text-red-300 font-medium transition-colors"
                   >
-                    Elimina
+                    {{ t('admin.index.table.delete') }}
                   </button>
                 </td>
               </tr>
@@ -237,7 +261,7 @@ onMounted(async () => {
       <div v-if="totalPages > 1" class="bg-gray-950 rounded-lg shadow-sm border border-gray-700 mt-6 p-6">
         <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
           <div class="text-sm text-gray-300">
-            Mostrando {{ (currentPage - 1) * itemsPerPage + 1 }} a {{ Math.min(currentPage * itemsPerPage, filteredItems.length) }} di {{ filteredItems.length }} risultati
+            {{ paginationText }}
           </div>
           <div class="flex space-x-2">
             <button
@@ -245,7 +269,7 @@ onMounted(async () => {
               :disabled="currentPage === 1"
               class="px-4 py-2 text-sm border border-gray-600 bg-gray-800 text-gray-300 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-700 transition-colors font-medium"
             >
-              Precedente
+              {{ t('admin.index.pagination.previous') }}
             </button>
             <span v-for="page in totalPages" :key="page">
               <button
@@ -265,7 +289,7 @@ onMounted(async () => {
               :disabled="currentPage === totalPages"
               class="px-4 py-2 text-sm border border-gray-600 bg-gray-800 text-gray-300 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-700 transition-colors font-medium"
             >
-              Successivo
+              {{ t('admin.index.pagination.next') }}
             </button>
           </div>
         </div>

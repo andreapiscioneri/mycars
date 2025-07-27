@@ -5,11 +5,27 @@ import { ref as storageRef, uploadBytes, getDownloadURL } from 'firebase/storage
 import { db, storage } from '@/lib/firebase';
 import { useRouter } from 'vue-router';
 import CarForm from '@/components/CarForm.vue';
-import LoadingSpinner from '@/components/LoadingSpinner.vue'
+import LoadingSpinner from '@/components/LoadingSpinner.vue';
+import { useI18n } from 'vue-i18n';
 
+const { t } = useI18n();
 const router = useRouter();
+
+// Set SEO meta tags
+useHead({
+  title: t('admin.new.title'),
+  meta: [
+    { name: 'description', content: t('admin.new.meta.description') },
+    { name: 'keywords', content: t('admin.new.meta.keywords') },
+    { name: 'robots', content: 'noindex, nofollow' },
+    { property: 'og:title', content: t('admin.new.meta.ogTitle') },
+    { property: 'og:description', content: t('admin.new.meta.ogDescription') },
+    { property: 'og:type', content: 'website' },
+  ]
+});
+
 const loading = ref(false);
-const error = ref(null);
+const error = ref('');
 
 const uploadImages = async (files) => {
   const uploadPromises = files.map(async (file) => {
@@ -34,7 +50,7 @@ const uploadImages = async (files) => {
 
 const handleSubmit = async (formData) => {
   loading.value = true;
-  error.value = null;
+  error.value = '';
   try {
     let imageUrls = [...formData.images]; // Keep existing images
     
@@ -65,7 +81,7 @@ const handleSubmit = async (formData) => {
     await addDoc(collection(db, 'cars'), carData);
     router.push('/admin');
   } catch (err) {
-    error.value = 'Error creating car: ' + err.message;
+    error.value = t('admin.new.form.errorPrefix') + err.message;
   } finally {
     loading.value = false;
   }
@@ -85,10 +101,10 @@ const handleSubmit = async (formData) => {
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
             </svg>
-            Torna all'Area Riservata
+            {{ t('admin.new.header.backButton') }}
           </NuxtLink>
           <span class="text-gray-400">|</span>
-          <h1 class="text-3xl font-bold text-[#A30000]">Aggiungi Nuovo Veicolo</h1>
+          <h1 class="text-3xl font-bold text-[#A30000]">{{ t('admin.new.header.title') }}</h1>
         </div>
       </div>
     </div>

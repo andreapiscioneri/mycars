@@ -4,10 +4,26 @@ import { doc, getDoc, updateDoc } from 'firebase/firestore';
 import { ref as storageRef, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { db, storage } from '@/lib/firebase';
 import { useRoute, useRouter } from 'vue-router';
-import LoadingSpinner from '@/components/LoadingSpinner.vue'
+import LoadingSpinner from '@/components/LoadingSpinner.vue';
+import { useI18n } from 'vue-i18n';
 
+const { t } = useI18n();
 const route = useRoute();
 const router = useRouter();
+
+// Set SEO meta tags
+useHead({
+  title: t('admin.edit.title'),
+  meta: [
+    { name: 'description', content: t('admin.edit.meta.description') },
+    { name: 'keywords', content: t('admin.edit.meta.keywords') },
+    { name: 'robots', content: 'noindex, nofollow' },
+    { property: 'og:title', content: t('admin.edit.meta.ogTitle') },
+    { property: 'og:description', content: t('admin.edit.meta.ogDescription') },
+    { property: 'og:type', content: 'website' },
+  ]
+});
+
 const car = ref(null);
 const loading = ref(true);
 const error = ref(null);
@@ -23,10 +39,10 @@ const loadCar = async () => {
         ...carDoc.data()
       };
     } else {
-      error.value = 'Car not found';
+      error.value = t('admin.edit.carNotFound');
     }
   } catch (err) {
-    error.value = 'Error loading car: ' + err.message;
+    error.value = t('admin.edit.errorLoading') + ': ' + err.message;
   } finally {
     loading.value = false;
   }
@@ -88,7 +104,7 @@ const handleSubmit = async (formData) => {
     router.push('/admin');
   } catch (err) {
     console.error('Error updating car:', err);
-    error.value = 'Error updating car: ' + err.message;
+    error.value = t('admin.edit.form.errorPrefix') + err.message;
   } finally {
     loading.value = false;
   }
@@ -112,10 +128,10 @@ onMounted(() => {
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
             </svg>
-            Torna all'Area Riservata
+            {{ t('admin.edit.header.backButton') }}
           </NuxtLink>
           <span class="text-gray-400">|</span>
-          <h1 class="text-3xl font-bold text-[#A30000]">Modifica Veicolo</h1>
+          <h1 class="text-3xl font-bold text-[#A30000]">{{ t('admin.edit.header.title') }}</h1>
         </div>
       </div>
     </div>
@@ -129,13 +145,13 @@ onMounted(() => {
           <svg class="w-16 h-16 text-red-400 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
           </svg>
-          <h2 class="text-xl font-semibold text-white mb-2">Si è verificato un errore</h2>
+          <h2 class="text-xl font-semibold text-white mb-2">{{ t('admin.common.error') }}</h2>
           <p class="text-red-400 mb-4">{{ error }}</p>
           <NuxtLink 
             to="/admin" 
             class="bg-[#A30000] hover:bg-red-800 text-white font-medium py-2 px-6 rounded-lg transition-all duration-300 transform hover:scale-105"
           >
-            Torna all'Area Riservata
+            {{ t('admin.edit.header.backButton') }}
           </NuxtLink>
         </div>
       </div>

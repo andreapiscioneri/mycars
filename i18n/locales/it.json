@@ -220,6 +220,12 @@
       "description": "La tua concessionaria di fiducia per auto usate, noleggio e assistenza a Bergamo."
     }
   },
+  "listIndex": {
+    "title": "Elenco Veicoli - MyCars",
+    "description": "Sfoglia il nostro catalogo completo di auto usate e noleggio a Bergamo.",
+    "keywords": "auto Bergamo, auto usate, noleggio auto, vendita auto, concessionaria Bergamo",
+    "redirecting": "Reindirizzamento..."
+  },
   "login": {
     "title": "Login Area Riservata | MyCars",
     "meta": {
@@ -304,6 +310,151 @@
       "yearAsc": "Anno ↑",
       "kmAsc": "Km ↑",
       "kmDesc": "Km ↓"
+    }
+  },
+  "detail": {
+    "loading": "Caricamento...",
+    "backToList": "Torna alla lista",
+    "category": {
+      "used": "Auto Usata",
+      "rent": "Auto a Noleggio"
+    },
+    "imageModal": {
+      "mainImageAlt": "Immagine principale",
+      "zoomedImageAlt": "Immagine zoomata"
+    },
+    "vehicleInfo": {
+      "price": "Prezzo",
+      "year": "Anno",
+      "kilometers": "Chilometri",
+      "fuel": "Carburante", 
+      "power": "Potenza",
+      "color": "Colore",
+      "brand": "Marca",
+      "description": "Descrizione",
+      "notAvailable": "n.d."
+    },
+    "actions": {
+      "requestInfo": "Richiedi Informazioni",
+      "callNow": "Chiama Ora",
+      "emailSubject": "Richiesta informazioni su {title}",
+      "emailBody": "Salve,%0A%0ASono interessato/a al veicolo {title} che ho visto sul vostro sito.%0A%0APotreste fornirmi maggiori informazioni?%0A%0AGrazie."
+    },
+    "relatedCars": {
+      "title": "Veicoli correlati",
+      "imageAlt": "Immagine veicolo"
+    }
+  },
+  "admin": {
+    "common": {
+      "loading": "Caricamento...",
+      "error": "Errore",
+      "success": "Successo",
+      "confirm": "Sei sicuro?",
+      "cancel": "Annulla",
+      "save": "Salva",
+      "delete": "Elimina",
+      "edit": "Modifica",
+      "back": "Indietro"
+    },
+    "index": {
+      "title": "Area Riservata - Gestione Veicoli | MyCars",
+      "meta": {
+        "description": "Area riservata per la gestione dei veicoli del concessionario MyCars.",
+        "keywords": "admin, gestione veicoli, area riservata, concessionaria",
+        "ogTitle": "Area Riservata | MyCars",
+        "ogDescription": "Accesso all'area di gestione veicoli di MyCars."
+      },
+      "header": {
+        "title": "Area Riservata",
+        "subtitle": "Gestione Veicoli",
+        "logout": "Logout"
+      },
+      "search": {
+        "placeholder": "Cerca veicoli...",
+        "removeFilter": "Rimuovi filtro",
+        "addVehicle": "Aggiungi Veicolo"
+      },
+      "table": {
+        "title": "Lista Veicoli",
+        "subtitle": "Gestisci tutti i veicoli presenti nel sistema",
+        "headers": {
+          "id": "ID",
+          "image": "Immagine",
+          "title": "Titolo",
+          "year": "Anno", 
+          "category": "Categoria",
+          "description": "Descrizione",
+          "actions": "Azioni"
+        },
+        "noDescription": "Nessuna descrizione",
+        "edit": "Modifica",
+        "delete": "Elimina"
+      },
+      "pagination": {
+        "showing": "Mostrando {start} a {end} di {total} risultati",
+        "previous": "Precedente",
+        "next": "Successivo"
+      },
+      "confirmDelete": "Sei sicuro di voler eliminare questa auto?"
+    },
+    "form": {
+      "title": "Titolo",
+      "subtitle": "Sottotitolo",
+      "description": "Descrizione",
+      "category": "Categoria",
+      "categoryUsed": "Auto Usata",
+      "categoryRent": "Noleggio",
+      "price": "Prezzo",
+      "year": "Anno",
+      "kilometers": "Chilometri",
+      "brand": "Marca",
+      "color": "Colore",
+      "powerSource": "Carburante",
+      "power": "Potenza",
+      "seller": "Venditore",
+      "images": "Immagini",
+      "uploadImages": "Carica Immagini",
+      "maxImages": "Massimo 10 immagini",
+      "validFormats": "Formati supportati: JPG, PNG, WebP"
+    },
+    "new": {
+      "title": "Aggiungi Nuovo Veicolo - Admin | MyCars",
+      "meta": {
+        "description": "Aggiungi un nuovo veicolo al database di MyCars.",
+        "keywords": "admin, aggiungi veicolo, nuovo, gestione",
+        "ogTitle": "Aggiungi Veicolo | MyCars Admin",
+        "ogDescription": "Pannello di amministrazione per aggiungere nuovi veicoli."
+      },
+      "header": {
+        "backButton": "Torna all'Area Riservata",
+        "title": "Aggiungi Nuovo Veicolo"
+      },
+      "form": {
+        "submitButton": "Crea Veicolo",
+        "successMessage": "Veicolo creato con successo!",
+        "errorPrefix": "Errore durante la creazione del veicolo: "
+      }
+    },
+    "edit": {
+      "title": "Modifica Veicolo - Admin | MyCars",
+      "meta": {
+        "description": "Modifica le informazioni del veicolo nel database di MyCars.",
+        "keywords": "admin, modifica veicolo, edit, gestione",
+        "ogTitle": "Modifica Veicolo | MyCars Admin",
+        "ogDescription": "Pannello di amministrazione per modificare veicoli."
+      },
+      "header": {
+        "backButton": "Torna all'Area Riservata",
+        "title": "Modifica Veicolo"
+      },
+      "form": {
+        "submitButton": "Aggiorna Veicolo", 
+        "successMessage": "Veicolo aggiornato con successo!",
+        "errorPrefix": "Errore durante l'aggiornamento del veicolo: "
+      },
+      "carNotFound": "Veicolo non trovato",
+      "errorLoading": "Errore nel caricamento del veicolo"
     }
   }
 }

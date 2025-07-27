@@ -9,33 +9,24 @@
         "text": "Explore our selection of new and used vehicles, thoroughly inspected to ensure quality and performance."
       },
       {
-        "title": "Design & Technology",
+        "title": "Design and Technology",
         "text": "Vehicles with style, character and cutting-edge technology. Come test them out."
       },
       {
-        "title": "After-Sales Services",
-        "text": "Authorized workshop, customer support and available spare parts."
-      },
-      {
-        "title": "Custom Financing",
-        "text": "Flexible solutions tailored to every purchasing need."
-      }
-    ],
-    "testimonialsTitle": "What our customers say",
-    "testimonials": [
-      {
-        "name": "Marco B.",
-        "text": "Impeccable service and perfect car. Highly recommended!"
-      },
-      {
-        "name": "Laura V.",
-        "text": "Great selection and very helpful staff. A great experience!"
-      },
-      {
-        "name": "Giorgio T.",
-        "text": "Bought a certified used car, like new! Fantastic."
+        "title": "Professional Support",
+        "text": "Trust our team of experts to guide you in choosing your ideal vehicle."
       }
     ]
+  },
+  "pages": {
+    "usedCars": {
+      "title": "Used Cars",
+      "subtitle": "Guaranteed quality vehicles"
+    },
+    "rentalCars": {
+      "title": "Car Rental",
+      "subtitle": "Flexible and convenient solutions"
+    }
   },
   "servizi": {
     "title": "Services",
@@ -220,6 +211,12 @@
       "description": "Your trusted dealership for used cars, rentals and assistance in Bergamo."
     }
   },
+  "listIndex": {
+    "title": "Vehicle List - MyCars",
+    "description": "Browse our complete catalog of used cars and rentals in Bergamo.",
+    "keywords": "cars Bergamo, used cars, car rental, car sales, Bergamo dealership",
+    "redirecting": "Redirecting..."
+  },
   "login": {
     "title": "Login Reserved Area | MyCars",
     "meta": {
@@ -304,6 +301,151 @@
       "yearAsc": "Year ↑",
       "kmAsc": "Km ↑",
       "kmDesc": "Km ↓"
+    }
+  },
+  "detail": {
+    "loading": "Loading...",
+    "backToList": "Back to list",
+    "category": {
+      "used": "Used Car",
+      "rent": "Car Rental"
+    },
+    "imageModal": {
+      "mainImageAlt": "Main image",
+      "zoomedImageAlt": "Zoomed image"
+    },
+    "vehicleInfo": {
+      "price": "Price",
+      "year": "Year",
+      "kilometers": "Kilometers",
+      "fuel": "Fuel",
+      "power": "Power",
+      "color": "Color",
+      "brand": "Brand",
+      "description": "Description",
+      "notAvailable": "n/a"
+    },
+    "actions": {
+      "requestInfo": "Request Information",
+      "callNow": "Call Now",
+      "emailSubject": "Information request for {title}",
+      "emailBody": "Hello,%0A%0AI am interested in the vehicle {title} that I saw on your website.%0A%0ACould you provide me with more information?%0A%0AThank you."
+    },
+    "relatedCars": {
+      "title": "Related vehicles",
+      "imageAlt": "Vehicle image"
+    }
+  },
+  "admin": {
+    "common": {
+      "loading": "Loading...",
+      "error": "Error",
+      "success": "Success",
+      "confirm": "Are you sure?",
+      "cancel": "Cancel",
+      "save": "Save",
+      "delete": "Delete",
+      "edit": "Edit",
+      "back": "Back"
+    },
+    "index": {
+      "title": "Reserved Area - Vehicle Management | MyCars",
+      "meta": {
+        "description": "Reserved area for managing MyCars dealership vehicles.",
+        "keywords": "admin, vehicle management, reserved area, dealership",
+        "ogTitle": "Reserved Area | MyCars",
+        "ogDescription": "Access to MyCars vehicle management area."
+      },
+      "header": {
+        "title": "Reserved Area",
+        "subtitle": "Vehicle Management",
+        "logout": "Logout"
+      },
+      "search": {
+        "placeholder": "Search vehicles...",
+        "removeFilter": "Remove filter",
+        "addVehicle": "Add Vehicle"
+      },
+      "table": {
+        "title": "Vehicle List",
+        "subtitle": "Manage all vehicles in the system",
+        "headers": {
+          "id": "ID",
+          "image": "Image",
+          "title": "Title",
+          "year": "Year", 
+          "category": "Category",
+          "description": "Description",
+          "actions": "Actions"
+        },
+        "noDescription": "No description",
+        "edit": "Edit",
+        "delete": "Delete"
+      },
+      "pagination": {
+        "showing": "Showing {start} to {end} of {total} results",
+        "previous": "Previous",
+        "next": "Next"
+      },
+      "confirmDelete": "Are you sure you want to delete this car?"
+    },
+    "form": {
+      "title": "Title",
+      "subtitle": "Subtitle", 
+      "description": "Description",
+      "category": "Category",
+      "categoryUsed": "Used Car",
+      "categoryRent": "Rental",
+      "price": "Price",
+      "year": "Year",
+      "kilometers": "Kilometers",
+      "brand": "Brand",
+      "color": "Color",
+      "powerSource": "Fuel",
+      "power": "Power",
+      "seller": "Seller",
+      "images": "Images",
+      "uploadImages": "Upload Images",
+      "maxImages": "Maximum 10 images",
+      "validFormats": "Supported formats: JPG, PNG, WebP"
+    },
+    "new": {
+      "title": "Add New Vehicle - Admin | MyCars",
+      "meta": {
+        "description": "Add a new vehicle to the MyCars database.",
+        "keywords": "admin, add vehicle, new, management",
+        "ogTitle": "Add Vehicle | MyCars Admin",
+        "ogDescription": "Administration panel to add new vehicles."
+      },
+      "header": {
+        "backButton": "Back to Reserved Area",
+        "title": "Add New Vehicle"
+      },
+      "form": {
+        "submitButton": "Create Vehicle",
+        "successMessage": "Vehicle created successfully!",
+        "errorPrefix": "Error creating vehicle: "
+      }
+    },
+    "edit": {
+      "title": "Edit Vehicle - Admin | MyCars",
+      "meta": {
+        "description": "Edit vehicle information in the MyCars database.",
+        "keywords": "admin, edit vehicle, edit, management",
+        "ogTitle": "Edit Vehicle | MyCars Admin",
+        "ogDescription": "Administration panel to edit vehicles."
+      },
+      "header": {
+        "backButton": "Back to Reserved Area",
+        "title": "Edit Vehicle"
+      },
+      "form": {
+        "submitButton": "Update Vehicle",
+        "successMessage": "Vehicle updated successfully!",
+        "errorPrefix": "Error updating vehicle: "
+      },
+      "carNotFound": "Vehicle not found",
+      "errorLoading": "Error loading vehicle"
     }
   }
 }
