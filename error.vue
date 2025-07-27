@@ -21,7 +21,7 @@ defineProps<{
       </p>
 
       <NuxtLink to="/">
-        <button class="bg-[#A30000] hover:bg-red-700 transition px-8 py-4 rounded text-base font-light shadow-md hover:shadow-lg">
+        <button class="cursor-pointer bg-[#A30000] hover:bg-red-700 transition px-8 py-4 rounded text-base font-light shadow-md hover:shadow-lg">
           Torna alla Homepage
         </button>
       </NuxtLink>
