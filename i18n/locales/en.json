@@ -448,6 +448,14 @@
       "errorLoading": "Error loading vehicle"
     }
   },
+  "loading": "Loading...",
+  "items": {
+    "year": "Year",
+    "kilometers": "Kilometers",
+    "price": "Price", 
+    "seller": "Seller",
+    "details": "Details"
+  },
   "carForm": {
     "sections": {
       "generalInfo": "General Information",

@@ -28,26 +28,26 @@ const props = defineProps({
           
           <div class="text-xs sm:text-sm text-gray-400 space-y-1 mb-4 flex-1">
             <div v-if="item.year" class="flex justify-between">
-              <span>Anno:</span>
+              <span>{{ $t('items.year') }}:</span>
               <span class="text-white font-medium">{{ item.year }}</span>
             </div>
             <div v-if="item.kilometers" class="flex justify-between">
-              <span>Chilometri:</span>
+              <span>{{ $t('items.kilometers') }}:</span>
               <span class="text-white font-medium">{{ Number(item.kilometers).toLocaleString() }} km</span>
             </div>
             <div v-if="item.price" class="flex justify-between">
-              <span>Prezzo:</span>
+              <span>{{ $t('items.price') }}:</span>
               <span class="text-white font-medium">€ {{ Number(item.price).toLocaleString() }}</span>
             </div>
             <div v-if="item.seller" class="flex justify-between">
-              <span>Venditore:</span>
+              <span>{{ $t('items.seller') }}:</span>
               <span class="text-white font-medium text-xs">{{ item.seller }}</span>
             </div>
           </div>
           
           <NuxtLink :to="`/detail/${item.id}`" class="mt-auto block w-full">
             <button class="w-full bg-[#A30000] hover:bg-red-700 text-white font-semibold py-2.5 sm:py-3 rounded-lg transition-all duration-300 text-sm sm:text-base">
-              Dettagli
+              {{ $t('items.details') }}
             </button>
           </NuxtLink>
         </div>

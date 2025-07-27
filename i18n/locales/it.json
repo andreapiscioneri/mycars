@@ -457,6 +457,14 @@
       "errorLoading": "Errore nel caricamento del veicolo"
     }
   },
+  "loading": "Caricamento...",
+  "items": {
+    "year": "Anno",
+    "kilometers": "Chilometri", 
+    "price": "Prezzo",
+    "seller": "Venditore",
+    "details": "Dettagli"
+  },
   "carForm": {
     "sections": {
       "generalInfo": "Informazioni Generali",
