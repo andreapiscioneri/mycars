@@ -78,7 +78,7 @@ const goToSlide = (index: number) => {
       <div class="absolute inset-0 bg-black/60 z-0 transition duration-500 group-hover:bg-black/70" />
       <div class="relative z-10 px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto">
         <div class="space-y-4 sm:space-y-6 lg:space-y-8 transform transition duration-700 group-hover:scale-105">
-          <h1 class="text-2xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold uppercase tracking-wide animate-fadeInDown leading-tight">
+          <h1 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold uppercase tracking-wide animate-fadeInDown leading-tight">
             {{ $t('homepage.heroTitle') }}
           </h1>
           <p class="text-sm sm:text-base md:text-lg lg:text-xl text-white/90 animate-fadeIn max-w-2xl mx-auto leading-relaxed">
