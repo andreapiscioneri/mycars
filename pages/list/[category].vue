@@ -44,6 +44,26 @@ const category = computed(() => route.params.category)
 const validCategories = ['used', 'rent']
 const isValidCategory = computed(() => validCategories.includes(category.value))
 
+// Count active filters
+const activeFiltersCount = computed(() => {
+  let count = 0
+  
+  // Count array filters
+  count += filters.value.brand.length
+  count += filters.value.powerSource.length
+  count += filters.value.seller.length
+  
+  // Count range filters
+  if (filters.value.price.min !== null || filters.value.price.max !== null) count++
+  if (filters.value.kilometers.min !== null || filters.value.kilometers.max !== null) count++
+  if (filters.value.year.min !== null || filters.value.year.max !== null) count++
+  
+  // Count search query
+  if (searchQuery.value.trim()) count++
+  
+  return count
+})
+
 // Set page title and meta based on category
 const pageTitle = computed(() => {
   if (category.value === 'used') return 'Auto Usate a Bergamo | Occasioni Garantite - MyCars'
@@ -285,16 +305,30 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div class="flex min-h-screen bg-black">
+  <div class="flex min-h-screen bg-black lg:flex-row-reverse">
     <!-- Mobile Filter Toggle Button -->
-    <button
-      class="lg:hidden fixed bottom-6 right-6 z-50 bg-[#A30000] hover:bg-red-800 text-white p-4 rounded-full shadow-lg transition-all duration-300"
-      @click="toggleFilter('mobileFilters')"
+    <div 
+      v-if="!filterPanelStates.mobileFilters"
+      class="lg:hidden fixed bottom-20 right-6 z-50"
     >
-      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.707A1 1 0 013 7V4z"></path>
-      </svg>
-    </button>
+      <button
+        class="bg-[#A30000] hover:bg-red-800 text-white p-4 rounded-full shadow-lg transition-all duration-300 flex items-center justify-center relative"
+        @click="toggleFilter('mobileFilters')"
+        :aria-label="filterPanelStates.mobileFilters ? 'Chiudi filtri' : 'Apri filtri'"
+      >
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.707A1 1 0 013 7V4z"></path>
+        </svg>
+        
+        <!-- Badge per contatore filtri attivi -->
+        <div 
+          v-if="activeFiltersCount > 0" 
+          class="absolute -top-2 -right-2 bg-white text-[#A30000] text-xs font-bold rounded-full w-6 h-6 flex items-center justify-center"
+        >
+          {{ activeFiltersCount }}
+        </div>
+      </button>
+    </div>
 
     <!-- Mobile Filter Overlay -->
     <div
@@ -306,27 +340,27 @@ onMounted(async () => {
     <!-- Sidebar Filter -->
     <aside 
       :class="[
-        'bg-black border-r border-gray-900 text-white min-h-screen overflow-y-auto transition-transform duration-300 z-40',
-        'lg:block lg:w-80 lg:static lg:translate-x-0',
+        'bg-black border-l border-gray-900 text-white min-h-screen overflow-y-auto transition-transform duration-300 z-40',
+        'lg:block lg:w-80 lg:static lg:translate-x-0 lg:order-2 lg:border-l-0 lg:border-r lg:border-gray-900',
         filterPanelStates.mobileFilters 
-          ? 'fixed inset-y-0 left-0 w-80 translate-x-0' 
-          : 'fixed inset-y-0 left-0 w-80 -translate-x-full lg:translate-x-0'
+          ? 'fixed inset-y-0 right-0 w-80 translate-x-0' 
+          : 'fixed inset-y-0 right-0 w-80 translate-x-full lg:translate-x-0'
       ]"
     >
       <div class="p-4 lg:p-6">
-        <!-- Close button for mobile -->
-        <div class="flex justify-between items-center mb-6 lg:mb-8">
+        <!-- Header with title and actions -->
+        <div class="flex justify-between items-center mb-6 lg:mb-8 sticky top-0 bg-black pb-4 border-b border-gray-800 lg:border-b-0">
           <h2 class="text-xl lg:text-2xl font-bold">Filtra</h2>
           <div class="flex items-center gap-3">
             <button 
               @click="clearFilters"
-              class="text-sm text-[#A30000] hover:text-red-400 transition-colors"
+              class="text-sm text-[#A30000] hover:text-red-400 transition-colors px-2 py-1"
             >
-              Pulisci
+              Pulisci tutto
             </button>
             <button
               @click="toggleFilter('mobileFilters')"
-              class="lg:hidden text-white hover:text-[#A30000] text-2xl"
+              class="lg:hidden text-white hover:text-[#A30000] text-2xl p-1"
             >
               ✕
             </button>
@@ -496,43 +530,75 @@ onMounted(async () => {
             </div>
           </div>
         </div>
+        
+        <!-- Apply filters button for mobile -->
+        <div class="lg:hidden sticky bottom-0 bg-black border-t border-gray-800 pt-4 mt-6">
+          <button
+            @click="toggleFilter('mobileFilters')"
+            class="w-full bg-[#A30000] hover:bg-red-800 text-white py-3 px-4 rounded-lg font-medium transition-colors"
+          >
+            Mostra {{ filteredItems.length }} risultati
+          </button>
+        </div>
       </div>
     </aside>
 
     <!-- Main Content -->
-    <div class="flex-1 flex flex-col min-h-screen lg:ml-0">
+    <div class="flex-1 flex flex-col min-h-screen">
       <!-- Top Bar: Search & Sort -->
       <div class="w-full px-4 lg:px-6 py-4 lg:py-6 bg-black border-b border-gray-800 sticky top-0 z-30">
-        <div class="flex flex-col lg:flex-row lg:items-center gap-4">
-          <div class="flex-1">
+        <div class="flex flex-col gap-4">
+          <!-- Search bar -->
+          <div class="flex gap-2">
+            <!-- Mobile filter button in header -->
+            <button
+              class="lg:hidden bg-[#A30000] hover:bg-red-800 text-white px-4 py-3 rounded-lg flex items-center gap-2 text-sm relative"
+              @click="toggleFilter('mobileFilters')"
+            >
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.707A1 1 0 013 7V4z"></path>
+              </svg>
+              <span>Filtri</span>
+              <div 
+                v-if="activeFiltersCount > 0" 
+                class="absolute -top-1 -right-1 bg-white text-[#A30000] text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center"
+              >
+                {{ activeFiltersCount }}
+              </div>
+            </button>
+            
             <input
               v-model="searchQuery"
               type="text"
               placeholder="Cerca per modello, marca..."
-              class="w-full bg-[#18181b] text-white rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#A30000] placeholder-gray-400 text-sm lg:text-base"
+              class="flex-1 bg-[#18181b] text-white rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#A30000] placeholder-gray-400 text-sm lg:text-base"
             />
           </div>
-          <div class="flex flex-col sm:flex-row items-start sm:items-center gap-2 lg:gap-4">
-            <span class="text-white text-sm lg:text-base">Ordina</span>
-            <select 
-              v-model="sortBy"
-              class="bg-[#18181b] border border-white/10 text-white text-sm px-3 py-2 lg:px-4 lg:py-3 pr-8 rounded-lg appearance-none min-w-0"
-            >
-              <option value="price-asc">Prezzo ↑</option>
-              <option value="price-desc">Prezzo ↓</option>
-              <option value="year-desc">Anno ↓</option>
-              <option value="year-asc">Anno ↑</option>
-              <option value="km-asc">Km ↑</option>
-              <option value="km-desc">Km ↓</option>
-            </select>
+          
+          <!-- Sort and results count -->
+          <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+            <div class="text-gray-400 text-sm lg:text-base">
+              {{ filteredItems.length }} veicoli trovati
+            </div>
+            <div class="flex items-center gap-2">
+              <span class="text-white text-sm lg:text-base">Ordina per:</span>
+              <select 
+                v-model="sortBy"
+                class="bg-[#18181b] border border-white/10 text-white text-sm px-3 py-2 lg:px-4 lg:py-3 pr-8 rounded-lg appearance-none min-w-0"
+              >
+                <option value="price-asc">Prezzo ↑</option>
+                <option value="price-desc">Prezzo ↓</option>
+                <option value="year-desc">Anno ↓</option>
+                <option value="year-asc">Anno ↑</option>
+                <option value="km-asc">Km ↑</option>
+                <option value="km-desc">Km ↓</option>
+              </select>
+            </div>
           </div>
         </div>
       </div>
       
       <div class="flex-1 w-full max-w-7xl mx-auto px-4 lg:px-6 py-6 lg:py-8">
-        <div class="mb-4 lg:mb-6 text-gray-400 text-sm lg:text-base">
-          {{ filteredItems.length }} veicoli trovati
-        </div>
         <Items :items="filteredItems" v-if="!loading" />
         <LoadingSpinner v-if="loading" />
         <div v-if="!loading && filteredItems.length === 0" class="text-center py-12 lg:py-16">
