@@ -83,12 +83,14 @@ const sendMail = () => {
     <!-- Info & Links -->
     <div class="max-w-7xl mx-auto py-8 sm:py-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 text-sm sm:text-base text-gray-300">
       <!-- Logo -->
-      <div class="sm:col-span-2 lg:col-span-1">
-        <img src="/static/images/mycarslogo.png" alt="MyCars Logo" class="h-8 sm:h-10 mb-4" />
-        <p class="text-xs sm:text-sm text-gray-400 max-w-sm">
-          {{ t('footer.company.description') }}
-        </p>
-      </div>
+<div class="sm:col-span-2 lg:col-span-1">
+  <a href="/">
+    <img src="/static/images/mycarslogo.png" alt="MyCars Logo" class="h-8 sm:h-10 mb-4" />
+  </a>
+  <p class="text-xs sm:text-sm text-gray-400 max-w-sm">
+    {{ t('footer.company.description') }}
+  </p>
+</div>
       
       <!-- Informazioni -->
       <div>
@@ -158,21 +160,22 @@ const sendMail = () => {
         <div class="text-center lg:text-left order-2 lg:order-1">
           <p class="text-sm sm:text-base text-white mb-3 sm:mb-4">{{ t('footer.social.title') }}</p>
           <div class="flex items-center justify-center lg:justify-start gap-4 pb-4 border-b border-white/20 lg:border-b-0">
-            <a href="#" class="hover:scale-110 transition-transform">
-              <img src="/static/icons/fb.png" alt="Facebook" class="w-6 h-6 sm:w-7 sm:h-7" />
-            </a>
-            <a href="#" class="hover:scale-110 transition-transform">
-              <img src="/static/icons/x.png" alt="X" class="w-6 h-6 sm:w-7 sm:h-7" />
-            </a>
-            <a href="#" class="hover:scale-110 transition-transform">
+               <a href="https://www.instagram.com/mycars_bergamo?igsh=M3A4amx3M3JzZXEw" class="hover:scale-110 transition-transform">
               <img src="/static/icons/ig.png" alt="Instagram" class="w-6 h-6 sm:w-7 sm:h-7" />
             </a>
-            <a href="#" class="hover:scale-110 transition-transform">
+            <!-- <a href="#" class="hover:scale-110 transition-transform">
+              <img src="/static/icons/fb.png" alt="Facebook" class="w-6 h-6 sm:w-7 sm:h-7" />
+            </a>-->
+            <!--<a href="#" class="hover:scale-110 transition-transform">
+              <img src="/static/icons/x.png" alt="X" class="w-6 h-6 sm:w-7 sm:h-7" />
+            </a>-->
+  
+           <!-- <a href="#" class="hover:scale-110 transition-transform">
               <img src="/static/icons/link.png" alt="LinkedIn" class="w-6 h-6 sm:w-7 sm:h-7" />
-            </a>
-            <a href="#" class="hover:scale-110 transition-transform">
+            </a>-->
+           <!-- <a href="#" class="hover:scale-110 transition-transform">
               <img src="/static/icons/yt.png" alt="YouTube" class="w-6 h-6 sm:w-7 sm:h-7" />
-            </a>
+            </a>-->
           </div>
         </div>
 
@@ -187,9 +190,12 @@ const sendMail = () => {
         </div>
 
         <!-- Logo -->
-        <div class="text-center lg:text-right order-3">
-          <img src="/static/images/mycarslogo.png" alt="MyCars Logo" class="h-6 sm:h-8 mx-auto lg:mx-0" />
-        </div>
+<div class="text-center lg:text-right order-3">
+  <a href="/">
+    <img src="/static/images/mycarslogo.png" alt="MyCars Logo" class="h-6 sm:h-8 mx-auto lg:mx-0" />
+  </a>
+</div>
+
       </div>
     </div>
   </footer>
