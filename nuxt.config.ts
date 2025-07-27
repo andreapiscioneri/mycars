@@ -6,6 +6,10 @@ export default defineNuxtConfig({
     enabled: true,
   },
 
+  css: [
+    '~/assets/css/responsive.css'
+  ],
+
   app: {
     head: {
       link: [
@@ -15,6 +19,9 @@ export default defineNuxtConfig({
           href: '/favicon.png',
         },
       ],
+      meta: [
+        { name: 'viewport', content: 'width=device-width, initial-scale=1, viewport-fit=cover' }
+      ]
     },
   },
 

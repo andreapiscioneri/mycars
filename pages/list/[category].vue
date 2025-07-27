@@ -33,7 +33,8 @@ const filterPanelStates = ref({
   seller: false,
   price: false,
   kilometers: false,
-  year: false
+  year: false,
+  mobileFilters: false
 })
 
 // Get category from URL parameter
@@ -285,177 +286,213 @@ onMounted(async () => {
 
 <template>
   <div class="flex min-h-screen bg-black">
+    <!-- Mobile Filter Toggle Button -->
+    <button
+      class="lg:hidden fixed bottom-6 right-6 z-50 bg-[#A30000] hover:bg-red-800 text-white p-4 rounded-full shadow-lg transition-all duration-300"
+      @click="toggleFilter('mobileFilters')"
+    >
+      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.707A1 1 0 013 7V4z"></path>
+      </svg>
+    </button>
+
+    <!-- Mobile Filter Overlay -->
+    <div
+      v-if="filterPanelStates.mobileFilters"
+      class="lg:hidden fixed inset-0 z-40 bg-black/50 backdrop-blur-sm"
+      @click="toggleFilter('mobileFilters')"
+    ></div>
+
     <!-- Sidebar Filter -->
-    <aside class="hidden md:block w-80 bg-black border-r border-gray-900 p-6 text-white min-h-screen overflow-y-auto">
-      <div class="flex justify-between items-center mb-8">
-        <h2 class="text-2xl font-bold">Filtra</h2>
-        <button 
-          @click="clearFilters"
-          class="text-sm text-[#A30000] hover:text-red-400 transition-colors"
-        >
-          Pulisci filtri
-        </button>
-      </div>
-      
-      <div class="space-y-4">
-        <!-- Brand Filter -->
-        <div class="border-b border-gray-800 pb-4">
-          <div 
-            class="flex justify-between items-center cursor-pointer mb-2"
-            @click="toggleFilter('brand')"
-          >
-            <span class="font-medium">Marca</span>
-            <span class="text-2xl transition-transform" :class="{ 'rotate-45': filterPanelStates.brand }">+</span>
-          </div>
-          <div v-show="filterPanelStates.brand" class="space-y-2 mt-3">
-            <label 
-              v-for="brand in uniqueBrands" 
-              :key="brand"
-              class="flex items-center space-x-2 text-sm cursor-pointer hover:text-[#A30000] transition-colors"
+    <aside 
+      :class="[
+        'bg-black border-r border-gray-900 text-white min-h-screen overflow-y-auto transition-transform duration-300 z-40',
+        'lg:block lg:w-80 lg:static lg:translate-x-0',
+        filterPanelStates.mobileFilters 
+          ? 'fixed inset-y-0 left-0 w-80 translate-x-0' 
+          : 'fixed inset-y-0 left-0 w-80 -translate-x-full lg:translate-x-0'
+      ]"
+    >
+      <div class="p-4 lg:p-6">
+        <!-- Close button for mobile -->
+        <div class="flex justify-between items-center mb-6 lg:mb-8">
+          <h2 class="text-xl lg:text-2xl font-bold">Filtra</h2>
+          <div class="flex items-center gap-3">
+            <button 
+              @click="clearFilters"
+              class="text-sm text-[#A30000] hover:text-red-400 transition-colors"
             >
-              <input 
-                type="checkbox" 
-                :value="brand"
-                :checked="filters.brand.includes(brand)"
-                @change="toggleBrandFilter(brand)"
-                class="rounded border-gray-600 bg-gray-700 text-[#A30000] focus:ring-[#A30000]"
-              />
-              <span>{{ brand }}</span>
-            </label>
+              Pulisci
+            </button>
+            <button
+              @click="toggleFilter('mobileFilters')"
+              class="lg:hidden text-white hover:text-[#A30000] text-2xl"
+            >
+              ✕
+            </button>
           </div>
         </div>
-
-        <!-- Power Source Filter -->
-        <div class="border-b border-gray-800 pb-4">
-          <div 
-            class="flex justify-between items-center cursor-pointer mb-2"
-            @click="toggleFilter('powerSource')"
-          >
-            <span class="font-medium">Carburante</span>
-            <span class="text-2xl transition-transform" :class="{ 'rotate-45': filterPanelStates.powerSource }">+</span>
-          </div>
-          <div v-show="filterPanelStates.powerSource" class="space-y-2 mt-3">
-            <label 
-              v-for="powerSource in uniquePowerSources" 
-              :key="powerSource"
-              class="flex items-center space-x-2 text-sm cursor-pointer hover:text-[#A30000] transition-colors"
+        
+        <div class="space-y-4">
+          <!-- Brand Filter -->
+          <div class="border-b border-gray-800 pb-4">
+            <div 
+              class="flex justify-between items-center cursor-pointer mb-2"
+              @click="toggleFilter('brand')"
             >
-              <input 
-                type="checkbox" 
-                :value="powerSource"
-                :checked="filters.powerSource.includes(powerSource)"
-                @change="togglePowerSourceFilter(powerSource)"
-                class="rounded border-gray-600 bg-gray-700 text-[#A30000] focus:ring-[#A30000]"
-              />
-              <span>{{ powerSource }}</span>
-            </label>
-          </div>
-        </div>
-
-        <!-- Seller Filter -->
-        <div class="border-b border-gray-800 pb-4">
-          <div 
-            class="flex justify-between items-center cursor-pointer mb-2"
-            @click="toggleFilter('seller')"
-          >
-            <span class="font-medium">Venditore</span>
-            <span class="text-2xl transition-transform" :class="{ 'rotate-45': filterPanelStates.seller }">+</span>
-          </div>
-          <div v-show="filterPanelStates.seller" class="space-y-2 mt-3">
-            <label 
-              v-for="seller in uniqueSellers" 
-              :key="seller"
-              class="flex items-center space-x-2 text-sm cursor-pointer hover:text-[#A30000] transition-colors"
-            >
-              <input 
-                type="checkbox" 
-                :value="seller"
-                :checked="filters.seller.includes(seller)"
-                @change="toggleSellerFilter(seller)"
-                class="rounded border-gray-600 bg-gray-700 text-[#A30000] focus:ring-[#A30000]"
-              />
-              <span>{{ seller }}</span>
-            </label>
-          </div>
-        </div>
-
-        <!-- Price Filter -->
-        <div class="border-b border-gray-800 pb-4">
-          <div 
-            class="flex justify-between items-center cursor-pointer mb-2"
-            @click="toggleFilter('price')"
-          >
-            <span class="font-medium">Prezzo (€)</span>
-            <span class="text-2xl transition-transform" :class="{ 'rotate-45': filterPanelStates.price }">+</span>
-          </div>
-          <div v-show="filterPanelStates.price" class="space-y-3 mt-3">
-            <div class="grid grid-cols-2 gap-2">
-              <input 
-                v-model.number="filters.price.min"
-                type="number" 
-                :placeholder="`Min (${priceRange.min})`"
-                class="w-full px-3 py-2 text-xs bg-gray-700 border border-gray-600 rounded text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#A30000]"
-              />
-              <input 
-                v-model.number="filters.price.max"
-                type="number" 
-                :placeholder="`Max (${priceRange.max})`"
-                class="w-full px-3 py-2 text-xs bg-gray-700 border border-gray-600 rounded text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#A30000]"
-              />
+              <span class="font-medium">Marca</span>
+              <span class="text-2xl transition-transform" :class="{ 'rotate-45': filterPanelStates.brand }">+</span>
+            </div>
+            <div v-show="filterPanelStates.brand" class="space-y-2 mt-3 max-h-40 overflow-y-auto">
+              <label 
+                v-for="brand in uniqueBrands" 
+                :key="brand"
+                class="flex items-center space-x-2 text-sm cursor-pointer hover:text-[#A30000] transition-colors"
+              >
+                <input 
+                  type="checkbox" 
+                  :value="brand"
+                  :checked="filters.brand.includes(brand)"
+                  @change="toggleBrandFilter(brand)"
+                  class="rounded border-gray-600 bg-gray-700 text-[#A30000] focus:ring-[#A30000]"
+                />
+                <span>{{ brand }}</span>
+              </label>
             </div>
           </div>
-        </div>
 
-        <!-- Kilometers Filter -->
-        <div class="border-b border-gray-800 pb-4">
-          <div 
-            class="flex justify-between items-center cursor-pointer mb-2"
-            @click="toggleFilter('kilometers')"
-          >
-            <span class="font-medium">Chilometri</span>
-            <span class="text-2xl transition-transform" :class="{ 'rotate-45': filterPanelStates.kilometers }">+</span>
-          </div>
-          <div v-show="filterPanelStates.kilometers" class="space-y-3 mt-3">
-            <div class="grid grid-cols-2 gap-2">
-              <input 
-                v-model.number="filters.kilometers.min"
-                type="number" 
-                :placeholder="`Min (${kilometersRange.min})`"
-                class="w-full px-3 py-2 text-xs bg-gray-700 border border-gray-600 rounded text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#A30000]"
-              />
-              <input 
-                v-model.number="filters.kilometers.max"
-                type="number" 
-                :placeholder="`Max (${kilometersRange.max})`"
-                class="w-full px-3 py-2 text-xs bg-gray-700 border border-gray-600 rounded text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#A30000]"
-              />
+          <!-- Power Source Filter -->
+          <div class="border-b border-gray-800 pb-4">
+            <div 
+              class="flex justify-between items-center cursor-pointer mb-2"
+              @click="toggleFilter('powerSource')"
+            >
+              <span class="font-medium">Carburante</span>
+              <span class="text-2xl transition-transform" :class="{ 'rotate-45': filterPanelStates.powerSource }">+</span>
+            </div>
+            <div v-show="filterPanelStates.powerSource" class="space-y-2 mt-3">
+              <label 
+                v-for="powerSource in uniquePowerSources" 
+                :key="powerSource"
+                class="flex items-center space-x-2 text-sm cursor-pointer hover:text-[#A30000] transition-colors"
+              >
+                <input 
+                  type="checkbox" 
+                  :value="powerSource"
+                  :checked="filters.powerSource.includes(powerSource)"
+                  @change="togglePowerSourceFilter(powerSource)"
+                  class="rounded border-gray-600 bg-gray-700 text-[#A30000] focus:ring-[#A30000]"
+                />
+                <span>{{ powerSource }}</span>
+              </label>
             </div>
           </div>
-        </div>
 
-        <!-- Year Filter -->
-        <div class="border-b border-gray-800 pb-4">
-          <div 
-            class="flex justify-between items-center cursor-pointer mb-2"
-            @click="toggleFilter('year')"
-          >
-            <span class="font-medium">Anno</span>
-            <span class="text-2xl transition-transform" :class="{ 'rotate-45': filterPanelStates.year }">+</span>
+          <!-- Seller Filter -->
+          <div class="border-b border-gray-800 pb-4">
+            <div 
+              class="flex justify-between items-center cursor-pointer mb-2"
+              @click="toggleFilter('seller')"
+            >
+              <span class="font-medium">Venditore</span>
+              <span class="text-2xl transition-transform" :class="{ 'rotate-45': filterPanelStates.seller }">+</span>
+            </div>
+            <div v-show="filterPanelStates.seller" class="space-y-2 mt-3">
+              <label 
+                v-for="seller in uniqueSellers" 
+                :key="seller"
+                class="flex items-center space-x-2 text-sm cursor-pointer hover:text-[#A30000] transition-colors"
+              >
+                <input 
+                  type="checkbox" 
+                  :value="seller"
+                  :checked="filters.seller.includes(seller)"
+                  @change="toggleSellerFilter(seller)"
+                  class="rounded border-gray-600 bg-gray-700 text-[#A30000] focus:ring-[#A30000]"
+                />
+                <span>{{ seller }}</span>
+              </label>
+            </div>
           </div>
-          <div v-show="filterPanelStates.year" class="space-y-3 mt-3">
-            <div class="grid grid-cols-2 gap-2">
-              <input 
-                v-model.number="filters.year.min"
-                type="number" 
-                :placeholder="`Min (${yearRange.min})`"
-                class="w-full px-3 py-2 text-xs bg-gray-700 border border-gray-600 rounded text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#A30000]"
-              />
-              <input 
-                v-model.number="filters.year.max"
-                type="number" 
-                :placeholder="`Max (${yearRange.max})`"
-                class="w-full px-3 py-2 text-xs bg-gray-700 border border-gray-600 rounded text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#A30000]"
-              />
+
+          <!-- Price Filter -->
+          <div class="border-b border-gray-800 pb-4">
+            <div 
+              class="flex justify-between items-center cursor-pointer mb-2"
+              @click="toggleFilter('price')"
+            >
+              <span class="font-medium">Prezzo (€)</span>
+              <span class="text-2xl transition-transform" :class="{ 'rotate-45': filterPanelStates.price }">+</span>
+            </div>
+            <div v-show="filterPanelStates.price" class="space-y-3 mt-3">
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                <input 
+                  v-model.number="filters.price.min"
+                  type="number" 
+                  :placeholder="`Min (${priceRange.min})`"
+                  class="w-full px-3 py-2 text-xs bg-gray-700 border border-gray-600 rounded text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#A30000]"
+                />
+                <input 
+                  v-model.number="filters.price.max"
+                  type="number" 
+                  :placeholder="`Max (${priceRange.max})`"
+                  class="w-full px-3 py-2 text-xs bg-gray-700 border border-gray-600 rounded text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#A30000]"
+                />
+              </div>
+            </div>
+          </div>
+
+          <!-- Kilometers Filter -->
+          <div class="border-b border-gray-800 pb-4">
+            <div 
+              class="flex justify-between items-center cursor-pointer mb-2"
+              @click="toggleFilter('kilometers')"
+            >
+              <span class="font-medium">Chilometri</span>
+              <span class="text-2xl transition-transform" :class="{ 'rotate-45': filterPanelStates.kilometers }">+</span>
+            </div>
+            <div v-show="filterPanelStates.kilometers" class="space-y-3 mt-3">
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                <input 
+                  v-model.number="filters.kilometers.min"
+                  type="number" 
+                  :placeholder="`Min (${kilometersRange.min})`"
+                  class="w-full px-3 py-2 text-xs bg-gray-700 border border-gray-600 rounded text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#A30000]"
+                />
+                <input 
+                  v-model.number="filters.kilometers.max"
+                  type="number" 
+                  :placeholder="`Max (${kilometersRange.max})`"
+                  class="w-full px-3 py-2 text-xs bg-gray-700 border border-gray-600 rounded text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#A30000]"
+                />
+              </div>
+            </div>
+          </div>
+
+          <!-- Year Filter -->
+          <div class="border-b border-gray-800 pb-4">
+            <div 
+              class="flex justify-between items-center cursor-pointer mb-2"
+              @click="toggleFilter('year')"
+            >
+              <span class="font-medium">Anno</span>
+              <span class="text-2xl transition-transform" :class="{ 'rotate-45': filterPanelStates.year }">+</span>
+            </div>
+            <div v-show="filterPanelStates.year" class="space-y-3 mt-3">
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                <input 
+                  v-model.number="filters.year.min"
+                  type="number" 
+                  :placeholder="`Min (${yearRange.min})`"
+                  class="w-full px-3 py-2 text-xs bg-gray-700 border border-gray-600 rounded text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#A30000]"
+                />
+                <input 
+                  v-model.number="filters.year.max"
+                  type="number" 
+                  :placeholder="`Max (${yearRange.max})`"
+                  class="w-full px-3 py-2 text-xs bg-gray-700 border border-gray-600 rounded text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#A30000]"
+                />
+              </div>
             </div>
           </div>
         </div>
@@ -463,40 +500,46 @@ onMounted(async () => {
     </aside>
 
     <!-- Main Content -->
-    <div class="flex-1 flex flex-col min-h-screen">
+    <div class="flex-1 flex flex-col min-h-screen lg:ml-0">
       <!-- Top Bar: Search & Sort -->
-      <div class="w-full px-4 py-6 flex flex-col md:flex-row md:items-center gap-4 bg-black border-b border-gray-800">
-        <input
-          v-model="searchQuery"
-          type="text"
-          placeholder="Cerca per modello, marca..."
-          class="flex-1 bg-[#18181b] text-white rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-[#A30000] placeholder-gray-400"
-        />
-        <div class="flex items-center gap-2">
-          <span class="text-white">Ordina</span>
-          <select 
-            v-model="sortBy"
-            class="bg-[#18181b] border border-white/10 text-white text-sm px-4 py-2 pr-8 rounded-lg appearance-none"
-          >
-            <option value="price-asc">Prezzo crescente</option>
-            <option value="price-desc">Prezzo decrescente</option>
-            <option value="year-desc">Anno decrescente</option>
-            <option value="year-asc">Anno crescente</option>
-            <option value="km-asc">Chilometri crescenti</option>
-            <option value="km-desc">Chilometri decrescenti</option>
-          </select>
+      <div class="w-full px-4 lg:px-6 py-4 lg:py-6 bg-black border-b border-gray-800 sticky top-0 z-30">
+        <div class="flex flex-col lg:flex-row lg:items-center gap-4">
+          <div class="flex-1">
+            <input
+              v-model="searchQuery"
+              type="text"
+              placeholder="Cerca per modello, marca..."
+              class="w-full bg-[#18181b] text-white rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#A30000] placeholder-gray-400 text-sm lg:text-base"
+            />
+          </div>
+          <div class="flex flex-col sm:flex-row items-start sm:items-center gap-2 lg:gap-4">
+            <span class="text-white text-sm lg:text-base">Ordina</span>
+            <select 
+              v-model="sortBy"
+              class="bg-[#18181b] border border-white/10 text-white text-sm px-3 py-2 lg:px-4 lg:py-3 pr-8 rounded-lg appearance-none min-w-0"
+            >
+              <option value="price-asc">Prezzo ↑</option>
+              <option value="price-desc">Prezzo ↓</option>
+              <option value="year-desc">Anno ↓</option>
+              <option value="year-asc">Anno ↑</option>
+              <option value="km-asc">Km ↑</option>
+              <option value="km-desc">Km ↓</option>
+            </select>
+          </div>
         </div>
       </div>
       
-      <div class="flex-1 w-full max-w-7xl mx-auto px-4 py-8">
-        <div class="mb-4 text-gray-400">{{ filteredItems.length }} veicoli trovati</div>
+      <div class="flex-1 w-full max-w-7xl mx-auto px-4 lg:px-6 py-6 lg:py-8">
+        <div class="mb-4 lg:mb-6 text-gray-400 text-sm lg:text-base">
+          {{ filteredItems.length }} veicoli trovati
+        </div>
         <Items :items="filteredItems" v-if="!loading" />
         <LoadingSpinner v-if="loading" />
-        <div v-if="!loading && filteredItems.length === 0" class="text-center py-16">
-          <p class="text-gray-500 text-lg">Nessuna auto trovata con i filtri selezionati.</p>
+        <div v-if="!loading && filteredItems.length === 0" class="text-center py-12 lg:py-16">
+          <p class="text-gray-500 text-base lg:text-lg mb-4">Nessuna auto trovata con i filtri selezionati.</p>
           <button 
             @click="clearFilters"
-            class="mt-4 text-[#A30000] hover:text-red-400 transition-colors"
+            class="text-[#A30000] hover:text-red-400 transition-colors text-sm lg:text-base"
           >
             Rimuovi tutti i filtri
           </button>
