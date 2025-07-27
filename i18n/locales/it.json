@@ -219,5 +219,44 @@
     "company": {
       "description": "La tua concessionaria di fiducia per auto usate, noleggio e assistenza a Bergamo."
     }
+  },
+  "login": {
+    "title": "Login Area Riservata | MyCars",
+    "meta": {
+      "description": "Accedi all'area riservata di MyCars per gestire i tuoi veicoli.",
+      "ogTitle": "Login Area Riservata | MyCars",
+      "ogDescription": "Accesso sicuro a MyCars Bergamo."
+    },
+    "brand": {
+      "name": "MyCars",
+      "subtitle": "Login"
+    },
+    "form": {
+      "email": "Email",
+      "emailPlaceholder": "Inserisci la tua email",
+      "password": "Password",
+      "passwordPlaceholder": "Inserisci la tua password",
+      "loginButton": "Accedi",
+      "forgotPassword": "Password dimenticata?"
+    },
+    "resetPassword": {
+      "title": "Reimposta Password",
+      "description": "Inserisci la tua email per ricevere le istruzioni per reimpostare la password",
+      "email": "Email",
+      "emailPlaceholder": "Inserisci la tua email",
+      "sendButton": "Invia Email di Reset",
+      "backToLogin": "Torna al login",
+      "successMessage": "Email inviata a {email}"
+    },
+    "errors": {
+      "userNotFound": "Utente non trovato.",
+      "wrongPassword": "Password errata.",
+      "invalidEmail": "Email non valida.",
+      "invalidCredentials": "Email o password non validi.",
+      "resetEmailNotFound": "Email non trovata o errore di rete."
+    },
+    "footer": {
+      "copyright": "© 2025 MyCars Bergamo. Tutti i diritti riservati."
+    }
   }
 }
