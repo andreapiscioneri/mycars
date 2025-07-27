@@ -212,12 +212,12 @@ const isRouteActive = (itemRoute: string) => {
             <div class="flex items-center px-3 py-3">
               <div 
                 v-if="!isOpen && !isMobile" 
-                class="w-2 h-2 rounded-full bg-white group-hover:bg-[#A30000] transition-colors"
+                class="w-2 h-2 rounded-full bg-white group-hover:bg-[#A30000] transition-colors cursor-pointer"
                 :class="[isRouteActive(item.route) ? 'bg-[#A30000]' : '']"
               ></div>
               <span 
                 v-if="isOpen || isMobile" 
-                class="text-sm font-medium group-hover:text-[#A30000] transition-colors"
+                class="text-sm font-medium group-hover:text-[#A30000] transition-colors cursor-pointer"
                 :class="[isRouteActive(item.route) ? 'text-[#A30000]' : '']"
               >
                 {{ item.label }}
@@ -232,14 +232,14 @@ const isRouteActive = (itemRoute: string) => {
             @click="logout"
           >
             <div class="flex items-center px-3 py-3 text-red-400 hover:text-red-300">
-              <svg v-if="isOpen || isMobile" class="w-4 h-4 mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg v-if="isOpen || isMobile" class="w-4 h-4 mr-3 flex-shrink-0 cursor-pointer" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path>
               </svg>
               <div 
                 v-if="!isOpen && !isMobile" 
-                class="w-2 h-2 rounded-full bg-red-400"
+                class="w-2 h-2 rounded-full bg-red-400 cursor-pointer"
               ></div>
-              <span v-if="isOpen || isMobile" class="text-sm font-medium">Logout</span>
+              <span v-if="isOpen || isMobile" class="text-sm font-medium cursor-pointer">Logout</span>
             </div>
           </div>
         </div>
@@ -252,10 +252,10 @@ const isRouteActive = (itemRoute: string) => {
           <div class="relative language-selector">
             <button
               @click="toggleDropdown"
-              class="w-full flex items-center justify-start p-2 rounded-lg hover:bg-white/5 transition-all duration-200 group"
+              class="w-full flex items-center justify-start p-2 rounded-lg hover:bg-white/5 transition-all duration-200 group cursor-pointer"
             >
-              <span class="text-xl mr-3">{{ selectedLangLabel?.emoji }}</span>
-              <span v-if="isOpen || isMobile" class="text-sm text-white group-hover:text-[#A30000]">
+              <span class="text-xl mr-3 cursor-pointer">{{ selectedLangLabel?.emoji }}</span>
+              <span v-if="isOpen || isMobile" class="text-sm text-white group-hover:text-[#A30000] cursor-pointer">
                 {{ selectedLangLabel?.label }}
               </span>
             </button>
@@ -278,14 +278,14 @@ const isRouteActive = (itemRoute: string) => {
 
           <!-- Login -->
           <button
-            class="w-full flex items-center justify-start p-2 rounded-lgs transition-all duration-200 group"
+            class="w-full flex items-center justify-start p-2 rounded-lgs transition-all duration-200 group cursor-pointer"
             @click="() => { isLoggedIn ? router.push(localePath('/')) : router.push(localePath('/login')) }"
           >
-            <svg xmlns="http://www.w3.org/2000/svg" class="bg-white w-5 h-5 mr-3 flex-shrink-0 group-hover:text-[#A30000] transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <svg xmlns="http://www.w3.org/2000/svg" class="bg-white w-5 h-5 mr-3 flex-shrink-0 group-hover:text-[#A30000] transition-colors cursor-pointer" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                 d="M5.121 17.804A10.978 10.978 0 0112 15c2.237 0 4.307.655 6.002 1.772M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
             </svg>
-            <span v-if="isOpen || isMobile" class="text-sm text-white group-hover:text-[#A30000] transition-colors">
+            <span v-if="isOpen || isMobile" class="text-sm text-white group-hover:text-[#A30000] transition-colors cursor-pointer">
               {{ isLoggedIn ? 'Ciao admin' : 'Accedi' }}
             </span>
           </button>
