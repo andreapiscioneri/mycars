@@ -134,7 +134,7 @@ const onDrop = (e, dropIndex) => {
         
         <div>
           <label class="block text-gray-300 text-sm font-semibold mb-2" for="subtitle">
-            Sottotitolo *
+            Sottotitolo
           </label>
           <input
             id="subtitle"
@@ -142,7 +142,7 @@ const onDrop = (e, dropIndex) => {
             type="text"
             placeholder="Es. Touring Business Advantage"
             class="w-full px-4 py-2 border border-gray-600 bg-gray-700 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-[#A30000] focus:border-transparent transition-all placeholder-gray-400"
-            required
+           
           >
         </div>
         
@@ -198,8 +198,6 @@ const onDrop = (e, dropIndex) => {
             id="price"
             v-model="formData.price"
             type="number"
-            min="0"
-            step="100"
             placeholder="Es. 25000"
             class="w-full px-4 py-2 border border-gray-600 bg-gray-700 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-[#A30000] focus:border-transparent transition-all placeholder-gray-400"
             required
@@ -214,7 +212,6 @@ const onDrop = (e, dropIndex) => {
             id="kilometers"
             v-model="formData.kilometers"
             type="number"
-            min="0"
             placeholder="Es. 50000"
             class="w-full px-4 py-2 border border-gray-600 bg-gray-700 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-[#A30000] focus:border-transparent transition-all placeholder-gray-400"
             required
@@ -252,7 +249,7 @@ const onDrop = (e, dropIndex) => {
       
       <div class="mt-6">
         <label class="block text-gray-300 text-sm font-semibold mb-2" for="seller">
-          Venditore *
+          Venditore
         </label>
         <input
           id="seller"
@@ -260,7 +257,7 @@ const onDrop = (e, dropIndex) => {
           type="text"
           placeholder="Nome del venditore"
           class="w-full px-4 py-2 border border-gray-600 bg-gray-700 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-[#A30000] focus:border-transparent transition-all placeholder-gray-400"
-          required
+          
         >
       </div>
     </div>

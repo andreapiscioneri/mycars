@@ -47,8 +47,14 @@ const handleSubmit = async (formData) => {
     // Create car document with image URLs
     const carData = {
       title: formData.title,
+      subtitle: formData.subtitle,
       year: formData.year,
       category: formData.category,
+      price: formData.price,
+      kilometers: formData.kilometers,
+      powerSource: formData.powerSource,
+      brand: formData.brand,
+      seller: formData.seller,
       description: formData.description,
       images: imageUrls
     };
