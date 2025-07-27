@@ -83,15 +83,15 @@ const sendMail = () => {
     <!-- Info & Links -->
     <div class="max-w-7xl mx-auto py-8 sm:py-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 text-sm sm:text-base text-gray-300">
       <!-- Logo -->
-<div class="sm:col-span-2 lg:col-span-1">
-  <a href="/">
-    <img src="/static/images/mycarslogo.png" alt="MyCars Logo" class="h-8 sm:h-10 mb-4" />
-  </a>
-  <p class="text-xs sm:text-sm text-gray-400 max-w-sm">
-    {{ t('footer.company.description') }}
-  </p>
-</div>
-      
+      <div class="sm:col-span-2 lg:col-span-1">
+        <a href="/">
+          <img src="/static/images/mycarslogo.png" alt="MyCars Logo" class="h-8 sm:h-10 mb-4" />
+        </a>
+        <p class="text-xs sm:text-sm text-gray-400 max-w-sm">
+          {{ t('footer.company.description') }}
+        </p>
+      </div>
+            
       <!-- Informazioni -->
       <div>
         <h4 class="font-bold text-white mb-3 sm:mb-4">{{ t('footer.informazioni.title') }}</h4>
