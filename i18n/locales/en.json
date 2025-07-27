@@ -287,6 +287,23 @@
       "maxPlaceholder": "Max ({max})",
       "showResults": "Show {count} results"
     },
+    "values": {
+      "powerSource": {
+        "benzina": "Gasoline",
+        "diesel": "Diesel",
+        "gpl": "LPG",
+        "metano": "Methane",
+        "elettrica": "Electric",
+        "ibrida": "Hybrid",
+        "plug-in": "Plug-in Hybrid"
+      },
+      "seller": {
+        "rivenditore": "Dealer",
+        "privato": "Private",
+        "concessionaria": "Dealership",
+        "azienda": "Company"
+      }
+    },
     "search": {
       "placeholder": "Search by model, brand...",
       "resultsCount": "{count} vehicles found",
@@ -454,6 +471,7 @@
     "kilometers": "Kilometers",
     "price": "Price", 
     "seller": "Seller",
+    "powerSource": "Fuel",
     "details": "Details"
   },
   "carForm": {
@@ -517,7 +535,7 @@
       },
       "powerSource": {
         "label": "Fuel Type",
-        "placeholder": "E.g. Diesel, Gasoline, Electric",
+        "placeholder": "Select fuel type",
         "required": true
       },
       "brand": {
@@ -535,7 +553,7 @@
       },
       "seller": {
         "label": "Seller",
-        "placeholder": "Seller name"
+        "placeholder": "Select seller type"
       },
       "description": {
         "label": "Description",

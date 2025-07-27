@@ -296,6 +296,23 @@
       "maxPlaceholder": "Max ({max})",
       "showResults": "Mostra {count} risultati"
     },
+    "values": {
+      "powerSource": {
+        "benzina": "Benzina",
+        "diesel": "Diesel",
+        "gpl": "GPL",
+        "metano": "Metano",
+        "elettrica": "Elettrica",
+        "ibrida": "Ibrida",
+        "plug-in": "Plug-in Hybrid"
+      },
+      "seller": {
+        "rivenditore": "Rivenditore",
+        "privato": "Privato",
+        "concessionaria": "Concessionaria",
+        "azienda": "Azienda"
+      }
+    },
     "search": {
       "placeholder": "Cerca per modello, marca...",
       "resultsCount": "{count} veicoli trovati",
@@ -463,6 +480,7 @@
     "kilometers": "Chilometri", 
     "price": "Prezzo",
     "seller": "Venditore",
+    "powerSource": "Carburante",
     "details": "Dettagli"
   },
   "carForm": {
@@ -526,7 +544,7 @@
       },
       "powerSource": {
         "label": "Alimentazione",
-        "placeholder": "Es. Diesel, Benzina, Elettrica",
+        "placeholder": "Seleziona alimentazione",
         "required": true
       },
       "brand": {
@@ -544,7 +562,7 @@
       },
       "seller": {
         "label": "Venditore",
-        "placeholder": "Nome del venditore"
+        "placeholder": "Seleziona venditore"
       },
       "description": {
         "label": "Descrizione",

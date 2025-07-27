@@ -1,6 +1,9 @@
 <script setup>
 import { ref } from 'vue';
 import Image from '@/components/Image.vue';
+import { useCarTranslations } from '@/composables/useCarTranslations';
+
+const { translatePowerSource, translateSeller } = useCarTranslations();
 
 // get items as props
 const props = defineProps({
@@ -41,7 +44,11 @@ const props = defineProps({
             </div>
             <div v-if="item.seller" class="flex justify-between">
               <span>{{ $t('items.seller') }}:</span>
-              <span class="text-white font-medium text-xs">{{ item.seller }}</span>
+              <span class="text-white font-medium text-xs">{{ translateSeller(item.seller) }}</span>
+            </div>
+            <div v-if="item.powerSource" class="flex justify-between">
+              <span>{{ $t('items.powerSource') }}:</span>
+              <span class="text-white font-medium text-xs">{{ translatePowerSource(item.powerSource) }}</span>
             </div>
           </div>
           

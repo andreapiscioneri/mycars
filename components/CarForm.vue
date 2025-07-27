@@ -273,14 +273,21 @@ const onDropUploaded = (e, dropIndex) => {
           <label class="block text-gray-300 text-sm font-semibold mb-2" for="powerSource">
             {{ $t('carForm.fields.powerSource.label') }} *
           </label>
-          <input
+          <select
             id="powerSource"
             v-model="formData.powerSource"
-            type="text"
-            :placeholder="$t('carForm.fields.powerSource.placeholder')"
-            class="w-full px-4 py-2 border border-gray-600 bg-gray-700 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-[#A30000] focus:border-transparent transition-all placeholder-gray-400"
+            class="bg-gray-700 border border-gray-600 text-white text-sm px-4 py-2 pr-8 rounded-lg appearance-none w-full focus:outline-none focus:ring-2 focus:ring-[#A30000] focus:border-transparent transition-all"
             required
           >
+            <option value="">{{ $t('carForm.fields.powerSource.placeholder') }}</option>
+            <option value="benzina">{{ $t('category.values.powerSource.benzina') }}</option>
+            <option value="diesel">{{ $t('category.values.powerSource.diesel') }}</option>
+            <option value="gpl">{{ $t('category.values.powerSource.gpl') }}</option>
+            <option value="metano">{{ $t('category.values.powerSource.metano') }}</option>
+            <option value="elettrica">{{ $t('category.values.powerSource.elettrica') }}</option>
+            <option value="ibrida">{{ $t('category.values.powerSource.ibrida') }}</option>
+            <option value="plug-in">{{ $t('category.values.powerSource.plug-in') }}</option>
+          </select>
         </div>
         
         <div>
@@ -328,14 +335,17 @@ const onDropUploaded = (e, dropIndex) => {
         <label class="block text-gray-300 text-sm font-semibold mb-2" for="seller">
           {{ $t('carForm.fields.seller.label') }}
         </label>
-        <input
+        <select
           id="seller"
           v-model="formData.seller"
-          type="text"
-          :placeholder="$t('carForm.fields.seller.placeholder')"
-          class="w-full px-4 py-2 border border-gray-600 bg-gray-700 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-[#A30000] focus:border-transparent transition-all placeholder-gray-400"
-          
+          class="bg-gray-700 border border-gray-600 text-white text-sm px-4 py-2 pr-8 rounded-lg appearance-none w-full focus:outline-none focus:ring-2 focus:ring-[#A30000] focus:border-transparent transition-all"
         >
+          <option value="">{{ $t('carForm.fields.seller.placeholder') }}</option>
+          <option value="rivenditore">{{ $t('category.values.seller.rivenditore') }}</option>
+          <option value="privato">{{ $t('category.values.seller.privato') }}</option>
+          <option value="concessionaria">{{ $t('category.values.seller.concessionaria') }}</option>
+          <option value="azienda">{{ $t('category.values.seller.azienda') }}</option>
+        </select>
       </div>
     </div>
 

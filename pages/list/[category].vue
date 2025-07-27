@@ -5,10 +5,12 @@ import { useI18n } from 'vue-i18n'
 import { collection, getDocs } from 'firebase/firestore'
 import { db } from '@/lib/firebase'
 import LoadingSpinner from '@/components/LoadingSpinner.vue'
+import { useCarTranslations } from '@/composables/useCarTranslations'
 
 const route = useRoute()
 const router = useRouter()
 const { t } = useI18n()
+const { translatePowerSource, translateSeller } = useCarTranslations()
 const items = ref([])
 const loading = ref(true)
 
@@ -442,7 +444,7 @@ useHead({
                   @change="togglePowerSourceFilter(powerSource)"
                   class="rounded border-gray-600 bg-gray-700 text-[#A30000] focus:ring-[#A30000]"
                 />
-                <span>{{ powerSource }}</span>
+                <span>{{ translatePowerSource(powerSource) }}</span>
               </label>
             </div>
           </div>
@@ -469,7 +471,7 @@ useHead({
                   @change="toggleSellerFilter(seller)"
                   class="rounded border-gray-600 bg-gray-700 text-[#A30000] focus:ring-[#A30000]"
                 />
-                <span>{{ seller }}</span>
+                <span>{{ translateSeller(seller) }}</span>
               </label>
             </div>
           </div>

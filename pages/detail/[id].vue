@@ -4,10 +4,12 @@ import { useRoute, useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import { doc, getDoc } from 'firebase/firestore'
 import { db } from '@/lib/firebase'
+import { useCarTranslations } from '@/composables/useCarTranslations'
 
 const route = useRoute()
 const router = useRouter()
 const { t } = useI18n()
+const { translatePowerSource, translateSeller } = useCarTranslations()
 const car = ref(null)
 const selectedImage = ref('')
 const loading = ref(true)
@@ -275,7 +277,7 @@ onMounted(async () => {
               </div>
               <div v-if="car.powerSource" class="bg-white/5 rounded-lg p-3 lg:p-4">
                 <p class="text-xs text-white/60 mb-1">{{ t('detail.vehicleInfo.fuel') }}</p>
-                <p class="text-lg font-semibold">{{ car.powerSource }}</p>
+                <p class="text-lg font-semibold">{{ translatePowerSource(car.powerSource) }}</p>
               </div>
               <div v-if="car.power" class="bg-white/5 rounded-lg p-3 lg:p-4">
                 <p class="text-xs text-white/60 mb-1">{{ t('detail.vehicleInfo.power') }}</p>
