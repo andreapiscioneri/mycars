@@ -128,13 +128,13 @@
   },
   "navbar": {
     "menu": {
-      "servizi": "Services",
-      "usati": "Used Cars",
-      "noleggio": "Rental",
-      "chisiamo": "About Us",
-      "dovesiamo": "Where We Are",
-      "contattaci": "Contact Us",
-      "areaRiservata": "Admin Area"
+      "servizi": "SERVICES",
+      "usati": "USED CARS",
+      "noleggio": "RENTAL",
+      "chisiamo": "ABOUT US",
+      "dovesiamo": "WHERE WE ARE",
+      "contattaci": "CONTACT US",
+      "areaRiservata": "ADMIN AREA"
     },
     "actions": {
       "openMenu": "Open menu",

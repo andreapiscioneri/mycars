@@ -137,13 +137,13 @@
   },
   "navbar": {
     "menu": {
-      "servizi": "Servizi",
-      "usati": "Usati",
-      "noleggio": "Noleggio",
-      "chisiamo": "Chi siamo",
-      "dovesiamo": "Dove siamo",
-      "contattaci": "Contattaci",
-      "areaRiservata": "Area Riservata"
+      "servizi": "SERVIZI",
+      "usati": "USATI",
+      "noleggio": "NOLEGGIO",
+      "chisiamo": "CHI SIAMO",
+      "dovesiamo": "DOVE SIAMO",
+      "contattaci": "CONTATTACI",
+      "areaRiservata": "AREA RISERVATA"
     },
     "actions": {
       "openMenu": "Apri menu",
