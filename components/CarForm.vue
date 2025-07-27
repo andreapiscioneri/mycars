@@ -20,6 +20,8 @@ const formData = ref({
   seller: '',
   category: 'used',
   description: '',
+  color: '',
+  power: '',
   images: []
 });
 
@@ -52,6 +54,8 @@ watch(() => props.initialData, (newData) => {
       brand: newData.brand || '',
       seller: newData.seller || '',
       description: newData.description || '',
+      color: newData.color || '',
+      power: newData.power || '',
       images: newData.images || []
     };
   }
@@ -236,7 +240,7 @@ const onDropUploaded = (e, dropIndex) => {
         Dettagli Tecnici
       </h3>
       
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         <div>
           <label class="block text-gray-300 text-sm font-semibold mb-2" for="price">
             Prezzo (€) *
@@ -290,6 +294,32 @@ const onDropUploaded = (e, dropIndex) => {
             placeholder="Es. BMW, Audi, Mercedes"
             class="w-full px-4 py-2 border border-gray-600 bg-gray-700 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-[#A30000] focus:border-transparent transition-all placeholder-gray-400"
             required
+          >
+        </div>
+
+        <div>
+          <label class="block text-gray-300 text-sm font-semibold mb-2" for="color">
+            Colore
+          </label>
+          <input
+            id="color"
+            v-model="formData.color"
+            type="text"
+            placeholder="Es. Nero, Bianco, Rosso"
+            class="w-full px-4 py-2 border border-gray-600 bg-gray-700 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-[#A30000] focus:border-transparent transition-all placeholder-gray-400"
+          >
+        </div>
+
+        <div>
+          <label class="block text-gray-300 text-sm font-semibold mb-2" for="power">
+            Potenza
+          </label>
+          <input
+            id="power"
+            v-model="formData.power"
+            type="text"
+            placeholder="Es. 150 CV, 2.0 TDI, Hybrid 180CV"
+            class="w-full px-4 py-2 border border-gray-600 bg-gray-700 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-[#A30000] focus:border-transparent transition-all placeholder-gray-400"
           >
         </div>
       </div>

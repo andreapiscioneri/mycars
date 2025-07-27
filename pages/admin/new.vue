@@ -57,6 +57,8 @@ const handleSubmit = async (formData) => {
       brand: formData.brand,
       seller: formData.seller,
       description: formData.description,
+      color: formData.color,
+      power: formData.power,
       images: imageUrls
     };
     
