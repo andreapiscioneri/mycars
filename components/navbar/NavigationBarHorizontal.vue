@@ -178,12 +178,6 @@ const menuItems = computed(() => {
             isOpen || isMobile ? 'h-12' : 'h-8'
           ]" 
         />
-        <span 
-          v-if="isOpen || isMobile" 
-          class="ml-3 text-white font-semibold text-lg tracking-wide"
-        >
-          MyCars
-        </span>
       </div>
 
       <!-- Toggle (desktop and tablet only) -->
