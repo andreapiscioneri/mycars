@@ -298,7 +298,7 @@ onMounted(async () => {
         <!-- Related cars -->
         <div v-if="relatedCars.length > 0" class="pt-8 lg:pt-12">
           <h2 class="text-2xl sm:text-3xl lg:text-4xl font-bold text-center mb-8 lg:mb-12">
-            <span class="text-white">Veicoli</span> 
+            <span class="text-white">Veicoli</span>&nbsp;
             <span class="text-[#A30000]">correlati</span>
           </h2>
 
@@ -343,7 +343,7 @@ onMounted(async () => {
                       <span>{{ relatedCar.year || 'n.d.' }}</span>
                       <span>{{ relatedCar.kilometers ? `${Number(relatedCar.kilometers).toLocaleString()} km` : 'n.d.' }}</span>
                     </div>
-                    <div v-if="relatedCar.price" class="text-[#A30000] font-bold text-lg">
+                    <div v-if="relatedCar.price" class="bg-gradient-to-r from-[#A30000]/20 to-transparent border border-[#A30000]/30 rounded-xl p-4 lg:p-2">
                       € {{ Number(relatedCar.price).toLocaleString() }}
                     </div>
                   </div>
