@@ -177,16 +177,3 @@
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
-
-/* Cursor pointer per bottoni e link */
-button,
-a,
-.cursor-pointer,
-[role="button"],
-[onclick],
-[type="button"],
-[type="submit"],
-[type="reset"],
-.clickable {
-  cursor: pointer !important;
-}
