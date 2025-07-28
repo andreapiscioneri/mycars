@@ -254,7 +254,12 @@ const isRouteActive = (itemRoute: string) => {
               @click="toggleDropdown"
               class="w-full flex items-center justify-start p-2 rounded-lg hover:bg-white/5 transition-all duration-200 group cursor-pointer"
             >
-              <span class="text-xl mr-3 cursor-pointer">{{ selectedLangLabel?.emoji }}</span>
+              <span 
+                class="text-xl cursor-pointer transition-all duration-200"
+                :class="isOpen || isMobile ? 'mr-3' : 'mx-auto'"
+              >
+                {{ selectedLangLabel?.emoji }}
+              </span>
               <span v-if="isOpen || isMobile" class="text-sm text-white group-hover:text-[#A30000] cursor-pointer">
                 {{ selectedLangLabel?.label }}
               </span>
@@ -262,16 +267,22 @@ const isRouteActive = (itemRoute: string) => {
 
             <div
               v-if="dropdownOpen"
-              class="absolute bottom-full mb-2 w-full bg-white text-black rounded-lg shadow-lg z-50 overflow-hidden"
+              :class="[
+                'absolute bottom-full mb-2 bg-white text-black rounded-lg shadow-lg z-50 overflow-hidden',
+                isOpen || isMobile ? 'w-full' : 'w-12 left-1/2 transform -translate-x-1/2'
+              ]"
             >
               <div
                 v-for="lang in langs"
                 :key="lang.code"
                 @click="changeLang(lang.code as 'it' | 'en')"
-                class="px-3 py-2 flex items-center gap-3 cursor-pointer hover:bg-gray-100 transition-colors"
+                :class="[
+                  'flex items-center cursor-pointer hover:bg-gray-100 transition-colors',
+                  isOpen || isMobile ? 'px-3 py-2 gap-3' : 'px-1 py-2 justify-center'
+                ]"
               >
                 <span class="text-lg cursor-pointer">{{ lang.emoji }}</span>
-                <span class="text-sm font-medium cursor-pointer">{{ lang.label }}</span>
+                <span v-if="isOpen || isMobile" class="text-sm font-medium cursor-pointer">{{ lang.label }}</span>
               </div>
             </div>
           </div>
