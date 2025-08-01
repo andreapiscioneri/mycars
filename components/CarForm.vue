@@ -280,13 +280,60 @@ const onDropUploaded = (e, dropIndex) => {
             required
           >
             <option value="">{{ $t('carForm.fields.powerSource.placeholder') }}</option>
-            <option value="benzina">{{ $t('category.values.powerSource.benzina') }}</option>
-            <option value="diesel">{{ $t('category.values.powerSource.diesel') }}</option>
-            <option value="gpl">{{ $t('category.values.powerSource.gpl') }}</option>
-            <option value="metano">{{ $t('category.values.powerSource.metano') }}</option>
-            <option value="elettrica">{{ $t('category.values.powerSource.elettrica') }}</option>
-            <option value="ibrida">{{ $t('category.values.powerSource.ibrida') }}</option>
-            <option value="plug-in">{{ $t('category.values.powerSource.plug-in') }}</option>
+            
+            <!-- Combustibili Tradizionali -->
+            <optgroup :label="$t('carForm.fields.powerSource.groups.traditional')">
+              <option value="benzina-95">{{ $t('category.values.powerSource.benzina-95') }}</option>
+              <option value="benzina-98">{{ $t('category.values.powerSource.benzina-98') }}</option>
+              <option value="benzina-100">{{ $t('category.values.powerSource.benzina-100') }}</option>
+              <option value="diesel-euro5">{{ $t('category.values.powerSource.diesel-euro5') }}</option>
+              <option value="diesel-euro6">{{ $t('category.values.powerSource.diesel-euro6') }}</option>
+              <option value="diesel-adblue">{{ $t('category.values.powerSource.diesel-adblue') }}</option>
+              <!-- Retrocompatibilità -->
+              <option value="benzina">{{ $t('category.values.powerSource.benzina') }}</option>
+              <option value="diesel">{{ $t('category.values.powerSource.diesel') }}</option>
+            </optgroup>
+            
+            <!-- Combustibili Gassosi -->
+            <optgroup :label="$t('carForm.fields.powerSource.groups.gas')">
+              <option value="gpl-euro5">{{ $t('category.values.powerSource.gpl-euro5') }}</option>
+              <option value="gpl-euro6">{{ $t('category.values.powerSource.gpl-euro6') }}</option>
+              <option value="metano-cng">{{ $t('category.values.powerSource.metano-cng') }}</option>
+              <option value="metano-lng">{{ $t('category.values.powerSource.metano-lng') }}</option>
+              <option value="metano-biomethane">{{ $t('category.values.powerSource.metano-biomethane') }}</option>
+              <!-- Retrocompatibilità -->
+              <option value="gpl">{{ $t('category.values.powerSource.gpl') }}</option>
+              <option value="metano">{{ $t('category.values.powerSource.metano') }}</option>
+            </optgroup>
+            
+            <!-- Elettriche -->
+            <optgroup :label="$t('carForm.fields.powerSource.groups.electric')">
+              <option value="elettrica-bev">{{ $t('category.values.powerSource.elettrica-bev') }}</option>
+              <option value="elettrica-fastcharge">{{ $t('category.values.powerSource.elettrica-fastcharge') }}</option>
+              <option value="elettrica-supercharge">{{ $t('category.values.powerSource.elettrica-supercharge') }}</option>
+              <!-- Retrocompatibilità -->
+              <option value="elettrica">{{ $t('category.values.powerSource.elettrica') }}</option>
+            </optgroup>
+            
+            <!-- Ibride -->
+            <optgroup :label="$t('carForm.fields.powerSource.groups.hybrid')">
+              <option value="ibrida-mild">{{ $t('category.values.powerSource.ibrida-mild') }}</option>
+              <option value="ibrida-full">{{ $t('category.values.powerSource.ibrida-full') }}</option>
+              <option value="ibrida-plugin">{{ $t('category.values.powerSource.ibrida-plugin') }}</option>
+              <option value="ibrida-range-extender">{{ $t('category.values.powerSource.ibrida-range-extender') }}</option>
+              <!-- Retrocompatibilità -->
+              <option value="ibrida">{{ $t('category.values.powerSource.ibrida') }}</option>
+              <option value="plug-in">{{ $t('category.values.powerSource.plug-in') }}</option>
+            </optgroup>
+            
+            <!-- Combustibili Alternativi -->
+            <optgroup :label="$t('carForm.fields.powerSource.groups.alternative')">
+              <option value="idrogeno">{{ $t('category.values.powerSource.idrogeno') }}</option>
+              <option value="fuel-cell">{{ $t('category.values.powerSource.fuel-cell') }}</option>
+              <option value="biocarburante">{{ $t('category.values.powerSource.biocarburante') }}</option>
+              <option value="etanolo-e85">{{ $t('category.values.powerSource.etanolo-e85') }}</option>
+              <option value="altro">{{ $t('category.values.powerSource.altro') }}</option>
+            </optgroup>
           </select>
         </div>
         

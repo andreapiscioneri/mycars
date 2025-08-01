@@ -299,12 +299,35 @@
     "values": {
       "powerSource": {
         "benzina": "Benzina",
+        "benzina-95": "Benzina 95",
+        "benzina-98": "Benzina 98",
+        "benzina-100": "Benzina 100",
         "diesel": "Diesel",
+        "diesel-euro5": "Diesel Euro 5",
+        "diesel-euro6": "Diesel Euro 6",
+        "diesel-adblue": "Diesel AdBlue",
         "gpl": "GPL",
+        "gpl-euro5": "GPL Euro 5",
+        "gpl-euro6": "GPL Euro 6",
         "metano": "Metano",
+        "metano-cng": "Metano CNG",
+        "metano-lng": "Metano LNG",
+        "metano-biomethane": "Metano Biomethane",
         "elettrica": "Elettrica",
+        "elettrica-bev": "BEV (Elettrica Pura)",
+        "elettrica-fastcharge": "Elettrica Fast Charge",
+        "elettrica-supercharge": "Elettrica Supercharge",
         "ibrida": "Ibrida",
-        "plug-in": "Plug-in Hybrid"
+        "ibrida-mild": "Mild Hybrid",
+        "ibrida-full": "Full Hybrid",
+        "ibrida-plugin": "Plug-in Hybrid",
+        "ibrida-range-extender": "Range Extender",
+        "plug-in": "Plug-in Hybrid",
+        "idrogeno": "Idrogeno",
+        "fuel-cell": "Fuel Cell (Idrogeno)",
+        "biocarburante": "Biocarburante",
+        "etanolo-e85": "Etanolo E85",
+        "altro": "Altro"
       },
       "seller": {
         "rivenditore": "Rivenditore",
@@ -600,7 +623,14 @@
       "powerSource": {
         "label": "Alimentazione",
         "placeholder": "Seleziona alimentazione",
-        "required": true
+        "required": true,
+        "groups": {
+          "traditional": "Tradizionali",
+          "gas": "Gas",
+          "electric": "Elettriche",
+          "hybrid": "Ibride",
+          "alternative": "Alternative"
+        }
       },
       "brand": {
         "label": "Marca",
