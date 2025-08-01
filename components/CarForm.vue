@@ -314,18 +314,86 @@ const onDropUploaded = (e, dropIndex) => {
             class="bg-gray-700 border border-gray-600 text-white text-sm px-4 py-2 pr-8 rounded-lg appearance-none w-full focus:outline-none focus:ring-2 focus:ring-[#A30000] focus:border-transparent transition-all"
           >
             <option value="">{{ $t('carForm.fields.color.placeholder') }}</option>
-            <option value="nero">{{ $t('category.values.color.nero') }}</option>
-            <option value="bianco">{{ $t('category.values.color.bianco') }}</option>
-            <option value="rosso">{{ $t('category.values.color.rosso') }}</option>
-            <option value="blu">{{ $t('category.values.color.blu') }}</option>
-            <option value="grigio">{{ $t('category.values.color.grigio') }}</option>
-            <option value="argento">{{ $t('category.values.color.argento') }}</option>
-            <option value="verde">{{ $t('category.values.color.verde') }}</option>
-            <option value="giallo">{{ $t('category.values.color.giallo') }}</option>
-            <option value="marrone">{{ $t('category.values.color.marrone') }}</option>
-            <option value="beige">{{ $t('category.values.color.beige') }}</option>
-            <option value="oro">{{ $t('category.values.color.oro') }}</option>
-            <option value="antracite">{{ $t('category.values.color.antracite') }}</option>
+            
+            <!-- Colori base -->
+            <optgroup :label="$t('carForm.fields.color.groups.base')">
+              <option value="nero">{{ $t('category.values.color.nero') }}</option>
+              <option value="bianco">{{ $t('category.values.color.bianco') }}</option>
+              <option value="grigio">{{ $t('category.values.color.grigio') }}</option>
+              <option value="argento">{{ $t('category.values.color.argento') }}</option>
+            </optgroup>
+            
+            <!-- Rossi -->
+            <optgroup :label="$t('carForm.fields.color.groups.red')">
+              <option value="rosso">{{ $t('category.values.color.rosso') }}</option>
+              <option value="bordeaux">{{ $t('category.values.color.bordeaux') }}</option>
+            </optgroup>
+            
+            <!-- Blu -->
+            <optgroup :label="$t('carForm.fields.color.groups.blue')">
+              <option value="blu">{{ $t('category.values.color.blu') }}</option>
+              <option value="blu-scuro">{{ $t('category.values.color.blu-scuro') }}</option>
+              <option value="blu-chiaro">{{ $t('category.values.color.blu-chiaro') }}</option>
+              <option value="blu-metallizzato">{{ $t('category.values.color.blu-metallizzato') }}</option>
+              <option value="azzurro">{{ $t('category.values.color.azzurro') }}</option>
+              <option value="celeste">{{ $t('category.values.color.celeste') }}</option>
+              <option value="navy">{{ $t('category.values.color.navy') }}</option>
+              <option value="petrolio">{{ $t('category.values.color.petrolio') }}</option>
+              <option value="turchese">{{ $t('category.values.color.turchese') }}</option>
+            </optgroup>
+            
+            <!-- Verdi -->
+            <optgroup :label="$t('carForm.fields.color.groups.green')">
+              <option value="verde">{{ $t('category.values.color.verde') }}</option>
+              <option value="verde-scuro">{{ $t('category.values.color.verde-scuro') }}</option>
+              <option value="verde-chiaro">{{ $t('category.values.color.verde-chiaro') }}</option>
+              <option value="verde-metallizzato">{{ $t('category.values.color.verde-metallizzato') }}</option>
+            </optgroup>
+            
+            <!-- Gialli e Arancioni -->
+            <optgroup :label="$t('carForm.fields.color.groups.yellow')">
+              <option value="giallo">{{ $t('category.values.color.giallo') }}</option>
+              <option value="giallo-limone">{{ $t('category.values.color.giallo-limone') }}</option>
+              <option value="arancione">{{ $t('category.values.color.arancione') }}</option>
+              <option value="oro">{{ $t('category.values.color.oro') }}</option>
+            </optgroup>
+            
+            <!-- Marroni e Beige -->
+            <optgroup :label="$t('carForm.fields.color.groups.brown')">
+              <option value="marrone">{{ $t('category.values.color.marrone') }}</option>
+              <option value="marrone-scuro">{{ $t('category.values.color.marrone-scuro') }}</option>
+              <option value="marrone-chiaro">{{ $t('category.values.color.marrone-chiaro') }}</option>
+              <option value="beige">{{ $t('category.values.color.beige') }}</option>
+              <option value="champagne">{{ $t('category.values.color.champagne') }}</option>
+              <option value="crema">{{ $t('category.values.color.crema') }}</option>
+              <option value="avorio">{{ $t('category.values.color.avorio') }}</option>
+            </optgroup>
+            
+            <!-- Rosa e Viola -->
+            <optgroup :label="$t('carForm.fields.color.groups.pink')">
+              <option value="rosa">{{ $t('category.values.color.rosa') }}</option>
+              <option value="fucsia">{{ $t('category.values.color.fucsia') }}</option>
+              <option value="magenta">{{ $t('category.values.color.magenta') }}</option>
+              <option value="viola">{{ $t('category.values.color.viola') }}</option>
+              <option value="violetto">{{ $t('category.values.color.violetto') }}</option>
+            </optgroup>
+            
+            <!-- Metallizzati e Speciali -->
+            <optgroup :label="$t('carForm.fields.color.groups.metallic')">
+              <option value="nero-metallizzato">{{ $t('category.values.color.nero-metallizzato') }}</option>
+              <option value="nero-opaco">{{ $t('category.values.color.nero-opaco') }}</option>
+              <option value="bianco-perla">{{ $t('category.values.color.bianco-perla') }}</option>
+              <option value="bianco-ghiaccio">{{ $t('category.values.color.bianco-ghiaccio') }}</option>
+              <option value="grigio-metallizzato">{{ $t('category.values.color.grigio-metallizzato') }}</option>
+              <option value="grigio-chiaro">{{ $t('category.values.color.grigio-chiaro') }}</option>
+              <option value="grigio-scuro">{{ $t('category.values.color.grigio-scuro') }}</option>
+              <option value="argento-metallizzato">{{ $t('category.values.color.argento-metallizzato') }}</option>
+              <option value="titanio">{{ $t('category.values.color.titanio') }}</option>
+              <option value="perla">{{ $t('category.values.color.perla') }}</option>
+              <option value="bronze">{{ $t('category.values.color.bronze') }}</option>
+              <option value="bronzo">{{ $t('category.values.color.bronzo') }}</option>
+              <option value="antracite">{{ $t('category.values.color.antracite') }}</option>
+            </optgroup>
           </select>
         </div>
 
