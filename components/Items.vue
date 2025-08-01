@@ -46,6 +46,10 @@ const props = defineProps({
               <span>{{ $t('items.powerSource') }}:</span>
               <span class="text-white font-medium text-xs">{{ translatePowerSource(item.powerSource) }}</span>
             </div>
+            <div v-if="item.color" class="flex justify-between">
+              <span>{{ $t('items.color') }}:</span>
+              <span class="text-white font-medium text-xs">{{ translateColor(item.color) }}</span>
+            </div>
             <div v-if="item.price" class="flex justify-between">
               <span>{{ $t('items.price') }}:</span>
               <span class="text-white font-bold text-xl ">€ {{ Number(item.price).toLocaleString() }}</span>

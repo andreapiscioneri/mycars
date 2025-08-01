@@ -288,6 +288,7 @@
       "closeFilters": "Chiudi filtri",
       "brand": "Marca",
       "powerSource": "Carburante",
+      "color": "Colore",
       "seller": "Venditore",
       "price": "Prezzo (€)",
       "kilometers": "Chilometri",
@@ -559,6 +560,7 @@
     "price": "Prezzo",
     "seller": "Venditore",
     "powerSource": "Carburante",
+    "color": "Colore",
     "details": "Dettagli"
   },
   "carForm": {

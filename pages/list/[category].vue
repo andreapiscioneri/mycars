@@ -22,6 +22,7 @@ const sortBy = ref('price-asc')
 const filters = ref({
   brand: [],
   powerSource: [],
+  color: [],
   seller: [],
   year: { min: null, max: null },
   price: { min: null, max: null },
@@ -33,6 +34,7 @@ const filterPanelStates = ref({
   brand: false,
   carrozzeria: false,
   powerSource: false,
+  color: false,
   seller: false,
   price: false,
   kilometers: false,
@@ -54,6 +56,7 @@ const activeFiltersCount = computed(() => {
   // Count array filters
   count += filters.value.brand.length
   count += filters.value.powerSource.length
+  count += filters.value.color.length
   count += filters.value.seller.length
   
   // Count range filters
@@ -95,6 +98,11 @@ const uniqueBrands = computed(() => {
 const uniquePowerSources = computed(() => {
   const powerSources = [...new Set(items.value.map(item => item.powerSource).filter(Boolean))]
   return powerSources.sort()
+})
+
+const uniqueColors = computed(() => {
+  const colors = [...new Set(items.value.map(item => item.color).filter(Boolean))]
+  return colors.sort()
 })
 
 const uniqueSellers = computed(() => {
@@ -165,6 +173,11 @@ const filteredItems = computed(() => {
   // Power source filter
   if (filters.value.powerSource.length > 0) {
     filtered = filtered.filter(item => filters.value.powerSource.includes(item.powerSource))
+  }
+
+  // Color filter
+  if (filters.value.color.length > 0) {
+    filtered = filtered.filter(item => filters.value.color.includes(item.color))
   }
 
   // Seller filter
@@ -249,6 +262,15 @@ const togglePowerSourceFilter = (powerSource) => {
   }
 }
 
+const toggleColorFilter = (color) => {
+  const index = filters.value.color.indexOf(color)
+  if (index > -1) {
+    filters.value.color.splice(index, 1)
+  } else {
+    filters.value.color.push(color)
+  }
+}
+
 const toggleSellerFilter = (seller) => {
   const index = filters.value.seller.indexOf(seller)
   if (index > -1) {
@@ -262,6 +284,7 @@ const clearFilters = () => {
   filters.value = {
     brand: [],
     powerSource: [],
+    color: [],
     seller: [],
     year: { min: null, max: null },
     price: { min: null, max: null },
@@ -445,6 +468,33 @@ useHead({
                   class="rounded border-gray-600 bg-gray-700 text-[#A30000] focus:ring-[#A30000]"
                 />
                 <span>{{ translatePowerSource(powerSource) }}</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- Color Filter -->
+          <div class="border-b border-gray-800 pb-4">
+            <div 
+              class="flex justify-between items-center cursor-pointer mb-2"
+              @click="toggleFilter('color')"
+            >
+              <span class="font-medium">{{ t('category.filters.color') }}</span>
+              <span class="text-2xl transition-transform" :class="{ 'rotate-45': filterPanelStates.color }">+</span>
+            </div>
+            <div v-show="filterPanelStates.color" class="space-y-2 mt-3 max-h-40 overflow-y-auto">
+              <label 
+                v-for="color in uniqueColors" 
+                :key="color"
+                class="flex items-center space-x-2 text-sm cursor-pointer hover:text-[#A30000] transition-colors"
+              >
+                <input 
+                  type="checkbox" 
+                  :value="color"
+                  :checked="filters.color.includes(color)"
+                  @change="toggleColorFilter(color)"
+                  class="rounded border-gray-600 bg-gray-700 text-[#A30000] focus:ring-[#A30000]"
+                />
+                <span>{{ translateColor(color) }}</span>
               </label>
             </div>
           </div>

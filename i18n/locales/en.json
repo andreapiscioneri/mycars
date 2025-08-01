@@ -279,6 +279,7 @@
       "closeFilters": "Close filters",
       "brand": "Brand",
       "powerSource": "Fuel",
+      "color": "Color",
       "seller": "Seller",
       "price": "Price (€)",
       "kilometers": "Kilometers",
@@ -550,6 +551,7 @@
     "price": "Price", 
     "seller": "Seller",
     "powerSource": "Fuel",
+    "color": "Color",
     "details": "Details"
   },
   "carForm": {
