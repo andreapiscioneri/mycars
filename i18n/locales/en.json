@@ -302,6 +302,25 @@
         "privato": "Private",
         "concessionaria": "Dealership",
         "azienda": "Company"
+      },
+      "color": {
+        "nero": "Black",
+        "bianco": "White",
+        "bianca": "White",
+        "rosso": "Red",
+        "rossa": "Red",
+        "blu": "Blue",
+        "grigio": "Gray",
+        "grigia": "Gray",
+        "argento": "Silver",
+        "verde": "Green",
+        "giallo": "Yellow",
+        "gialla": "Yellow",
+        "marrone": "Brown",
+        "beige": "Beige",
+        "oro": "Gold",
+        "bronze": "Bronze",
+        "antracite": "Anthracite"
       }
     },
     "search": {
@@ -545,7 +564,7 @@
       },
       "color": {
         "label": "Color",
-        "placeholder": "E.g. Black, White, Red"
+        "placeholder": "Select color"
       },
       "power": {
         "label": "Power",

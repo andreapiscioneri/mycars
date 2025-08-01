@@ -9,7 +9,7 @@ import { useCarTranslations } from '@/composables/useCarTranslations'
 const route = useRoute()
 const router = useRouter()
 const { t } = useI18n()
-const { translatePowerSource, translateSeller } = useCarTranslations()
+const { translatePowerSource, translateSeller, translateColor } = useCarTranslations()
 const car = ref(null)
 const selectedImage = ref('')
 const loading = ref(true)
@@ -285,7 +285,7 @@ onMounted(async () => {
               </div>
               <div v-if="car.color" class="bg-white/5 rounded-lg p-3 lg:p-4">
                 <p class="text-xs text-white/60 mb-1">{{ t('detail.vehicleInfo.color') }}</p>
-                <p class="text-lg font-semibold">{{ car.color }}</p>
+                <p class="text-lg font-semibold">{{ translateColor(car.color) }}</p>
               </div>
               <div v-if="car.brand" class="bg-white/5 rounded-lg p-3 lg:p-4">
                 <p class="text-xs text-white/60 mb-1">{{ t('detail.vehicleInfo.brand') }}</p>

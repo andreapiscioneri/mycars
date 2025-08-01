@@ -308,13 +308,25 @@ const onDropUploaded = (e, dropIndex) => {
           <label class="block text-gray-300 text-sm font-semibold mb-2" for="color">
             {{ $t('carForm.fields.color.label') }}
           </label>
-          <input
+          <select
             id="color"
             v-model="formData.color"
-            type="text"
-            :placeholder="$t('carForm.fields.color.placeholder')"
-            class="w-full px-4 py-2 border border-gray-600 bg-gray-700 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-[#A30000] focus:border-transparent transition-all placeholder-gray-400"
+            class="bg-gray-700 border border-gray-600 text-white text-sm px-4 py-2 pr-8 rounded-lg appearance-none w-full focus:outline-none focus:ring-2 focus:ring-[#A30000] focus:border-transparent transition-all"
           >
+            <option value="">{{ $t('carForm.fields.color.placeholder') }}</option>
+            <option value="nero">{{ $t('category.values.color.nero') }}</option>
+            <option value="bianco">{{ $t('category.values.color.bianco') }}</option>
+            <option value="rosso">{{ $t('category.values.color.rosso') }}</option>
+            <option value="blu">{{ $t('category.values.color.blu') }}</option>
+            <option value="grigio">{{ $t('category.values.color.grigio') }}</option>
+            <option value="argento">{{ $t('category.values.color.argento') }}</option>
+            <option value="verde">{{ $t('category.values.color.verde') }}</option>
+            <option value="giallo">{{ $t('category.values.color.giallo') }}</option>
+            <option value="marrone">{{ $t('category.values.color.marrone') }}</option>
+            <option value="beige">{{ $t('category.values.color.beige') }}</option>
+            <option value="oro">{{ $t('category.values.color.oro') }}</option>
+            <option value="antracite">{{ $t('category.values.color.antracite') }}</option>
+          </select>
         </div>
 
         <div>

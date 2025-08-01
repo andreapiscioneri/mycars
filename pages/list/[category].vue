@@ -10,7 +10,7 @@ import { useCarTranslations } from '@/composables/useCarTranslations'
 const route = useRoute()
 const router = useRouter()
 const { t } = useI18n()
-const { translatePowerSource, translateSeller } = useCarTranslations()
+const { translatePowerSource, translateSeller, translateColor } = useCarTranslations()
 const items = ref([])
 const loading = ref(true)
 

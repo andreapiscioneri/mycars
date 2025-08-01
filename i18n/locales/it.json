@@ -311,6 +311,25 @@
         "privato": "Privato",
         "concessionaria": "Concessionaria",
         "azienda": "Azienda"
+      },
+      "color": {
+        "nero": "Nero",
+        "bianco": "Bianco",
+        "bianca": "Bianca",
+        "rosso": "Rosso",
+        "rossa": "Rossa",
+        "blu": "Blu",
+        "grigio": "Grigio",
+        "grigia": "Grigia",
+        "argento": "Argento",
+        "verde": "Verde",
+        "giallo": "Giallo",
+        "gialla": "Gialla",
+        "marrone": "Marrone",
+        "beige": "Beige",
+        "oro": "Oro",
+        "bronze": "Bronze",
+        "antracite": "Antracite"
       }
     },
     "search": {
@@ -554,7 +573,7 @@
       },
       "color": {
         "label": "Colore",
-        "placeholder": "Es. Nero, Bianco, Rosso"
+        "placeholder": "Seleziona colore"
       },
       "power": {
         "label": "Potenza",

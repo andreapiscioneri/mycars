@@ -17,8 +17,16 @@ export const useCarTranslations = () => {
     return translated !== key ? translated : value
   }
 
+  const translateColor = (value) => {
+    if (!value) return value
+    const key = `category.values.color.${value.toLowerCase()}`
+    const translated = t(key)
+    return translated !== key ? translated : value
+  }
+
   return {
     translatePowerSource,
-    translateSeller
+    translateSeller,
+    translateColor
   }
 }

@@ -3,7 +3,7 @@ import { ref } from 'vue';
 import Image from '@/components/Image.vue';
 import { useCarTranslations } from '@/composables/useCarTranslations';
 
-const { translatePowerSource, translateSeller } = useCarTranslations();
+const { translatePowerSource, translateSeller, translateColor } = useCarTranslations();
 
 // get items as props
 const props = defineProps({
