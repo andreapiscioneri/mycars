@@ -65,16 +65,14 @@ const goToSlide = (index: number) => {
 
     <!-- HERO -->
     <section class="relative w-full min-h-screen flex items-center justify-center text-center group overflow-hidden">
-      <video 
-        autoplay 
-        muted 
-        loop 
-        playsinline 
-        preload="auto" 
-        class="absolute inset-0 w-full h-full object-cover z-0"
-      >
-        <source src="/public/static/images/def-2.mp4" type="video/mp4" />
-      </video>
+      <!-- Logo Background -->
+      <div class="absolute inset-0 flex items-center justify-center z-0">
+        <img 
+          src="/public/static/images/mycarslogo.png" 
+          alt="MyCars Logo" 
+          class="w-64 sm:w-80 md:w-96 lg:w-[500px] xl:w-[600px] opacity-100 transition-all duration-1000 group-hover:opacity-80 group-hover:scale-105"
+        />
+      </div>
       <div class="absolute inset-0 bg-black/60 z-0 transition duration-500 group-hover:bg-black/70" />
       <div class="relative z-10 px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto">
         <div class="space-y-4 sm:space-y-6 lg:space-y-8 transform transition duration-700 group-hover:scale-105">
