@@ -3,20 +3,39 @@
     "heroTitle": "MyCars - Your car, your style",
     "heroSubtitle": "Quality, passion and tailor-made services. Discover your next vehicle.",
     "discoverMore": "Discover more",
-    "sections": [
-      {
-        "title": "Full Range",
-        "text": "Explore our selection of new and used vehicles, thoroughly inspected to ensure quality and performance."
-      },
-      {
-        "title": "Design and Technology",
-        "text": "Vehicles with style, character and cutting-edge technology. Come test them out."
-      },
-      {
-        "title": "Professional Support",
-        "text": "Trust our team of experts to guide you in choosing your ideal vehicle."
-      }
-    ]
+"sections": [
+  {
+    "title": "Complete Range",
+    "text": "Discover our selection of new and used vehicles, carefully inspected to guarantee you quality and performance."
+  },
+  {
+    "title": "Design and Technology",
+    "text": "Vehicles with style, character, and cutting-edge technology. Come and test them."
+  },
+  {
+    "title": "After-Sales Services",
+    "text": "Authorized workshop, customer support, and spare parts always available."
+  },
+  {
+    "title": "Personalized Financing",
+    "text": "Many flexible solutions designed for every purchase need."
+  }
+],
+"testimonialsTitle": "What our customers say",
+"testimonials": [
+  {
+    "name": "Marco B.",
+    "text": "Flawless service and a perfect car. Highly recommended!"
+  },
+  {
+    "name": "Laura V.",
+    "text": "Wide selection and super helpful staff. A great experience!"
+  },
+  {
+    "name": "Giorgio T.",
+    "text": "I bought a certified used car — like new! Fantastic."
+  }
+]
   },
   "pages": {
     "usedCars": {
