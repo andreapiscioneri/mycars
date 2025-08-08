@@ -110,15 +110,16 @@ const goToSlide = (index: number) => {
           <h2 class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-[#A30000] animate-fadeInDown leading-tight">
             {{ $t(`homepage.sections[${idx}].title`) }}
           </h2>
+          
           <p class="text-sm sm:text-base md:text-lg lg:text-xl text-white/95 animate-fadeIn max-w-2xl mx-auto leading-relaxed">
             {{ $t(`homepage.sections[${idx}].text`) }}
           </p>
           <div class="pt-2 sm:pt-4">
             <NuxtLink
-              :to="['/usato', '/noleggio', '/servizi', '/contatti'][idx]"
-              class="inline-block bg-[#A30000] hover:bg-red-800 text-white font-medium px-6 sm:px-8 py-3 sm:py-4 rounded-lg shadow-lg transition-all duration-300 hover:shadow-xl hover:scale-105 transform text-sm sm:text-base"
+              :to="['/list/used', '/list/rent', '/servizi', '/contatti'][idx]"
+              class="inline-block bg-[#A30000] hover:bg-red-800 text-white font-medium px-6 sm:px-8 py-3 sm:py-4 rounded-lg shadow-lg transition-all duration-300 transform hover:scale-105 hover:shadow-xl text-sm sm:text-base"
             >
-              {{ $t('homepage.discoverMore') }} →
+              {{ $t('homepage.discoverMore') }}
             </NuxtLink>
           </div>
         </div>
