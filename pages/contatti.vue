@@ -95,7 +95,7 @@ const submitForm = () => {
           <p class="flex items-center gap-2">
             <img src="/static/images/telefono.png" alt="Icona telefono" class="w-4 h-4" loading="lazy" />
             <strong>{{ t('contatti.recapiti.telefono') }}</strong>
-            <a href="tel:+393803850700" class="underline">+39 380 385 0700</a>
+            <a href="tel:+39035319414" class="underline">+39 035 319414</a>
           </p>
           <p class="flex items-center gap-2">
             <img src="/static/images/mailblack.png" alt="Icona email" class="w-4 h-3" loading="lazy" />

@@ -44,8 +44,8 @@ useHead({
 
           <!-- Telefono -->
           <p class="text-base flex items-center gap-2 mt-4">
-            <a href="tel:+393803850700" class="hover:underline text-white" aria-label="Telefono MyCars">
-              +39 380 385 0700
+            <a href="tel:+39035319414" class="hover:underline text-white" aria-label="Telefono MyCars">
+              +39 035 319414
             </a>
             <img
               src="/static/images/telefono.png"
