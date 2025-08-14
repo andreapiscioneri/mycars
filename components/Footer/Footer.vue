@@ -115,7 +115,7 @@ const sendMail = () => {
           </div>
           <div>
             <p class="font-medium text-white mb-1">{{ t('footer.dovesiamo.telefono') }}</p>
-            <a href="tel+39035319414" class="text-[#609BE1] hover:text-[#A30000] transition-colors">
+            <a href="tel:+39035319414" class="text-[#609BE1] hover:text-[#A30000] transition-colors">
               +39 035 319414
             </a>
           </div>
