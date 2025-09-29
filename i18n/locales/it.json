@@ -428,6 +428,8 @@
       "color": "Colore",
       "brand": "Marca",
       "description": "Descrizione",
+      "showMore": "Mostra di più",
+      "showLess": "Mostra meno",
       "notAvailable": "n.d."
     },
     "actions": {

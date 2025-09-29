@@ -438,6 +438,8 @@
       "color": "Color",
       "brand": "Brand",
       "description": "Description",
+      "showMore": "Show more",
+      "showLess": "Show less",
       "notAvailable": "n/a"
     },
     "actions": {

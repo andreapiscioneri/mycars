@@ -14,6 +14,7 @@ const car = ref(null)
 const selectedImage = ref('')
 const loading = ref(true)
 const relatedCars = ref([])
+const isDescriptionExpanded = ref(false)
 
 const scrollContainer = ref(null)
 const thumbContainer = ref(null)
@@ -84,6 +85,28 @@ const getLocalizedDescription = () => {
   
   // Se è ancora una stringa semplice (retrocompatibilità)
   return car.value.description || ''
+}
+
+// Description management for show more/less
+const DESCRIPTION_MAX_LENGTH = 200
+const displayedDescription = computed(() => {
+  const fullDescription = getLocalizedDescription()
+  if (!fullDescription) return ''
+  
+  if (isDescriptionExpanded.value || fullDescription.length <= DESCRIPTION_MAX_LENGTH) {
+    return fullDescription
+  }
+  
+  return fullDescription.substring(0, DESCRIPTION_MAX_LENGTH) + '...'
+})
+
+const shouldShowToggle = computed(() => {
+  const fullDescription = getLocalizedDescription()
+  return fullDescription && fullDescription.length > DESCRIPTION_MAX_LENGTH
+})
+
+const toggleDescription = () => {
+  isDescriptionExpanded.value = !isDescriptionExpanded.value
 }
 
 onMounted(async () => {
@@ -310,7 +333,25 @@ onMounted(async () => {
             <!-- Description -->
             <div v-if="getLocalizedDescription()" class="bg-white/5 rounded-lg p-4 lg:p-6">
               <h3 class="font-semibold text-lg mb-3">{{ t('detail.vehicleInfo.description') }}</h3>
-              <p class="text-sm sm:text-base text-white/90 leading-relaxed">{{ getLocalizedDescription() }}</p>
+              <div class="space-y-3">
+                <p class="text-sm sm:text-base text-white/90 leading-relaxed">{{ displayedDescription }}</p>
+                <button 
+                  v-if="shouldShowToggle" 
+                  @click="toggleDescription"
+                  class="inline-flex items-center gap-1 text-[#A30000] hover:text-[#A30000]/80 font-medium text-sm transition-colors"
+                >
+                  <span>{{ isDescriptionExpanded ? t('detail.vehicleInfo.showLess') : t('detail.vehicleInfo.showMore') }}</span>
+                  <svg 
+                    class="w-4 h-4 transition-transform duration-200"
+                    :class="{ 'rotate-180': isDescriptionExpanded }"
+                    fill="none" 
+                    stroke="currentColor" 
+                    viewBox="0 0 24 24"
+                  >
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                  </svg>
+                </button>
+              </div>
             </div>
 
             <!-- Actions -->
