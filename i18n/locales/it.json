@@ -663,7 +663,10 @@
       },
       "description": {
         "label": "Descrizione",
-        "placeholder": "Inserisci una descrizione dettagliata del veicolo, le sue caratteristiche, gli optional inclusi, etc..."
+        "italian": "Descrizione Italiana",
+        "english": "Descrizione Inglese", 
+        "placeholderIt": "Inserisci una descrizione dettagliata del veicolo in italiano...",
+        "placeholderEn": "Inserisci una descrizione dettagliata del veicolo in inglese..."
       }
     },
     "images": {

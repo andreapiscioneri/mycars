@@ -1,5 +1,8 @@
 <script setup>
 import { ref, watch, computed, onBeforeUnmount } from 'vue';
+import { useI18n } from 'vue-i18n';
+
+const { locale } = useI18n();
 
 const props = defineProps({
   initialData: {
@@ -19,7 +22,10 @@ const formData = ref({
   brand: '',
   seller: '',
   category: 'used',
-  description: '',
+  description: {
+    it: '',
+    en: ''
+  },
   color: '',
   power: '',
   images: []
@@ -53,7 +59,9 @@ watch(() => props.initialData, (newData) => {
       powerSource: newData.powerSource || '',
       brand: newData.brand || '',
       seller: newData.seller || '',
-      description: newData.description || '',
+      description: typeof newData.description === 'object' && newData.description !== null 
+        ? newData.description 
+        : { it: newData.description || '', en: '' },
       color: newData.color || '',
       power: newData.power || '',
       images: newData.images || []
@@ -498,13 +506,35 @@ onBeforeUnmount(() => {
         {{ $t('carForm.sections.description') }}
       </h3>
       
-      <textarea
-        id="description"
-        v-model="formData.description"
-        rows="6"
-        :placeholder="$t('carForm.fields.description.placeholder')"
-        class="w-full px-4 py-3 border border-gray-600 bg-gray-700 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-[#A30000] focus:border-transparent transition-all resize-none placeholder-gray-400"
-      ></textarea>
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <!-- Descrizione Italiana -->
+        <div>
+          <label class="block text-gray-300 text-sm font-semibold mb-2" for="description-it">
+            {{ $t('carForm.fields.description.italian') }}
+          </label>
+          <textarea
+            id="description-it"
+            v-model="formData.description.it"
+            rows="6"
+            :placeholder="$t('carForm.fields.description.placeholderIt')"
+            class="w-full px-4 py-3 border border-gray-600 bg-gray-700 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-[#A30000] focus:border-transparent transition-all resize-none placeholder-gray-400"
+          ></textarea>
+        </div>
+        
+        <!-- Descrizione Inglese -->
+        <div>
+          <label class="block text-gray-300 text-sm font-semibold mb-2" for="description-en">
+            {{ $t('carForm.fields.description.english') }}
+          </label>
+          <textarea
+            id="description-en"
+            v-model="formData.description.en"
+            rows="6"
+            :placeholder="$t('carForm.fields.description.placeholderEn')"
+            class="w-full px-4 py-3 border border-gray-600 bg-gray-700 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-[#A30000] focus:border-transparent transition-all resize-none placeholder-gray-400"
+          ></textarea>
+        </div>
+      </div>
     </div>
 
     <!-- Images Section -->

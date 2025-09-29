@@ -673,7 +673,10 @@
       },
       "description": {
         "label": "Description",
-        "placeholder": "Enter a detailed description of the vehicle, its features, included options, etc..."
+        "italian": "Italian Description",
+        "english": "English Description",
+        "placeholderIt": "Enter a detailed description of the vehicle in Italian...",
+        "placeholderEn": "Enter a detailed description of the vehicle in English..."
       }
     },
     "images": {

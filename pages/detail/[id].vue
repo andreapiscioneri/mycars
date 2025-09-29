@@ -8,7 +8,7 @@ import { useCarTranslations } from '@/composables/useCarTranslations'
 
 const route = useRoute()
 const router = useRouter()
-const { t } = useI18n()
+const { t, locale } = useI18n()
 const { translatePowerSource, translateSeller, translateColor } = useCarTranslations()
 const car = ref(null)
 const selectedImage = ref('')
@@ -69,8 +69,22 @@ const pageTitle = computed(() => {
 
 const pageDescription = computed(() => {
   if (!car.value) return 'MyCars Bergamo'
-  return car.value.description || `Scopri ${car.value.title} - anno ${car.value.year}, categoria ${car.value.category}.`
+  const localDescription = getLocalizedDescription()
+  return localDescription || `Scopri ${car.value.title} - anno ${car.value.year}, categoria ${car.value.category}.`
 })
+
+// Get localized description
+const getLocalizedDescription = () => {
+  if (!car.value) return ''
+  
+  // Se la descrizione è un oggetto con le lingue
+  if (typeof car.value.description === 'object' && car.value.description !== null) {
+    return car.value.description[locale.value] || car.value.description.it || car.value.description.en || ''
+  }
+  
+  // Se è ancora una stringa semplice (retrocompatibilità)
+  return car.value.description || ''
+}
 
 onMounted(async () => {
   try {
@@ -294,9 +308,9 @@ onMounted(async () => {
             </div>
 
             <!-- Description -->
-            <div v-if="car.description" class="bg-white/5 rounded-lg p-4 lg:p-6">
+            <div v-if="getLocalizedDescription()" class="bg-white/5 rounded-lg p-4 lg:p-6">
               <h3 class="font-semibold text-lg mb-3">{{ t('detail.vehicleInfo.description') }}</h3>
-              <p class="text-sm sm:text-base text-white/90 leading-relaxed">{{ car.description }}</p>
+              <p class="text-sm sm:text-base text-white/90 leading-relaxed">{{ getLocalizedDescription() }}</p>
             </div>
 
             <!-- Actions -->
