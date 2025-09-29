@@ -2,7 +2,7 @@
 import { ref, watch, computed, onBeforeUnmount } from 'vue';
 import { useI18n } from 'vue-i18n';
 
-const { locale } = useI18n();
+const { locale, t } = useI18n();
 
 const props = defineProps({
   initialData: {
@@ -80,13 +80,13 @@ const handleFileSelect = (event) => {
 };
 
 const removeImage = (index) => {
-  if (window.confirm($t('carForm.images.deleteConfirm'))) {
+  if (window.confirm(t('carForm.images.deleteConfirm'))) {
     formData.value.images.splice(index, 1);
   }
 };
 
 const removeUploadedFile = (index) => {
-  if (window.confirm($t('carForm.images.deleteConfirm'))) {
+  if (window.confirm(t('carForm.images.deleteConfirm'))) {
     // Cleanup the object URL to prevent memory leaks
     if (isClient && filePreviewUrls.value[index]) {
       URL.revokeObjectURL(filePreviewUrls.value[index]);
