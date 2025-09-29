@@ -294,11 +294,10 @@ onMounted(async () => {
             </div>
 
             <!-- Description -->
-            <!-- TODO: Riattivare la sezione descrizione quando necessario -->
-            <!-- <div v-if="car.description" class="bg-white/5 rounded-lg p-4 lg:p-6">
+            <div v-if="car.description" class="bg-white/5 rounded-lg p-4 lg:p-6">
               <h3 class="font-semibold text-lg mb-3">{{ t('detail.vehicleInfo.description') }}</h3>
               <p class="text-sm sm:text-base text-white/90 leading-relaxed">{{ car.description }}</p>
-            </div> -->
+            </div>
 
             <!-- Actions -->
             <div class="flex flex-col gap-3 pt-6">
