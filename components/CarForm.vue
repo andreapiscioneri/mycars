@@ -1,5 +1,5 @@
 <script setup>
-import { ref, watch, computed } from 'vue';
+import { ref, watch, computed, onBeforeUnmount } from 'vue';
 
 const props = defineProps({
   initialData: {
@@ -79,6 +79,10 @@ const removeImage = (index) => {
 
 const removeUploadedFile = (index) => {
   if (window.confirm($t('carForm.images.deleteConfirm'))) {
+    // Cleanup the object URL to prevent memory leaks
+    if (isClient && filePreviewUrls.value[index]) {
+      URL.revokeObjectURL(filePreviewUrls.value[index]);
+    }
     uploadedFiles.value.splice(index, 1);
   }
 };
@@ -129,6 +133,15 @@ const onDropUploaded = (e, dropIndex) => {
     uploadedFiles.value = files;
   }
 };
+
+// Cleanup object URLs when component is destroyed to prevent memory leaks
+onBeforeUnmount(() => {
+  if (isClient) {
+    filePreviewUrls.value.forEach(url => {
+      URL.revokeObjectURL(url);
+    });
+  }
+});
 </script>
 
 <template>
@@ -555,8 +568,8 @@ const onDropUploaded = (e, dropIndex) => {
             />
             <button
               type="button"
-              @click="removeImage(index)"
-              class="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs hover:bg-red-600 transition-colors opacity-0 group-hover:opacity-100"
+              @click.stop.prevent="removeImage(index)"
+              class="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs hover:bg-red-600 transition-colors opacity-100 md:opacity-0 md:group-hover:opacity-100 cursor-pointer z-10"
             >
               ×
             </button>
@@ -603,8 +616,8 @@ const onDropUploaded = (e, dropIndex) => {
             </div>
             <button
               type="button"
-              @click="removeUploadedFile(index)"
-              class="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs hover:bg-red-600 transition-colors opacity-0 group-hover:opacity-100"
+              @click.stop.prevent="removeUploadedFile(index)"
+              class="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs hover:bg-red-600 transition-colors opacity-100 md:opacity-0 md:group-hover:opacity-100 cursor-pointer z-10"
             >
               ×
             </button>
