@@ -56,10 +56,10 @@ const backLink = computed(() => {
 
 // Generate email URL with translations
 const emailUrl = computed(() => {
-  if (!car.value) return 'mailto:info@mycarsbergamo.it'
+  if (!car.value) return 'mailto:mycarssrl.bg@gmail.com'
   const subject = t('detail.actions.emailSubject', { title: car.value.title })
   const body = t('detail.actions.emailBody', { title: car.value.title })
-  return `mailto:info@mycarsbergamo.it?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`
+  return `mailto:mycarssrl.bg@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`
 })
 
 // Meta data for SEO

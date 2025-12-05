@@ -57,8 +57,8 @@ useHead({
 
           <!-- Email -->
           <p class="text-base flex items-center gap-2 mt-2">
-            <a href="mailto:info@maycars.it" class="hover:underline text-white" aria-label="Email MyCars">
-              info@maycars.it
+            <a href="mailto:mycarssrl.bg@gmail.com" class="hover:underline text-white" aria-label="Email MyCars">
+              mycarssrl.bg@gmail.com
             </a>
             <img
               src="/static/images/mailblack.png"
@@ -76,6 +76,8 @@ useHead({
               <li>{{ t('dovesiamo.orari.sabato') }}</li>
               <li>{{ t('dovesiamo.orari.domenica') }}</li>
             </ul>
+            <br>
+            <p class="mt-4 text-sm italic text-white">{{ t('dovesiamo.notaAppuntamento') }}</p>
           </div>
 
           <div class="border-t-2 border-[#A30000] mt-6 w-full"></div>

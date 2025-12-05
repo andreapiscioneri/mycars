@@ -32,7 +32,7 @@ const sendMail = () => {
     `${messaggio.value}`
   )
 
-  const mailtoLink = `mailto:info@mycarsbergamo.it?subject=${subject}&body=${body}`
+  const mailtoLink = `mailto:mycarssrl.bg@gmail.com?subject=${subject}&body=${body}`
   window.location.href = mailtoLink
 }
 </script>
@@ -134,13 +134,13 @@ const sendMail = () => {
             <transition name="fade" mode="out-in">
               <div v-if="showHours" class="mt-3 text-xs sm:text-sm text-gray-400 space-y-1" key="open">
                 <div class="grid grid-cols-2 gap-2">
-                  <p>{{ t('footer.dovesiamo.giorni.domenica') }}</p><span class="text-white text-right">{{ t('footer.dovesiamo.orariValue.domenica') }}</span>
                   <p>{{ t('footer.dovesiamo.giorni.lunedi') }}</p><span class="text-white text-right">{{ t('footer.dovesiamo.orariValue.lunedi') }}</span>
                   <p>{{ t('footer.dovesiamo.giorni.martedi') }}</p><span class="text-white text-right">{{ t('footer.dovesiamo.orariValue.martedi') }}</span>
                   <p>{{ t('footer.dovesiamo.giorni.mercoledi') }}</p><span class="text-white text-right">{{ t('footer.dovesiamo.orariValue.mercoledi') }}</span>
                   <p>{{ t('footer.dovesiamo.giorni.giovedi') }}</p><span class="text-white text-right">{{ t('footer.dovesiamo.orariValue.giovedi') }}</span>
                   <p>{{ t('footer.dovesiamo.giorni.venerdi') }}</p><span class="text-white text-right">{{ t('footer.dovesiamo.orariValue.venerdi') }}</span>
                   <p>{{ t('footer.dovesiamo.giorni.sabato') }}</p><span class="text-white text-right">{{ t('footer.dovesiamo.orariValue.sabato') }}</span>
+                  <p>{{ t('footer.dovesiamo.giorni.domenica') }}</p><span class="text-white text-right">{{ t('footer.dovesiamo.orariValue.domenica') }}</span>
                 </div>
               </div>
             </transition>

@@ -112,10 +112,11 @@
     "indirizzo": "Via dei Livelli di Sopra\n24060 – Costa di Mezzate (BG)",
     "orariTitolo": "Opening Hours:",
     "orari": {
-      "lunven": "Monday – Friday: 09:00 – 12:30 / 14:30 – 19:00",
-      "sabato": "Saturday: 09:00 – 12:30",
+      "lunven": "Monday – Friday: 09:30 – 12:00 / 14:30 – 18:00",
+      "sabato": "Saturday: 09:30 – 12:00",
       "domenica": "Sunday: Closed"
-    }
+    },
+    "notaAppuntamento": "We are available by appointment also at different times"
   },
   "contatti": {
     "meta": {
@@ -204,13 +205,13 @@
         "sabato": "Saturday"
       },
       "orariValue": {
-        "domenica": "Closed",
-        "lunedi": "09:00–17:30",
-        "martedi": "09:00–17:30",
-        "mercoledi": "09:00–17:30",
-        "giovedi": "09:00–17:30",
-        "venerdi": "09:00–17:30",
-        "sabato": "Closed"
+        "lunedi": "09:30–12:00 / 14:30–18:00",
+        "martedi": "09:30–12:00 / 14:30–18:00",
+        "mercoledi": "09:30–12:00 / 14:30–18:00",
+        "giovedi": "09:30–12:00 / 14:30–18:00",
+        "venerdi": "09:30–12:00 / 14:30–18:00",
+        "sabato": "09:30–12:00",
+        "domenica": "Closed"
       },
       "provincia": "Province:",
       "provinciaValue": "Bergamo"

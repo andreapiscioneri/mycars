@@ -65,7 +65,7 @@ const submitForm = () => {
     `Messaggio:\n${form.value.messaggio}`
   )
 
-  const mailtoLink = `mailto:info@maycars.it?subject=${subject}&body=${body}`
+  const mailtoLink = `mailto:mycarssrl.bg@gmail.com?subject=${subject}&body=${body}`
   window.location.href = mailtoLink
 
   success.value = true
@@ -100,7 +100,7 @@ const submitForm = () => {
           <p class="flex items-center gap-2">
             <img src="/static/images/mailblack.png" alt="Icona email" class="w-4 h-3" loading="lazy" />
             <strong>{{ t('contatti.recapiti.email') }}</strong>
-            <a href="mailto:info@maycars.it" class="underline">info@maycars.it</a>
+            <a href="mailto:mycarssrl.bg@gmail.com" class="underline">mycarssrl.bg@gmail.com</a>
           </p>
         </address>
 
